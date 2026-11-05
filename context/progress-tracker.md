@@ -4,11 +4,11 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## Current Phase
 
-- Product planning and specification (pre-implementation).
+- Public pages UI implementation.
 
 ## Current Goal
 
-- Finalize the project context documents and resolve essential auction rules before implementation.
+- Complete Feature 02 incrementally; Step 1 shared site header is ready for review.
 
 ## Completed
 
@@ -31,16 +31,28 @@ Update this file after meaningful implementation changes or approved product/arc
 - Approved WIN-003: an unanswered offer expires after 48 hours and the system automatically contacts the next eligible bidder; progression must avoid duplicate or simultaneous active offers.
 - Approved WIN-004: the original highest-ranked bidder also has 48 hours to accept; if no response, their offer expires and the next bidder is contacted. The original winner's period was specified as starting upon offer delivery; reliable delivery-time semantics still need design.
 - Approved END-003: an early cancellation requires a reason, which is displayed to auction viewers and affected bidders.
-- Drafted project overview, code standards, UI context, and AI workflow rules; implementation has not begun.
+- Drafted the project overview, code standards, UI context, and AI workflow rules before implementation began.
+- Added the approved Terra design tokens and Literata/Nunito Sans font setup.
+- Added typed, reusable Button, Card, Input, and Textarea UI primitives with accessible states and native HTML behavior.
+- Added the required `lucide-react` dependency without introducing a component library.
+- Verified the initial Feature 01 implementation with TypeScript, ESLint, and `git diff --check`.
+- Verified the Feature 01 production build and checked key text/focus color combinations against WCAG contrast ratios.
+- Reviewed the TSX primitives against the Vercel React best-practices checklist; components remain server-compatible and use direct imports without an unnecessary barrel module.
+- Approved Feature 01 as the UI foundation for Feature 02.
+- Implemented the Feature 02 shared site header with QRBid branding, desktop navigation, and an accessible mobile menu.
+- Added the shared header to the root layout without adding authentication placeholders or extra routes.
+- Verified Feature 02 Step 1 with ESLint, a production build, a sequential TypeScript check, `git diff --check`, and a local HTTP render check.
 
 ## In Progress
 
-- Reviewing and adapting project context documentation for QRBid.
+- Feature 02 Step 1 is awaiting review before the landing page work begins, as required by the feature specification.
 
 ## Next Up
 
-- Review and approve the architecture context.
-- Resolve the remaining auction lifecycle and registration requirements.
+- Review Feature 02 Step 1: shared site header.
+- After approval, implement Feature 02 Step 2: landing page hero, CTA, and three-step explanation.
+- After a separate review, implement Feature 02 Step 3: nonfunctional create-auction form prototype.
+- Resolve the remaining auction lifecycle and registration requirements before implementing affected features.
 - Design the database schema and security policies after product decisions are finalized.
 
 ## Open Questions
@@ -78,6 +90,10 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## Session Notes
 
-- This is a planning document. No code, database schema, deployment, or tests have been completed.
+- Feature 01 provides the design-system foundation; Feature 02 Step 1 adds only the shared public header.
+- The mobile menu uses a native button, `aria-expanded`, `aria-controls`, accessible labels, and keyboard-operable native links.
+- Feature 02 Step 1 was verified structurally and through a local HTTP render; interactive narrow/desktop browser QA remains pending because browser automation is unavailable in this environment.
+- No landing-page redesign, create-auction route, database schema, authentication, deployment, or business logic has been implemented in Feature 02 Step 1.
+- A temporary component preview route was removed after browser automation became unavailable; no permanent showcase page was added.
 - Use the approved project-overview.md and ui-context.md as the product and design sources of truth.
 - Do not treat open questions as approved requirements.

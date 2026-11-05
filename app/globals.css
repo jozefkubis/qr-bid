@@ -1,1 +1,57 @@
 @import "tailwindcss";
+
+:root {
+  --primary: #4a7c59;
+  --primary-hover: #3d684a;
+  --background: #faf6f0;
+  --surface: #fffdf9;
+  --surface-muted: #f3ede4;
+  --tertiary: #705c30;
+  --text: #2e322f;
+  --text-muted: #626a64;
+  --border: #d9d0c4;
+  --focus: #2f6f45;
+  --error: #b42318;
+  --radius-ui: 0.75rem;
+  --shadow-ui: 0 4px 20px rgba(46, 50, 48, 0.06);
+}
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-tertiary: var(--tertiary);
+  --color-foreground: var(--text);
+  --color-muted-foreground: var(--text-muted);
+  --color-border: var(--border);
+  --color-focus: var(--focus);
+  --color-error: var(--error);
+  --font-sans: var(--font-nunito-sans);
+  --font-heading: var(--font-literata);
+  --radius-soft: var(--radius-ui);
+  --shadow-soft: var(--shadow-ui);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  body {
+    background: var(--background);
+    color: var(--text);
+    font-family: var(--font-nunito-sans), sans-serif;
+    line-height: 1.6;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-literata), serif;
+  }
+}
