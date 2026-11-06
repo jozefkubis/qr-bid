@@ -8,7 +8,7 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## Current Goal
 
-- Feature 04 How QRBid Works section is implemented and verified; awaiting product-owner review.
+- Feature 05 final CTA and separate footer are implemented and verified; awaiting product-owner review.
 
 ## Completed
 
@@ -57,13 +57,19 @@ Update this file after meaningful implementation changes or approved product/arc
 - Verified Feature 04 with ESLint, `npm run build -- --webpack`, standalone `npx tsc --noEmit`, and `git diff --check`. Webpack was used because previous Turbopack runs encountered sandbox port restrictions.
 - Checked Chrome at 375/768/1280/1440px: full-width background `rgb(243, 237, 228)`, no horizontal overflow, three desktop cards with equal 370px height and aligned footers, mobile/tablet stacking, decorative icons hidden from assistive technology, and preserved two-column desktop hero. Visually inspected 375px and 1440px screenshots in `/tmp/qrbid-feature04-375.png` and `/tmp/qrbid-feature04-1440.png`.
 
+
+- Implemented Feature 05 in static `FinalCta` and `SiteFooter` components, composed after HowItWorks with the footer outside `main` and the CTA section. Earlier section content and links are preserved.
+- CTA continues the preceding `bg-surface-muted` content area, uses a solid `bg-primary` panel, exact approved English copy, and one contrasting light Link to `/auctions/new`. Footer uses the same `bg-surface` token as SiteHeader, a top border, a home-linked text brand and server-evaluated copyright year (2026). Added no extra routes, dependencies or backend features.
+- Feature 05 checks passed: `npm run lint`, default `npm run build` (Turbopack), standalone `npx tsc --noEmit`, and `git diff --check`. Production Chrome checks at 375/1280/1440px confirmed one separate footer, identical header/footer background `rgb(255, 253, 249)`, continuous section background `rgb(243, 237, 228)`, green panel `rgb(74, 124, 89)`, approximately 48px CTA height, visible 2px focus and no horizontal overflow. Inspected mobile and desktop screenshots (`/tmp/qrbid-feature05-375.png`, `/tmp/qrbid-feature05-1440.png`).
+- Feature 05 contrast checks: white panel text 4.86:1, dark-green button text 6.31:1 (hover 5.51:1), footer copyright 5.49:1. CTA target `/auctions/new` remains unimplemented and returns 404; no auction-creation functionality is claimed.
+
 ## In Progress
 
-- Feature 04 is awaiting product-owner visual review; the existing Feature 03 hero was accepted as the foundation for this section.
+- Feature 05 is awaiting product-owner visual review; Features 03–04 remain in place.
 
 ## Next Up
 
-- Review Feature 04: the full-width How QRBid Works section below the preserved hero.
+- Review Feature 05: final green CTA panel and separate light footer.
 - Implement Feature 02 Step 3, the nonfunctional create-auction form prototype, as a separately approved task.
 - Resolve the remaining auction lifecycle and registration requirements before implementing affected features.
 - Design the database schema and security policies after product decisions are finalized.
@@ -122,3 +128,8 @@ Update this file after meaningful implementation changes or approved product/arc
 - Feature 04 was explicitly requested on 2026-11-06 and supersedes the earlier Feature 03 hero-only page-end restriction by adding the newly specified section. The existing “View sample auction” CTA continues to target the preview card.
 - Mobile-menu follow-up: the existing dev server on port 3000 did not hydrate/respond during browser QA. Confirmed the unchanged header works on the separate production server (port 3100): `aria-expanded` changes from false to true and both mobile links appear. If the development page remains unresponsive, restart the dev server; no header code was changed for Feature 04.
 - Applied the approved Feature 04 icon refinement: replaced the third card's gavel with `BellRing` and added small decorative `Clock`, `Printer`, and `Zap` icons to the three footer lines. Icons are hidden from assistive technology, cannot shrink, and keep text wrapping usable. Updated Feature 04's icon guidance. ESLint, standalone TypeScript and `git diff --check` passed; production build was not repeated for this icon-only change.
+- Verification correction discovered during Feature 05: the Webpack build compiles but does not process Tailwind under this project’s Turbopack-only CSS loader configuration. Earlier successful Webpack checks establish compilation only, not production visual correctness. Default Turbopack build now passes and the styled production page was verified directly; do not use Webpack as an equivalent visual verification fallback without configuring its CSS pipeline. No build configuration was changed.
+- Applied the requested header/footer screenshot refinement: header remains at the viewport top using sticky positioning, has anchor-scroll clearance and a prominent green Create an auction CTA. Desktop includes EN/SK and Sign in previews; the expanded menu below 1024px contains the same previews and is scrollable on short screens.
+- Footer now uses compact brand/copyright on the left and the requested Terms/Privacy/Status/Documentation labels plus language preview on the right. Resources are disabled and marked “Coming soon”; EN/SK and Sign in are also disabled and visibly marked as forthcoming. No new routes, fake service-status signal, authentication or localization was implemented.
+- Scope assumption: continued the existing UI-only milestone while asking whether actual localization and Clerk authentication are desired; that clarification has not yet been answered. Functional translations/sign-in remain a separate task, not completed work.
+- Synchronized Features 02, 03 and 05 plus UI context with the header/footer refinement. Verified final changes with ESLint, standalone TypeScript, default Turbopack production build and `git diff --check`. Chrome checks at 375/768/1280/1440px confirmed sticky header top=0 after scrolling, no horizontal overflow, working mobile menu, disabled preview semantics and matching header/footer backgrounds. Inspected mobile and desktop screenshots in `/tmp/qrbid-header-footer-375.png` and `/tmp/qrbid-header-footer-1440.png`.

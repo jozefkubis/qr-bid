@@ -54,7 +54,7 @@ The reference shows a desktop marketing hero divided into **two simultaneous col
 - Use existing CSS variables / Tailwind tokens from Feature 01; avoid hardcoded duplicate brand colors.
 - Use `lucide-react` sparingly; no shadcn/ui, Radix, animation packages, new component library, or unnecessary dependencies.
 - Mobile-first, semantic HTML, keyboard-visible focus, accessible contrast, minimum ~44px touch targets.
-- English copy for now. Do not implement an EN/SK switcher in this feature.
+- English copy for now. The later shared-header refinement in Feature 02 permits a disabled language-preview control marked “Soon”; working localization remains out of scope.
 - QRBid is an **unlisted/link-only auction tool**, not a public marketplace. Viewing an auction does not require registration; bidding eventually will.
 
 ## 3. Primary desktop layout — the highest-priority acceptance criterion
@@ -223,7 +223,7 @@ The product owner explicitly removed the lower “How it works” section on 202
 - Use existing `SiteHeader` already rendered from `app/layout.tsx`.
 - Do not add a second navbar inside `app/page.tsx`.
 - Do not copy the reference's broken logo image, purple Create Auction button, Sign in link, or EN/SK switcher into the hero.
-- The header currently uses text “QRBid” and minimal links per Feature 02; preserve that behavior unless separately approved.
+- The shared header follows the latest Feature 02 header requirements, including the subsequent sticky position and explicitly disabled language/sign-in previews. Preserve its working navigation.
 - Do not introduce authentication or fake language switching.
 
 ## 8. Technical scope and guardrails

@@ -19,7 +19,7 @@ Create the first two visually complete, responsive QRBid pages using the approve
 - Use `lucide-react` only where icons genuinely improve clarity.
 - Terra tokens from Feature 01: forest green `#4a7c59`, warm cream `#faf6f0`, restrained amber `#705c30`, Literata headings, Nunito Sans body.
 - Warm, minimal, calm, mobile-first. Accessible contrast, visible keyboard focus, comfortable touch targets, semantic landmarks.
-- UI copy in **English** for now. Do not implement a fake EN/SK switcher; internationalization is a separate decision/feature.
+- UI copy in **English** for now. Functional internationalization remains separate. The later header refinement allows an explicitly disabled EN/SK preview labeled “Soon”.
 
 ## Scope A — Shared site header
 
@@ -27,10 +27,11 @@ Create `components/layout/site-header.tsx` (adapt naming to existing project con
 
 - Reusable on both pages.
 - Brand/logo text **QRBid** on the left; clicking it navigates to `/`.
-- Desktop navigation kept minimal: **Home** and **Create an auction**.
+- Header remains visible while scrolling using `position: sticky`, `top: 0` and an opaque surface with sufficient stacking order. Preserve document flow, add anchor scroll clearance and avoid content jumping. Approved refinement on 2026-11-06.
+- Desktop navigation: **Home**, a disabled EN/SK preview marked “Soon”, disabled **Sign in (soon)**, and a prominent green **Create an auction** link with an arrow. Use the expanded mobile menu below 1024px so these items remain usable without overflow. This is a UI-only refinement; no language state, persistence or authentication is added.
 - On mobile, use a simple menu toggle with a clear accessible name, `aria-expanded`, and keyboard-operable links. Menu may expand beneath the header; no floating editor sidebar or complex overlay.
 - Header uses a warm light surface and subtle bottom border, not the Ghost AI dark editor theme.
-- Avoid placeholders pretending to authenticate: no working Log in, Sign up, user avatar, account menu, or dashboard links yet.
+- The requested **Sign in** control is a native disabled button marked “(soon)”; it must not point at an invented sign-in route or pretend to authenticate. No sign-up, avatar, account menu or dashboard links.
 - Keep the component simple; add client-side state only where needed for mobile menu interaction.
 
 ## Scope B — Landing page `/`

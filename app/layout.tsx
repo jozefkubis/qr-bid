@@ -24,7 +24,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       data-theme="light"
-      className={`${literata.variable} ${nunitoSans.variable} h-full antialiased`}
+      className={`${literata.variable} ${nunitoSans.variable} h-full scroll-pt-20 antialiased`}
     >
       <body className="flex min-h-full flex-col">
         <SiteHeader />

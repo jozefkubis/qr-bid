@@ -69,3 +69,9 @@ Full name, email, phone number, and preferred language (EN/SK). Avoid unsupporte
 - Do not imply SMS verification, push notifications, payments, invoicing, or legal sale completion unless those features are approved.
 - Use realistic example content but do not copy the screenshots' dates, sample amounts, or placeholder metrics as requirements.
 - The Terra palette and Literata/Nunito Sans typography are approved. The logo and any extra controls still require review before implementation.
+
+## Shared Header and Footer Refinement (2026-11-06)
+
+- Keep the header visible during scrolling with sticky positioning and preserve anchor clearance. Use the expanded mobile menu below 1024px.
+- Header includes an explicitly disabled EN/SK preview labeled “Soon”, disabled “Sign in (soon)”, and a prominent green Create an auction link. Working localization and Clerk integration remain separate tasks; the current implementation assumes UI-only scope pending clarification.
+- Footer follows the compact reference layout: brand/copyright left, planned resource labels and language preview right on desktop; wrap/stack on mobile. Terms, Privacy, Status and Documentation are disabled and marked “Coming soon”, with no fake routes or operational-status claim. Background remains identical to SiteHeader.
