@@ -8,7 +8,7 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## Current Goal
 
-- Complete Feature 02 incrementally; Step 1 shared site header is ready for review.
+- Feature 03 v3 hero-only landing page is implemented and verified; awaiting product-owner review.
 
 ## Completed
 
@@ -42,16 +42,22 @@ Update this file after meaningful implementation changes or approved product/arc
 - Implemented the Feature 02 shared site header with QRBid branding, desktop navigation, and an accessible mobile menu.
 - Added the shared header to the root layout without adding authentication placeholders or extra routes.
 - Verified Feature 02 Step 1 with ESLint, a production build, a sequential TypeScript check, `git diff --check`, and a local HTTP render check.
+- Implemented Feature 03 v2: one responsive hero with copy and CTAs on the left and a static parking-space auction preview on the right at desktop widths.
+- Added the approved hero copy, green “Get bids.” heading and factual supporting line. Per subsequent product-owner feedback, removed the three-step explanation and replaced its CTA with “View sample auction” linking to `#sample-auction`.
+- Reused the shared header and existing Card, Input and Button primitives. Sample auction values live in a local constant; suggestion chips are static spans, the amount input is read-only, and bidding uses a native disabled button with readable full-opacity styling.
+- Replaced default Next.js metadata with a QRBid title and description. Added no dependencies, routes, backend integrations, timers, QR generation or persistence.
+- Verified Feature 03 v2 with `npm run lint`, `npm run build`, sequential `npx tsc --noEmit`, and `git diff --check`.
+- Verified layout in headless Chrome at 320, 375, 390, 768, 1024, 1280 and 1440px: no horizontal overflow; stacked text then preview below 1024px, side-by-side columns at 1024/1280/1440px; one h1 and one shared header; approximately 48px CTA targets and visible 2px keyboard focus. Confirmed read-only/disabled demo semantics and mobile menu expansion.
+- Visually inspected full-page screenshots at 375px and 1440px; the desktop text-left/card-right composition and mobile stacking are confirmed.
 
 ## In Progress
 
-- Feature 02 Step 1 is awaiting review before the landing page work begins, as required by the feature specification.
+- Feature 03 v3 is awaiting product-owner visual review.
 
 ## Next Up
 
-- Review Feature 02 Step 1: shared site header.
-- After approval, implement Feature 02 Step 2: landing page hero, CTA, and three-step explanation.
-- After a separate review, implement Feature 02 Step 3: nonfunctional create-auction form prototype.
+- Review the Feature 03 v3 hero-only landing page, including mobile and desktop composition.
+- Implement Feature 02 Step 3, the nonfunctional create-auction form prototype, as a separately approved task.
 - Resolve the remaining auction lifecycle and registration requirements before implementing affected features.
 - Design the database schema and security policies after product decisions are finalized.
 
@@ -90,10 +96,19 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## Session Notes
 
-- Feature 01 provides the design-system foundation; Feature 02 Step 1 adds only the shared public header.
+- Feature 01 provides the design-system foundation; Feature 02 Step 1 adds the shared public header.
 - The mobile menu uses a native button, `aria-expanded`, `aria-controls`, accessible labels, and keyboard-operable native links.
-- Feature 02 Step 1 was verified structurally and through a local HTTP render; interactive narrow/desktop browser QA remains pending because browser automation is unavailable in this environment.
-- No landing-page redesign, create-auction route, database schema, authentication, deployment, or business logic has been implemented in Feature 02 Step 1.
+- Feature 02 Step 1 initially received structural and HTTP checks; subsequent Feature 03 browser checks confirmed mobile menu expansion and keyboard-visible focus.
+- Feature 03 v2 supersedes the earlier landing-page review checkpoints and implements the complete landing page as one focused change, per the user's request on 2026-11-06.
+- `/` returns HTTP 200. The required CTA points to `/auctions/new`, which still returns 404 because the separate create-auction prototype is not implemented. Navigation to a working create form remains pending; no extra route was added under Feature 03.
+- Temporary full-page QA screenshots: `/tmp/qrbid-hero-375.png` and `/tmp/qrbid-hero-1440.png` (also captured at the other tested widths). Browser checks used the local production build.
+- No create-auction route, database schema, authentication, deployment, or business logic has been implemented.
 - A temporary component preview route was removed after browser automation became unavailable; no permanent showcase page was added.
 - Use the approved project-overview.md and ui-context.md as the product and design sources of truth.
 - Do not treat open questions as approved requirements.
+
+- Product-owner screenshot feedback on 2026-11-06 approved a hero-only page: no lower “How it works” section. Feature 03 v3 documents the new scope and on-page sample CTA, with arrow/eye/location icons and static increment-plus-total chips. Terra styling and preview-only bidding remain in effect.
+- Feature 03 v3 verification: lint, standalone TypeScript and diff checks pass. Inspected mobile/desktop screenshots and checked 320/375/1280/1440px layouts with no horizontal overflow, no lower explanation section, and a valid sample-card anchor. Final chip polish uses consistent mobile wrapping and a 5.51:1 text contrast.
+- Initial hero-only build passed with Turbopack. After final chip polish, repeated Turbopack builds failed on an environment restriction (`binding to a port: Operation not permitted`), including the escalated retry. Final production build passed with `npm run build -- --webpack`; no configuration or dependency changes were required.
+- Fixed the 404 theme collision reported after navigating to `/auctions/new` and back: root layout now explicitly declares `data-theme="light"`; the Terra body background/text rules are unlayered and scoped with higher specificity than Next.js's default 404 `body` styles. No framework internals or auction routes were changed.
+- Verified on the local development server with Chrome emulating a dark system theme. Before the fix, the default 404 set black body background and white text (the intermittent persistence after return did not reproduce in this run). After the fix, initial home, 404, return via logo and browser history back all retained cream `rgb(250, 246, 240)` and dark text `rgb(46, 50, 47)`. ESLint, standalone TypeScript and diff checks passed; production build was not rerun for this focused CSS/layout fix.

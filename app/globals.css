@@ -34,14 +34,19 @@
   --shadow-soft: var(--shadow-ui);
 }
 
+/* Keep the Terra theme above the unlayered body styles in Next.js's 404 UI. */
+html[data-theme="light"] body {
+  background: var(--background);
+  color: var(--text);
+  color-scheme: light;
+}
+
 @layer base {
   * {
     border-color: var(--border);
   }
 
   body {
-    background: var(--background);
-    color: var(--text);
     font-family: var(--font-nunito-sans), sans-serif;
     line-height: 1.6;
   }
