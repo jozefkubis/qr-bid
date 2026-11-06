@@ -3,6 +3,7 @@ import { ArrowRight, Eye, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { HowItWorks } from "@/components/landing/how-it-works";
 
 const sampleAuction = {
   title: "Garage parking space #42",
@@ -24,10 +25,10 @@ const sampleMoney = new Intl.NumberFormat("en-IE", {
 
 export default function Home() {
   return (
-    <main className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+    <main className="w-full">
       <section
         aria-labelledby="hero-heading"
-        className="grid items-center gap-12 py-12 sm:py-16 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:py-20 xl:gap-16"
+        className="mx-auto grid w-full max-w-7xl items-center gap-12 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:px-8 lg:py-20 xl:gap-16"
       >
         <div className="min-w-0">
           <p className="inline-flex rounded-soft border border-border bg-surface-muted px-3 py-1.5 text-sm font-semibold text-tertiary">
@@ -120,7 +121,7 @@ export default function Home() {
           </div>
         </Card>
       </section>
-
+      <HowItWorks />
     </main>
   );
 }

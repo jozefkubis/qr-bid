@@ -8,7 +8,7 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## Current Goal
 
-- Feature 03 v3 hero-only landing page is implemented and verified; awaiting product-owner review.
+- Feature 04 How QRBid Works section is implemented and verified; awaiting product-owner review.
 
 ## Completed
 
@@ -50,13 +50,20 @@ Update this file after meaningful implementation changes or approved product/arc
 - Verified layout in headless Chrome at 320, 375, 390, 768, 1024, 1280 and 1440px: no horizontal overflow; stacked text then preview below 1024px, side-by-side columns at 1024/1280/1440px; one h1 and one shared header; approximately 48px CTA targets and visible 2px keyboard focus. Confirmed read-only/disabled demo semantics and mobile menu expansion.
 - Visually inspected full-page screenshots at 375px and 1440px; the desktop text-left/card-right composition and mobile stacking are confirmed.
 
+
+- Implemented Feature 04 as a static Server Component in `components/landing/how-it-works.tsx`, rendered immediately after the existing hero. Exact approved intro, step descriptions and footer copy are used.
+- Added a full-width muted warm background, centered content, three lighter Card primitives, decorative Lucide icons, step labels and aligned footers. Desktop cards are equal-height in three columns; mobile/tablet use one column.
+- Preserved hero layout, sample CTA, disabled demo bidding and shared header. Added no dependencies, routes, state or backend functionality.
+- Verified Feature 04 with ESLint, `npm run build -- --webpack`, standalone `npx tsc --noEmit`, and `git diff --check`. Webpack was used because previous Turbopack runs encountered sandbox port restrictions.
+- Checked Chrome at 375/768/1280/1440px: full-width background `rgb(243, 237, 228)`, no horizontal overflow, three desktop cards with equal 370px height and aligned footers, mobile/tablet stacking, decorative icons hidden from assistive technology, and preserved two-column desktop hero. Visually inspected 375px and 1440px screenshots in `/tmp/qrbid-feature04-375.png` and `/tmp/qrbid-feature04-1440.png`.
+
 ## In Progress
 
-- Feature 03 v3 is awaiting product-owner visual review.
+- Feature 04 is awaiting product-owner visual review; the existing Feature 03 hero was accepted as the foundation for this section.
 
 ## Next Up
 
-- Review the Feature 03 v3 hero-only landing page, including mobile and desktop composition.
+- Review Feature 04: the full-width How QRBid Works section below the preserved hero.
 - Implement Feature 02 Step 3, the nonfunctional create-auction form prototype, as a separately approved task.
 - Resolve the remaining auction lifecycle and registration requirements before implementing affected features.
 - Design the database schema and security policies after product decisions are finalized.
@@ -112,3 +119,6 @@ Update this file after meaningful implementation changes or approved product/arc
 - Initial hero-only build passed with Turbopack. After final chip polish, repeated Turbopack builds failed on an environment restriction (`binding to a port: Operation not permitted`), including the escalated retry. Final production build passed with `npm run build -- --webpack`; no configuration or dependency changes were required.
 - Fixed the 404 theme collision reported after navigating to `/auctions/new` and back: root layout now explicitly declares `data-theme="light"`; the Terra body background/text rules are unlayered and scoped with higher specificity than Next.js's default 404 `body` styles. No framework internals or auction routes were changed.
 - Verified on the local development server with Chrome emulating a dark system theme. Before the fix, the default 404 set black body background and white text (the intermittent persistence after return did not reproduce in this run). After the fix, initial home, 404, return via logo and browser history back all retained cream `rgb(250, 246, 240)` and dark text `rgb(46, 50, 47)`. ESLint, standalone TypeScript and diff checks passed; production build was not rerun for this focused CSS/layout fix.
+- Feature 04 was explicitly requested on 2026-11-06 and supersedes the earlier Feature 03 hero-only page-end restriction by adding the newly specified section. The existing “View sample auction” CTA continues to target the preview card.
+- Mobile-menu follow-up: the existing dev server on port 3000 did not hydrate/respond during browser QA. Confirmed the unchanged header works on the separate production server (port 3100): `aria-expanded` changes from false to true and both mobile links appear. If the development page remains unresponsive, restart the dev server; no header code was changed for Feature 04.
+- Applied the approved Feature 04 icon refinement: replaced the third card's gavel with `BellRing` and added small decorative `Clock`, `Printer`, and `Zap` icons to the three footer lines. Icons are hidden from assistive technology, cannot shrink, and keep text wrapping usable. Updated Feature 04's icon guidance. ESLint, standalone TypeScript and `git diff --check` passed; production build was not repeated for this icon-only change.

@@ -212,7 +212,9 @@ Subtle divider, then:
 
 Do not reveal participant names, contact details, winner information, or invented notifications.
 
-## 6. Page end — hero only
+## 6. Page end — Feature 03 scope
+
+**Subsequent approved extension:** Feature 04 (`04-how-it-works-qrbid.md`) now adds its own How QRBid Works section below this hero. Preserve the sample CTA and hero behavior; the hero-only restriction below describes the Feature 03 milestone, not the page after Feature 04.
 
 The product owner explicitly removed the lower “How it works” section on 2026-11-06. End the page after the two-column hero and its preview card. Do not render the three-step explanation, an extra divider, or a broken `#how-it-works` link. This supersedes Feature 02’s landing-page explanation requirement.
 
