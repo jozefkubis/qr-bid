@@ -2,13 +2,26 @@
 
 import { ArrowRight, Menu, X } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useState, useSyncExternalStore } from "react";
 import { LanguagePreview } from "@/components/layout/language-preview";
 
 const navigationLinkClasses =
   "inline-flex min-h-11 items-center rounded-soft px-3 font-semibold text-foreground transition-colors hover:bg-surface-muted hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";
 
+const subscribeToHydration = () => () => {};
+const getClientSnapshot = () => true;
+const getServerSnapshot = () => false;
+
 export function SiteHeader() {
+  const pathname = usePathname();
+  // Keep the shared server shell and the first hydration render identical.
+  const isHydrated = useSyncExternalStore(
+    subscribeToHydration,
+    getClientSnapshot,
+    getServerSnapshot,
+  );
+  const showCreateAuctionLink = isHydrated && pathname !== "/auctions/new";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   function closeMenu() {
@@ -30,14 +43,16 @@ export function SiteHeader() {
           <Link href="/" className={navigationLinkClasses}>
             Home
           </Link>
-          <LanguagePreview />
           <button type="button" disabled title="Sign in coming soon" className="min-h-11 cursor-not-allowed rounded-soft px-3 text-sm text-muted-foreground">
             Sign in <span className="text-xs">(soon)</span>
           </button>
-          <Link href="/auctions/new" className="inline-flex min-h-11 items-center gap-2 rounded-soft border border-primary bg-primary px-4 py-2 font-semibold text-white hover:border-primary-hover hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus">
+          {showCreateAuctionLink ? <Link href="/auctions/new" className="inline-flex min-h-11 items-center gap-2 rounded-soft border border-primary bg-primary px-4 py-2 font-semibold text-white hover:border-primary-hover hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus">
             Create an auction
             <ArrowRight aria-hidden="true" className="size-4" />
-          </Link>
+          </Link> : null}
+          <div className="ml-3 border-l border-border pl-5">
+            <LanguagePreview />
+          </div>
         </nav>
 
         <button
@@ -66,19 +81,21 @@ export function SiteHeader() {
             <Link href="/" className={navigationLinkClasses} onClick={closeMenu}>
               Home
             </Link>
-            <div className="mt-2 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-3">
-              <LanguagePreview />
-              <button type="button" disabled title="Sign in coming soon" className="min-h-11 cursor-not-allowed rounded-soft px-3 text-sm text-muted-foreground">
-                Sign in <span className="text-xs">(soon)</span>
-              </button>
-            </div>
-            <Link
+            {showCreateAuctionLink ? <Link
               href="/auctions/new"
               className={navigationLinkClasses}
               onClick={closeMenu}
             >
               Create an auction
-            </Link>
+            </Link> : null}
+            <div className="mt-2 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-3">
+              <button type="button" disabled title="Sign in coming soon" className="min-h-11 cursor-not-allowed rounded-soft px-3 text-sm text-muted-foreground">
+                Sign in <span className="text-xs">(soon)</span>
+              </button>
+              <div className="ml-auto border-l border-border pl-5">
+                <LanguagePreview />
+              </div>
+            </div>
           </div>
         </nav>
       ) : null}

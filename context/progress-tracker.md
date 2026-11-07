@@ -8,7 +8,7 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## Current Goal
 
-- Feature 05 final CTA and separate footer are implemented and verified; awaiting product-owner review.
+- Feature 06 Create Auction UI prototype is implemented and verified; awaiting product-owner review.
 
 ## Completed
 
@@ -65,12 +65,11 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## In Progress
 
-- Feature 05 is awaiting product-owner visual review; Features 03–04 remain in place.
+- Feature 06 is awaiting product-owner visual review; existing landing page, shared header and footer remain in place.
 
 ## Next Up
 
-- Review Feature 05: final green CTA panel and separate light footer.
-- Implement Feature 02 Step 3, the nonfunctional create-auction form prototype, as a separately approved task.
+- Review Feature 06 at `/auctions/new`, including mobile layout and local photo/date interactions.
 - Resolve the remaining auction lifecycle and registration requirements before implementing affected features.
 - Design the database schema and security policies after product decisions are finalized.
 
@@ -113,9 +112,9 @@ Update this file after meaningful implementation changes or approved product/arc
 - The mobile menu uses a native button, `aria-expanded`, `aria-controls`, accessible labels, and keyboard-operable native links.
 - Feature 02 Step 1 initially received structural and HTTP checks; subsequent Feature 03 browser checks confirmed mobile menu expansion and keyboard-visible focus.
 - Feature 03 v2 supersedes the earlier landing-page review checkpoints and implements the complete landing page as one focused change, per the user's request on 2026-11-06.
-- `/` returns HTTP 200. The required CTA points to `/auctions/new`, which still returns 404 because the separate create-auction prototype is not implemented. Navigation to a working create form remains pending; no extra route was added under Feature 03.
+- At the Feature 03 checkpoint, `/` returned HTTP 200 and `/auctions/new` returned 404. Feature 06 now provides the working UI-only form at that destination.
 - Temporary full-page QA screenshots: `/tmp/qrbid-hero-375.png` and `/tmp/qrbid-hero-1440.png` (also captured at the other tested widths). Browser checks used the local production build.
-- No create-auction route, database schema, authentication, deployment, or business logic has been implemented.
+- Feature 06 now implements the create-auction route as a UI prototype. Database schema, authentication, deployment and business logic remain unimplemented.
 - A temporary component preview route was removed after browser automation became unavailable; no permanent showcase page was added.
 - Use the approved project-overview.md and ui-context.md as the product and design sources of truth.
 - Do not treat open questions as approved requirements.
@@ -133,3 +132,16 @@ Update this file after meaningful implementation changes or approved product/arc
 - Footer now uses compact brand/copyright on the left and the requested Terms/Privacy/Status/Documentation labels plus language preview on the right. Resources are disabled and marked “Coming soon”; EN/SK and Sign in are also disabled and visibly marked as forthcoming. No new routes, fake service-status signal, authentication or localization was implemented.
 - Scope assumption: continued the existing UI-only milestone while asking whether actual localization and Clerk authentication are desired; that clarification has not yet been answered. Functional translations/sign-in remain a separate task, not completed work.
 - Synchronized Features 02, 03 and 05 plus UI context with the header/footer refinement. Verified final changes with ESLint, standalone TypeScript, default Turbopack production build and `git diff --check`. Chrome checks at 375/768/1280/1440px confirmed sticky header top=0 after scrolling, no horizontal overflow, working mobile menu, disabled preview semantics and matching header/footer backgrounds. Inspected mobile and desktop screenshots in `/tmp/qrbid-header-footer-375.png` and `/tmp/qrbid-header-footer-1440.png`.
+
+- Feature 06 was explicitly approved for implementation on 2026-11-07. Added `/auctions/new` with a single Terra form card, auction details, paired pricing fields, duration controls, accurate unlisted-auction information and disabled action row. Reused Button, Input, Textarea, Card and the shared footer; no dependencies were added.
+- Local photo selection and drag/drop support JPG/PNG/WebP, thumbnail previews, filenames, sizes, unsupported-type feedback and removal. Object URLs are revoked on replacement/unmount. No uploads or persistence occur.
+- Date/time initialize after mount to browser time plus 72 hours. Quick choices set local date/time; manual changes clear the selected duration and update the English summary. The time-zone label comes from the browser, with no fixed CEST or historical date.
+- Header uses `usePathname()` to hide its creation link only on `/auctions/new`, in desktop and mobile navigation. Existing three home CTA links already used the correct Next.js Link destination and needed no changes.
+- Verification: `npm run lint`, `npm run build` (default Turbopack), `npx tsc --noEmit` and `git diff --check` passed. Reviewed applicable React best practices and installed Next.js usePathname documentation.
+- Production Chrome checks at 320/375/390/768/1280/1440px found no horizontal overflow, one h1/footer, mobile stacking and paired desktop pricing fields. Visually inspected full-page 375px and 1440px screenshots at `/tmp/qrbid-feature06-375.png` and `/tmp/qrbid-feature06-1440.png`, including paired date/time fields and opposite-end desktop actions.
+- Browser checks confirmed +7-day selection, manual date summary updates, a decoded local PNG preview, unsupported file rejection, photo removal, mobile menu expansion with Home retained and creation CTA absent, three home creation links, disabled non-submit actions, labels on all fields and a visible 2px keyboard focus ring. No runtime exceptions were observed. Local CDP access required sandbox escalation; verification then completed successfully.
+- Remaining scope: this is English UI and local state only. Draft saving, auction publishing, QR/PDF generation, authentication, backend validation and persistent uploads remain unavailable by design.
+- Fixed the reported Feature 06 development hydration mismatch in SiteHeader: pathname-dependent CTA visibility now waits for hydration via `useSyncExternalStore`, with the same CTA-free server and initial client snapshot. The rest of the shared header renders normally; no hydration warnings are suppressed. After hydration the creation CTA appears on home and remains hidden on `/auctions/new`.
+- Hydration-fix verification: ESLint, default Turbopack production build, standalone TypeScript and diff checks passed. On the existing development server at port 3000, Chrome at 375px and 1440px confirmed direct visits to both routes and Next.js Link navigation from home to the form, with correct CTA visibility and no browser runtime/console errors. A separate dev server was not used because Next.js detected the existing instance.
+- Applied the requested compact photo-picker styling: centered Choose photos control backed by the native file input, reduced vertical padding/icon spacing and smaller 14px action/12px supporting text. Native file selection and drag/drop remain available, with a visible focus outline on the browse label when the input receives keyboard focus. ESLint, standalone TypeScript and diff checks passed; Chrome checks at 375/1440px confirmed centered alignment, 216/208px drop-area height, keyboard focus and no horizontal overflow. Production build was not repeated for this focused styling change.
+- Moved the header language preview to the far right, after navigation actions, with the same left divider and spacing as the footer. Expanded mobile navigation places it at the right of the final Sign in row. Updated UI context. ESLint, standalone TypeScript and diff checks passed; Chrome at 375/1440px confirmed final/right-aligned position, a 1px divider, no overflow and no runtime exceptions. Production build was not repeated for this layout-only adjustment.
