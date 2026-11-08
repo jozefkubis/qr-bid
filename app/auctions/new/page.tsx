@@ -1,10 +1,13 @@
+import { auth } from "@clerk/nextjs/server";
 import type { Metadata } from "next";
 import { CreateAuctionForm } from "@/components/auctions/create-auction-form";
 import { SiteFooter } from "@/components/layout/site-footer";
 
 export const metadata: Metadata = { title: "Create an auction — QRBid" };
 
-export default function CreateAuctionPage() {
+export default async function CreateAuctionPage() {
+  await auth.protect();
+
   return (
     <>
       <main className="mx-auto w-full max-w-4xl flex-1 px-4 py-10 sm:px-6 sm:py-14">

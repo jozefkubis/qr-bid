@@ -1,12 +1,18 @@
 "use client";
 
-import { ArrowRight, Menu, X } from "lucide-react";
+import { Show, SignInButton, UserButton } from "@clerk/nextjs";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useSyncExternalStore } from "react";
+import { CreateAuctionLink } from "@/components/auth/create-auction-link";
 import { LanguagePreview } from "@/components/layout/language-preview";
 
 const navigationLinkClasses =
+  "inline-flex min-h-11 items-center rounded-soft px-3 font-semibold text-foreground transition-colors hover:bg-surface-muted hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";
+const createAuctionClasses =
+  "inline-flex min-h-11 items-center gap-2 rounded-soft border border-primary bg-primary px-4 py-2 font-semibold text-white hover:border-primary-hover hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";
+const signInClasses =
   "inline-flex min-h-11 items-center rounded-soft px-3 font-semibold text-foreground transition-colors hover:bg-surface-muted hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";
 
 const subscribeToHydration = () => () => {};
@@ -43,16 +49,22 @@ export function SiteHeader() {
           <Link href="/" className={navigationLinkClasses}>
             Home
           </Link>
-          <button type="button" disabled title="Sign in coming soon" className="min-h-11 cursor-not-allowed rounded-soft px-3 text-sm text-muted-foreground">
-            Sign in <span className="text-xs">(soon)</span>
-          </button>
-          {showCreateAuctionLink ? <Link href="/auctions/new" className="inline-flex min-h-11 items-center gap-2 rounded-soft border border-primary bg-primary px-4 py-2 font-semibold text-white hover:border-primary-hover hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus">
-            Create an auction
-            <ArrowRight aria-hidden="true" className="size-4" />
-          </Link> : null}
+          {showCreateAuctionLink ? (
+            <CreateAuctionLink className={createAuctionClasses} showArrow />
+          ) : null}
           <div className="ml-3 border-l border-border pl-5">
             <LanguagePreview />
           </div>
+          <Show when="signed-out">
+            <SignInButton mode="modal" fallbackRedirectUrl="/">
+              <button type="button" className={signInClasses}>Sign in</button>
+            </SignInButton>
+          </Show>
+          <Show when="signed-in">
+            <div className="ml-1 flex min-h-11 items-center">
+              <UserButton />
+            </div>
+          </Show>
         </nav>
 
         <button
@@ -81,20 +93,28 @@ export function SiteHeader() {
             <Link href="/" className={navigationLinkClasses} onClick={closeMenu}>
               Home
             </Link>
-            {showCreateAuctionLink ? <Link
-              href="/auctions/new"
-              className={navigationLinkClasses}
-              onClick={closeMenu}
-            >
-              Create an auction
-            </Link> : null}
+            {showCreateAuctionLink ? (
+              <CreateAuctionLink
+                className={navigationLinkClasses}
+                onClick={closeMenu}
+              />
+            ) : null}
             <div className="mt-2 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-3">
-              <button type="button" disabled title="Sign in coming soon" className="min-h-11 cursor-not-allowed rounded-soft px-3 text-sm text-muted-foreground">
-                Sign in <span className="text-xs">(soon)</span>
-              </button>
               <div className="ml-auto border-l border-border pl-5">
                 <LanguagePreview />
               </div>
+              <Show when="signed-out">
+                <SignInButton mode="modal" fallbackRedirectUrl="/">
+                  <button type="button" className={signInClasses} onClick={closeMenu}>
+                    Sign in
+                  </button>
+                </SignInButton>
+              </Show>
+              <Show when="signed-in">
+                <div className="flex min-h-11 items-center">
+                  <UserButton />
+                </div>
+              </Show>
             </div>
           </div>
         </nav>

@@ -4,11 +4,11 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## Current Phase
 
-- Public pages UI implementation.
+- Authentication integration and public UI refinement.
 
 ## Current Goal
 
-- Feature 06 Create Auction UI prototype is implemented and verified; awaiting product-owner review.
+- Verify Feature 07 Clerk authentication flows and the final authenticated header layout.
 
 ## Completed
 
@@ -62,14 +62,22 @@ Update this file after meaningful implementation changes or approved product/arc
 - CTA continues the preceding `bg-surface-muted` content area, uses a solid `bg-primary` panel, exact approved English copy, and one contrasting light Link to `/auctions/new`. Footer uses the same `bg-surface` token as SiteHeader, a top border, a home-linked text brand and server-evaluated copyright year (2026). Added no extra routes, dependencies or backend features.
 - Feature 05 checks passed: `npm run lint`, default `npm run build` (Turbopack), standalone `npx tsc --noEmit`, and `git diff --check`. Production Chrome checks at 375/1280/1440px confirmed one separate footer, identical header/footer background `rgb(255, 253, 249)`, continuous section background `rgb(243, 237, 228)`, green panel `rgb(74, 124, 89)`, approximately 48px CTA height, visible 2px focus and no horizontal overflow. Inspected mobile and desktop screenshots (`/tmp/qrbid-feature05-375.png`, `/tmp/qrbid-feature05-1440.png`).
 - Feature 05 contrast checks: white panel text 4.86:1, dark-green button text 6.31:1 (hover 5.51:1), footer copyright 5.49:1. CTA target `/auctions/new` remains unimplemented and returns 404; no auction-creation functionality is claimed.
+- Implemented Feature 07 with the existing Clerk application and installed `@clerk/nextjs` v7 SDK. Added `ClerkProvider`, a root `proxy.ts`, catch-all `/sign-in` and `/sign-up` pages, modal sign-in entry points, a signed-in `UserButton`, and server-side protection for `/auctions/new` using `auth.protect()`.
+- Existing create-auction CTAs open Clerk's sign-in modal while signed out and retain `/auctions/new` as the post-auth destination. The landing page remains public; no public auction route was invented or blanket-protected.
+- Added a Next.js 16 `Suspense` boundary around the pathname-dependent shared header and a colocated loading UI for the protected create-auction page, preserving Cache Components and Partial Prerendering.
+- Applied product-owner screenshot feedback: desktop header order is Home, Create an auction, EN/SK, then Clerk user avatar at the far right. The expanded mobile menu keeps EN/SK immediately before the account control.
+- Feature 07 checks passed after the final header-order refinement: ESLint, standalone TypeScript, `git diff --check`, and the default Turbopack production build. The build generated `/`, `/auctions/new`, `/sign-in/[[...sign-in]]`, and `/sign-up/[[...sign-up]]`, with Proxy active. A clean in-app browser smoke test was attempted, but the browser access host was unavailable; current visual and end-to-end Clerk verification therefore remains unconfirmed.
+- The product owner manually confirmed that Clerk authentication works and supplied a signed-in header screenshot showing the Clerk user avatar. Automated browser verification remains unavailable, so only the manually observed flow is confirmed.
+- Facebook OAuth returned Meta's “Application is not active” screen while Clerk was using shared development credentials with `Use custom credentials` disabled. Facebook sign-up/sign-in was therefore intentionally disabled for now; email and the other working configured methods remain available. Re-enable Facebook only after the shared provider works again or a dedicated Meta app, exact Clerk redirect URI, App ID and App Secret are configured. No QRBid code or secret files were changed for this provider issue.
 
 ## In Progress
 
-- Feature 06 is awaiting product-owner visual review; existing landing page, shared header and footer remain in place.
+- Feature 07 automated Clerk smoke testing and final post-refinement header visual verification remain pending because browser automation is currently unavailable; basic authentication was confirmed manually by the product owner.
 
 ## Next Up
 
-- Review Feature 06 at `/auctions/new`, including mobile layout and local photo/date interactions.
+- Complete signed-out, modal, direct-route, protected-route, signed-in avatar and sign-out smoke tests.
+- Configure or confirm Google and Facebook providers in the Clerk Dashboard; code integration alone does not enable them.
 - Resolve the remaining auction lifecycle and registration requirements before implementing affected features.
 - Design the database schema and security policies after product decisions are finalized.
 

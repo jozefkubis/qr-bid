@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { ArrowRight, Eye, MapPin } from "lucide-react";
+import { Eye, MapPin } from "lucide-react";
+import { CreateAuctionLink } from "@/components/auth/create-auction-link";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -50,13 +51,10 @@ export default function Home() {
               interested people place bids. No public marketplace required.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                href="/auctions/new"
+              <CreateAuctionLink
                 className="inline-flex min-h-11 items-center justify-center rounded-soft border border-primary bg-primary px-5 py-2.5 font-semibold text-white transition-colors hover:border-primary-hover hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
-              >
-                Create an auction
-                <ArrowRight aria-hidden="true" className="ml-2 size-5" />
-              </Link>
+                showArrow
+              />
               <Link
                 href="#sample-auction"
                 className="inline-flex min-h-11 items-center justify-center rounded-soft border border-primary bg-surface px-5 py-2.5 font-semibold text-primary transition-colors hover:bg-surface-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"

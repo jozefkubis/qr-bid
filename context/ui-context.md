@@ -73,6 +73,6 @@ Full name, email, phone number, and preferred language (EN/SK). Avoid unsupporte
 ## Shared Header and Footer Refinement (2026-11-06)
 
 - Keep the header visible during scrolling with sticky positioning and preserve anchor clearance. Use the expanded mobile menu below 1024px.
-- Header includes an explicitly disabled EN/SK preview labeled “Soon”, disabled “Sign in (soon)”, and a prominent green Create an auction link. Working localization and Clerk integration remain separate tasks; the current implementation assumes UI-only scope pending clarification.
-- The header language preview sits at the far right after the navigation actions, separated by the same slim vertical border used in the footer. In the expanded mobile menu it is right-aligned beside Sign in, below the creation link when present.
+- Header includes an explicitly disabled EN/SK preview labeled “Soon”, working Clerk authentication controls, and a prominent green Create an auction action. Signed-out authentication opens Clerk's modal; signed-in users see Clerk's account avatar. Localization remains a separate task.
+- The header language preview follows the navigation actions and is separated by the same slim vertical border used in the footer. When signed in, Clerk's user avatar sits immediately after EN/SK as the final item on the far right. The expanded mobile menu uses the same EN/SK-then-account order below the creation link.
 - Footer follows the compact reference layout: brand/copyright left, planned resource labels and language preview right on desktop; wrap/stack on mobile. Terms, Privacy, Status and Documentation are disabled and marked “Coming soon”, with no fake routes or operational-status claim. Background remains identical to SiteHeader.

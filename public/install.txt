@@ -1,2 +1,4 @@
 codex mcp add supabase --url "https://mcp.supabase.com/mcp?project_ref=hylkwkpuwkpdvqczlkma&read_only=true"
 npm install lucide-react
+npm install @clerk/nextjs
+npx skills add clerk/skills

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { CreateAuctionLink } from "@/components/auth/create-auction-link";
 
 export function FinalCta() {
   return (
@@ -20,12 +20,9 @@ export function FinalCta() {
               Set up your auction, share a link or QR code, and let interested
               people place their bids.
             </p>
-            <Link
-              href="/auctions/new"
+            <CreateAuctionLink
               className="mt-8 inline-flex min-h-11 items-center justify-center rounded-soft border border-surface bg-surface px-5 py-2.5 font-semibold text-primary-hover transition-colors hover:border-surface-muted hover:bg-surface-muted focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-            >
-              Create an auction
-            </Link>
+            />
           </div>
         </div>
       </div>
