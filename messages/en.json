@@ -1,0 +1,121 @@
+{
+  "Metadata": {
+    "title": "QRBid — Simple auctions, shared by QR code",
+    "description": "Create a time-limited auction and share its link or QR code. No public marketplace required."
+  },
+  "Navigation": {
+    "home": "Home",
+    "createAuction": "Create an auction",
+    "signIn": "Sign in",
+    "primaryNavigation": "Primary navigation",
+    "mobileNavigation": "Mobile navigation",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu"
+  },
+  "LanguageSwitcher": {
+    "label": "Language selection",
+    "english": "English {current}",
+    "slovak": "Slovak {current}",
+    "current": "— current language",
+    "formWarning": "Changing the language reloads this page. Unsaved form changes and selected photos will be lost. Continue?"
+  },
+  "Landing": {
+    "eyebrow": "Simple auctions. Shared by QR.",
+    "heroLine1": "Create an auction.",
+    "heroLine2": "Share a QR code.",
+    "heroLine3": "Get bids.",
+    "description": "Create a time-limited auction, share its link or QR code, and let interested people place bids. No public marketplace required.",
+    "viewSample": "View sample auction",
+    "publicNote": "View auctions without signing in · Share via a direct link or QR code",
+    "sample": {
+      "badge": "Sample auction · Preview only",
+      "title": "Garage parking space #42",
+      "location": "Bratislava, Slovakia",
+      "currentBid": "Current highest bid",
+      "timeRemaining": "Time remaining (example)",
+      "timeRemainingValue": "4h 12m",
+      "nextBids": "Example next bids · Minimum +{increment}",
+      "yourBid": "Your bid (example)",
+      "displayOnly": "Display only. No bids can be placed in this preview.",
+      "biddingAfterLaunch": "Bidding available after launch",
+      "unlisted": "Unlisted · Accessible by link",
+      "exampleBids": "{count, plural, one {# example bid} other {# example bids}}"
+    }
+  },
+  "HowItWorks": {
+    "eyebrow": "HOW IT WORKS",
+    "title": "How QRBid works",
+    "description": "Three simple steps to create an auction, share it with interested people, and receive bids online.",
+    "steps": {
+      "1": { "label": "STEP 01", "title": "Create your auction", "description": "Add a title, description, photos, starting price, minimum bid increment, and end date.", "footer": "Set the rules for your auction" },
+      "2": { "label": "STEP 02", "title": "Share the QR code", "description": "Share a direct link or place a QR code on a printed A4 poster so interested people can open your auction.", "footer": "Accessible through a direct link" },
+      "3": { "label": "STEP 03", "title": "Receive bids", "description": "Registered participants can place bids online. Follow the current highest bid and see when the auction ends.", "footer": "Bidding updates in real time" }
+    }
+  },
+  "FinalCta": {
+    "eyebrow": "READY TO GET STARTED?",
+    "title": "Ready to create your first auction?",
+    "description": "Set up your auction, share a link or QR code, and let interested people place their bids."
+  },
+  "Footer": {
+    "rights": "All rights reserved.",
+    "resourcesLabel": "Resources — coming soon",
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "status": "Status",
+    "documentation": "Documentation",
+    "comingSoon": "Coming soon",
+    "comingSoonTitle": "{resource} coming soon"
+  },
+  "AuctionForm": {
+    "pageTitle": "Create an auction",
+    "pageDescription": "Add your auction details and choose when bidding ends.",
+    "previewNote": "UI preview only. Changes stay on this page and are not saved.",
+    "formLabel": "Create an auction preview",
+    "details": "Auction details",
+    "titleLabel": "Auction Title",
+    "titlePlaceholder": "e.g. Underground parking space #42",
+    "titleExample": "Underground Parking Space #42 – City Tower",
+    "titleHelp": "Choose a clear, descriptive title.",
+    "descriptionLabel": "Description",
+    "descriptionExample": "Secure underground parking space located on level -2. Camera surveillance and electronic gate access. Access token provided to the winning bidder.",
+    "descriptionHelp": "Describe the condition, access and important details.",
+    "pricingRules": "Pricing & Bidding Rules",
+    "startingPrice": "Starting Price (EUR)",
+    "startingPriceHelp": "The first valid bid may equal this amount.",
+    "minimumIncrement": "Minimum Bid Increment (EUR)",
+    "minimumIncrementHelp": "Later bids must exceed the current highest bid by at least this amount.",
+    "saveDraft": "Save Draft",
+    "draftUnavailable": "Draft saving is not available in this preview.",
+    "createAndGenerate": "Create Auction & Generate QR Code",
+    "creationUnavailable": "Auction creation and QR generation are not yet available."
+  },
+  "AuctionDuration": {
+    "title": "Duration & End Time",
+    "localTimeZone": "Your local time zone",
+    "quickDuration": "Quick duration",
+    "hours24": "+24 hours",
+    "days3": "+3 days",
+    "days7": "+7 days",
+    "endDate": "End Date",
+    "endTime": "End Time",
+    "summary": "Ends on {date} at {time} ({zone})",
+    "chooseSchedule": "Choose an end date and time to preview the schedule.",
+    "unlistedTitle": "Unlisted auction",
+    "unlistedDescription": "Anyone with the direct link or QR code can view this auction. It will not appear in a public auction directory. Signing in will be required to place a bid."
+  },
+  "PhotoPicker": {
+    "label": "Photos / Images",
+    "add": "Add photos",
+    "dragOrBrowse": "Drag photos here or click to browse",
+    "choose": "Choose photos",
+    "help": "JPG, PNG or WebP. Local previews only; no photos are uploaded.",
+    "unsupported": "Choose JPG, PNG or WebP images. Other file types were skipped.",
+    "previewAlt": "Preview of {name}",
+    "selectedLocally": "{size} KB · Selected locally",
+    "remove": "Remove {name}"
+  },
+  "Auth": { "signIn": "Sign in", "signUp": "Sign up" },
+  "Loading": { "auctionForm": "Loading auction form…", "signIn": "Loading sign in…", "signUp": "Loading sign up…" },
+  "Validation": { "required": "This field is required." }
+}

@@ -100,6 +100,13 @@ Store monetary values as exact decimal or integer minor units, **never floating-
 - Public access via a link is **not** a guarantee of secrecy: links can be forwarded.
 - Design tokens and UI composition belong in `ui-context.md`; coding conventions in `code-standards.md`.
 
+## Internationalization
+
+- `next-intl` provides EN/SK locale routing and message catalogs. User-facing pages always use `/en/...` or `/sk/...`; route identifiers and user-generated auction content are not translated.
+- One root `proxy.ts` composes Clerk with locale routing. Explicit locale prefixes always win. Unprefixed legacy URLs use the manually saved `qrbid_locale` cookie, then weighted `Accept-Language` matching for only `en` or `sk`, then English fallback. Czech and other unsupported languages do not imply Slovak.
+- A manual switch writes the locale cookie through a validated server action with `SameSite=Lax`, `Path=/`, a one-year lifetime and `Secure` on HTTPS. Visiting a shared localized URL does not overwrite the saved preference.
+- Clerk components receive the matching official `@clerk/localizations` resource. Provider-controlled OAuth pages can remain outside QRBid's localization control.
+
 ## Open Decisions — Resolve Before Implementation of Affected Features
 
 1. **Resolved (AUTH-001):** Clerk verifies email; full name, email, and phone are collected; phone is not verified in MVP. Exact collection/synchronization mechanics remain to be designed.

@@ -1,0 +1,121 @@
+{
+  "Metadata": {
+    "title": "QRBid — Jednoduché aukcie zdieľané QR kódom",
+    "description": "Vytvorte časovo obmedzenú aukciu a zdieľajte jej odkaz alebo QR kód. Bez verejného trhoviska."
+  },
+  "Navigation": {
+    "home": "Domov",
+    "createAuction": "Vytvoriť aukciu",
+    "signIn": "Prihlásiť sa",
+    "primaryNavigation": "Hlavná navigácia",
+    "mobileNavigation": "Mobilná navigácia",
+    "openMenu": "Otvoriť navigačné menu",
+    "closeMenu": "Zavrieť navigačné menu"
+  },
+  "LanguageSwitcher": {
+    "label": "Výber jazyka",
+    "english": "Angličtina {current}",
+    "slovak": "Slovenčina {current}",
+    "current": "— aktuálny jazyk",
+    "formWarning": "Zmena jazyka znovu načíta túto stránku. Neuložené zmeny vo formulári a vybrané fotografie sa stratia. Chcete pokračovať?"
+  },
+  "Landing": {
+    "eyebrow": "Jednoduché aukcie. Zdieľané cez QR.",
+    "heroLine1": "Vytvorte aukciu.",
+    "heroLine2": "Zdieľajte QR kód.",
+    "heroLine3": "Získajte ponuky.",
+    "description": "Vytvorte časovo obmedzenú aukciu, zdieľajte jej odkaz alebo QR kód a umožnite záujemcom prihadzovať. Bez verejného trhoviska.",
+    "viewSample": "Pozrieť ukážkovú aukciu",
+    "publicNote": "Aukcie si pozriete bez prihlásenia · Zdieľanie priamym odkazom alebo QR kódom",
+    "sample": {
+      "badge": "Ukážková aukcia · Iba náhľad",
+      "title": "Garážové parkovacie miesto č. 42",
+      "location": "Bratislava, Slovensko",
+      "currentBid": "Aktuálna najvyššia ponuka",
+      "timeRemaining": "Zostávajúci čas (príklad)",
+      "timeRemainingValue": "4 h 12 min",
+      "nextBids": "Príklady ďalších ponúk · Minimum +{increment}",
+      "yourBid": "Vaša ponuka (príklad)",
+      "displayOnly": "Iba na zobrazenie. V tomto náhľade nemožno prihadzovať.",
+      "biddingAfterLaunch": "Prihadzovanie bude dostupné po spustení",
+      "unlisted": "Nezaradená · Dostupná cez odkaz",
+      "exampleBids": "{count, plural, one {# ukážková ponuka} few {# ukážkové ponuky} other {# ukážkových ponúk}}"
+    }
+  },
+  "HowItWorks": {
+    "eyebrow": "AKO TO FUNGUJE",
+    "title": "Ako QRBid funguje",
+    "description": "Tri jednoduché kroky na vytvorenie aukcie, jej zdieľanie so záujemcami a prijímanie ponúk online.",
+    "steps": {
+      "1": { "label": "KROK 01", "title": "Vytvorte aukciu", "description": "Pridajte názov, opis, fotografie, počiatočnú cenu, minimálne navýšenie a dátum ukončenia.", "footer": "Nastavte pravidlá aukcie" },
+      "2": { "label": "KROK 02", "title": "Zdieľajte QR kód", "description": "Zdieľajte priamy odkaz alebo umiestnite QR kód na vytlačený plagát A4, aby záujemcovia mohli aukciu otvoriť.", "footer": "Dostupná cez priamy odkaz" },
+      "3": { "label": "KROK 03", "title": "Prijímajte ponuky", "description": "Registrovaní účastníci môžu prihadzovať online. Sledujte aktuálnu najvyššiu ponuku a čas ukončenia aukcie.", "footer": "Ponuky sa aktualizujú v reálnom čase" }
+    }
+  },
+  "FinalCta": {
+    "eyebrow": "STE PRIPRAVENÍ ZAČAŤ?",
+    "title": "Ste pripravení vytvoriť svoju prvú aukciu?",
+    "description": "Nastavte aukciu, zdieľajte odkaz alebo QR kód a umožnite záujemcom prihadzovať."
+  },
+  "Footer": {
+    "rights": "Všetky práva vyhradené.",
+    "resourcesLabel": "Zdroje — pripravujeme",
+    "terms": "Podmienky",
+    "privacy": "Súkromie",
+    "status": "Stav",
+    "documentation": "Dokumentácia",
+    "comingSoon": "Pripravujeme",
+    "comingSoonTitle": "{resource} — pripravujeme"
+  },
+  "AuctionForm": {
+    "pageTitle": "Vytvoriť aukciu",
+    "pageDescription": "Pridajte údaje o aukcii a vyberte, kedy sa prihadzovanie skončí.",
+    "previewNote": "Iba náhľad rozhrania. Zmeny zostávajú na tejto stránke a neukladajú sa.",
+    "formLabel": "Náhľad vytvorenia aukcie",
+    "details": "Údaje o aukcii",
+    "titleLabel": "Názov aukcie",
+    "titlePlaceholder": "napr. Podzemné parkovacie miesto č. 42",
+    "titleExample": "Podzemné parkovacie miesto č. 42 – City Tower",
+    "titleHelp": "Zvoľte jasný a výstižný názov.",
+    "descriptionLabel": "Opis",
+    "descriptionExample": "Bezpečné podzemné parkovacie miesto na podlaží -2. Kamerový dohľad a vstup cez elektronickú bránu. Prístupový čip dostane víťaz aukcie.",
+    "descriptionHelp": "Opíšte stav, prístup a dôležité podrobnosti.",
+    "pricingRules": "Cena a pravidlá prihadzovania",
+    "startingPrice": "Počiatočná cena (EUR)",
+    "startingPriceHelp": "Prvá platná ponuka sa môže rovnať tejto sume.",
+    "minimumIncrement": "Minimálne navýšenie ponuky (EUR)",
+    "minimumIncrementHelp": "Ďalšie ponuky musia aktuálnu najvyššiu ponuku prevýšiť aspoň o túto sumu.",
+    "saveDraft": "Uložiť koncept",
+    "draftUnavailable": "Ukladanie konceptu nie je v tomto náhľade dostupné.",
+    "createAndGenerate": "Vytvoriť aukciu a vygenerovať QR kód",
+    "creationUnavailable": "Vytvorenie aukcie a QR kódu zatiaľ nie je dostupné."
+  },
+  "AuctionDuration": {
+    "title": "Trvanie a čas ukončenia",
+    "localTimeZone": "Vaše miestne časové pásmo",
+    "quickDuration": "Rýchly výber trvania",
+    "hours24": "+24 hodín",
+    "days3": "+3 dni",
+    "days7": "+7 dní",
+    "endDate": "Dátum ukončenia",
+    "endTime": "Čas ukončenia",
+    "summary": "Končí {date} o {time} ({zone})",
+    "chooseSchedule": "Vyberte dátum a čas ukončenia na zobrazenie harmonogramu.",
+    "unlistedTitle": "Nezaradená aukcia",
+    "unlistedDescription": "Aukciu môže zobraziť každý, kto má priamy odkaz alebo QR kód. Nezobrazí sa vo verejnom katalógu aukcií. Na prihodenie bude potrebné prihlásenie."
+  },
+  "PhotoPicker": {
+    "label": "Fotografie / obrázky",
+    "add": "Pridať fotografie",
+    "dragOrBrowse": "Presuňte fotografie sem alebo ich vyberte kliknutím",
+    "choose": "Vybrať fotografie",
+    "help": "JPG, PNG alebo WebP. Iba lokálne náhľady; fotografie sa neodosielajú.",
+    "unsupported": "Vyberte obrázky JPG, PNG alebo WebP. Ostatné typy súborov boli preskočené.",
+    "previewAlt": "Náhľad súboru {name}",
+    "selectedLocally": "{size} KB · Vybrané lokálne",
+    "remove": "Odstrániť {name}"
+  },
+  "Auth": { "signIn": "Prihlásiť sa", "signUp": "Zaregistrovať sa" },
+  "Loading": { "auctionForm": "Načítava sa formulár aukcie…", "signIn": "Načítava sa prihlásenie…", "signUp": "Načítava sa registrácia…" },
+  "Validation": { "required": "Toto pole je povinné." }
+}

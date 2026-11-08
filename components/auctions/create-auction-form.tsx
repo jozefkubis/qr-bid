@@ -1,6 +1,7 @@
 "use client";
 
 import { QrCode } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { AuctionDuration } from "@/components/auctions/auction-duration";
 import { PhotoPicker } from "@/components/auctions/photo-picker";
 import { Button } from "@/components/ui/button";
@@ -9,27 +10,29 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 export function CreateAuctionForm() {
+  const t = useTranslations("AuctionForm");
+
   return (
     <Card className="p-5 sm:p-10">
-      <form aria-label="Create an auction preview" aria-describedby="auction-preview" onSubmit={(event) => event.preventDefault()} className="grid min-w-0 gap-8">
+      <form aria-label={t("formLabel")} aria-describedby="auction-preview" onSubmit={(event) => event.preventDefault()} className="grid min-w-0 gap-8">
         <fieldset className="grid min-w-0 gap-7">
-          <legend className="sr-only">Auction details</legend>
-          <Input id="auction-title" name="title" label="Auction Title" required placeholder="e.g. Underground parking space #42" defaultValue="Underground Parking Space #42 – City Tower" helpText="Choose a clear, descriptive title." />
-          <Textarea id="auction-description" name="description" label="Description" rows={5} defaultValue="Secure underground parking space located on level -2. Camera surveillance and electronic gate access. Access token provided to the winning bidder." helpText="Describe the condition, access and important details." />
+          <legend className="sr-only">{t("details")}</legend>
+          <Input id="auction-title" name="title" label={t("titleLabel")} required placeholder={t("titlePlaceholder")} defaultValue={t("titleExample")} helpText={t("titleHelp")} />
+          <Textarea id="auction-description" name="description" label={t("descriptionLabel")} rows={5} defaultValue={t("descriptionExample")} helpText={t("descriptionHelp")} />
           <PhotoPicker />
         </fieldset>
         <fieldset className="min-w-0 border-t border-border pt-8">
-          <legend className="sr-only">Pricing &amp; Bidding Rules</legend>
-          <h2 className="mb-5 text-xl font-semibold">Pricing &amp; Bidding Rules</h2>
+          <legend className="sr-only">{t("pricingRules")}</legend>
+          <h2 className="mb-5 text-xl font-semibold">{t("pricingRules")}</h2>
           <div className="grid items-start gap-5 sm:grid-cols-2">
-            <Input id="starting-price" name="startingPrice" type="number" label="Starting Price (EUR)" required defaultValue="80" step="0.01" helpText="The first valid bid may equal this amount." />
-            <Input id="minimum-increment" name="minimumIncrement" type="number" label="Minimum Bid Increment (EUR)" required defaultValue="5" step="0.01" helpText="Later bids must exceed the current highest bid by at least this amount." />
+            <Input id="starting-price" name="startingPrice" type="number" label={t("startingPrice")} required defaultValue="80" step="0.01" helpText={t("startingPriceHelp")} />
+            <Input id="minimum-increment" name="minimumIncrement" type="number" label={t("minimumIncrement")} required defaultValue="5" step="0.01" helpText={t("minimumIncrementHelp")} />
           </div>
         </fieldset>
         <AuctionDuration />
         <div className="grid gap-5 border-t border-border pt-6 sm:flex sm:items-start sm:justify-between">
-          <div className="grid gap-2 sm:max-w-40"><Button variant="secondary" disabled aria-describedby="draft-help">Save Draft</Button><p id="draft-help" className="text-sm text-muted-foreground">Draft saving is not available in this preview.</p></div>
-          <div className="grid gap-2 sm:max-w-sm"><Button disabled aria-describedby="creation-help"><QrCode aria-hidden="true" className="size-5 shrink-0" /><span>Create Auction &amp; Generate QR Code</span></Button><p id="creation-help" className="text-sm text-muted-foreground sm:text-right">Auction creation and QR generation are not yet available.</p></div>
+          <div className="grid gap-2 sm:max-w-40"><Button variant="secondary" disabled aria-describedby="draft-help">{t("saveDraft")}</Button><p id="draft-help" className="text-sm text-muted-foreground">{t("draftUnavailable")}</p></div>
+          <div className="grid gap-2 sm:max-w-sm"><Button disabled aria-describedby="creation-help"><QrCode aria-hidden="true" className="size-5 shrink-0" /><span>{t("createAndGenerate")}</span></Button><p id="creation-help" className="text-sm text-muted-foreground sm:text-right">{t("creationUnavailable")}</p></div>
         </div>
       </form>
     </Card>

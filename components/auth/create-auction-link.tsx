@@ -2,8 +2,8 @@
 
 import { Show, SignInButton } from "@clerk/nextjs";
 import { ArrowRight } from "lucide-react";
-import Link from "next/link";
-import type { ReactNode } from "react";
+import { useLocale, useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 type CreateAuctionLinkProps = {
   className: string;
@@ -11,46 +11,28 @@ type CreateAuctionLinkProps = {
   showArrow?: boolean;
 };
 
-function LinkContent({ showArrow }: Pick<CreateAuctionLinkProps, "showArrow">) {
+function LinkContent({ label, showArrow }: { label: string; showArrow: boolean }) {
   return (
     <>
-      Create an auction
+      {label}
       {showArrow ? <ArrowRight aria-hidden="true" className="size-4" /> : null}
     </>
   );
 }
 
-function AuthTrigger({
-  children,
-  className,
-  onClick,
-}: {
-  children: ReactNode;
-  className: string;
-  onClick?: () => void;
-}) {
-  return (
-    <SignInButton mode="modal" forceRedirectUrl="/auctions/new">
-      <button type="button" className={className} onClick={onClick}>
-        {children}
-      </button>
-    </SignInButton>
-  );
-}
-
-export function CreateAuctionLink({
-  className,
-  onClick,
-  showArrow = false,
-}: CreateAuctionLinkProps) {
-  const content = <LinkContent showArrow={showArrow} />;
+export function CreateAuctionLink({ className, onClick, showArrow = false }: CreateAuctionLinkProps) {
+  const locale = useLocale();
+  const t = useTranslations("Navigation");
+  const content = <LinkContent label={t("createAuction")} showArrow={showArrow} />;
 
   return (
     <>
       <Show when="signed-out">
-        <AuthTrigger className={className} onClick={onClick}>
-          {content}
-        </AuthTrigger>
+        <SignInButton mode="modal" forceRedirectUrl={`/${locale}/auctions/new`}>
+          <button type="button" className={className} onClick={onClick}>
+            {content}
+          </button>
+        </SignInButton>
       </Show>
       <Show when="signed-in">
         <Link href="/auctions/new" className={className} onClick={onClick}>

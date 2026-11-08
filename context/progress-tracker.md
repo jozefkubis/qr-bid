@@ -4,11 +4,11 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## Current Phase
 
-- Authentication integration and public UI refinement.
+- Internationalization and authenticated public UI.
 
 ## Current Goal
 
-- Verify Feature 07 Clerk authentication flows and the final authenticated header layout.
+- Review Feature 08 English/Slovak localization and language switching in the browser.
 
 ## Completed
 
@@ -69,15 +69,22 @@ Update this file after meaningful implementation changes or approved product/arc
 - Feature 07 checks passed after the final header-order refinement: ESLint, standalone TypeScript, `git diff --check`, and the default Turbopack production build. The build generated `/`, `/auctions/new`, `/sign-in/[[...sign-in]]`, and `/sign-up/[[...sign-up]]`, with Proxy active. A clean in-app browser smoke test was attempted, but the browser access host was unavailable; current visual and end-to-end Clerk verification therefore remains unconfirmed.
 - The product owner manually confirmed that Clerk authentication works and supplied a signed-in header screenshot showing the Clerk user avatar. Automated browser verification remains unavailable, so only the manually observed flow is confirmed.
 - Facebook OAuth returned Meta's “Application is not active” screen while Clerk was using shared development credentials with `Use custom credentials` disabled. Facebook sign-up/sign-in was therefore intentionally disabled for now; email and the other working configured methods remain available. Re-enable Facebook only after the shared provider works again or a dedicated Meta app, exact Clerk redirect URI, App ID and App Secret are configured. No QRBid code or secret files were changed for this provider issue.
+- Implemented Feature 08 with `next-intl` 4.14.9 and `@clerk/localizations` 4.24.6. Existing routes now use always-present `/en` and `/sk` prefixes; legacy `/`, `/sign-in`, `/sign-up` and `/auctions/new` redirect safely while preserving query parameters.
+- Added exactly two parity-checked catalogs, `messages/en.json` and `messages/sk.json`, with 107 matching leaf keys. Localized all currently implemented navigation, landing, sample auction, How It Works, CTA/footer, create-auction form, photo picker, duration/time-zone UI, metadata, accessibility labels, client feedback and loading UI. Dates, numbers and EUR display use the active locale without changing stored sample values.
+- Replaced disabled language previews in header, mobile menu and footer with an accessible working switcher that preserves the current path, query and hash. Manual selection is stored for one year through a validated server action; switching on the create-auction page warns that unsaved local state and selected photos will be lost.
+- Locale negotiation is deterministic: explicit URL prefix wins; unprefixed requests use `qrbid_locale`, then weighted `Accept-Language` for only Slovak or English, then English fallback. Opening an explicit localized link does not overwrite a prior manual cookie. HTTP checks confirmed Slovak, English, German and Czech cases plus legacy query preservation.
+- Clerk receives official EN/SK localization resources, and localized modal/dedicated auth URLs preserve locale. Provider-owned OAuth pages may remain provider-localized. Facebook remains disabled pending a working shared provider or dedicated Meta credentials; Feature 08 did not alter Clerk Dashboard settings or secrets.
+- Strengthened `/en|sk/auctions/new` protection in the single composed Clerk/locale proxy while retaining page-level `auth.protect()`. Signed-out HTTP checks now return `307` to the matching localized sign-in route and expose no protected form HTML.
+- Feature 08 verification passed: ESLint, standalone TypeScript, default Turbopack production build, `git diff --check`, catalog JSON/parity checks and targeted production HTTP tests. The build generated EN/SK variants of all confirmed routes with one Proxy entry point.
 
 ## In Progress
 
-- Feature 07 automated Clerk smoke testing and final post-refinement header visual verification remain pending because browser automation is currently unavailable; basic authentication was confirmed manually by the product owner.
+- Feature 08 browser visual review and interactive Clerk/switcher smoke testing remain for the product owner because this Codex CLI session has no browser host. Code, build and HTTP behavior are verified.
 
 ## Next Up
 
-- Complete signed-out, modal, direct-route, protected-route, signed-in avatar and sign-out smoke tests.
-- Configure or confirm Google and Facebook providers in the Clerk Dashboard; code integration alone does not enable them.
+- Review `/en`, `/sk`, localized auth modals/pages, switcher behavior and long Slovak labels on mobile and desktop.
+- Re-enable Facebook only after its OAuth provider is active; code integration alone does not activate provider-side OAuth.
 - Resolve the remaining auction lifecycle and registration requirements before implementing affected features.
 - Design the database schema and security policies after product decisions are finalized.
 

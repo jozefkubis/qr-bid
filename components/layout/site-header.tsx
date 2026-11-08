@@ -2,11 +2,11 @@
 
 import { Show, SignInButton, UserButton } from "@clerk/nextjs";
 import { Menu, X } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import { useState, useSyncExternalStore } from "react";
 import { CreateAuctionLink } from "@/components/auth/create-auction-link";
 import { LanguagePreview } from "@/components/layout/language-preview";
+import { Link, usePathname } from "@/i18n/navigation";
 
 const navigationLinkClasses =
   "inline-flex min-h-11 items-center rounded-soft px-3 font-semibold text-foreground transition-colors hover:bg-surface-muted hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";
@@ -21,6 +21,8 @@ const getServerSnapshot = () => false;
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const locale = useLocale();
+  const t = useTranslations("Navigation");
   // Keep the shared server shell and the first hydration render identical.
   const isHydrated = useSyncExternalStore(
     subscribeToHydration,
@@ -45,9 +47,9 @@ export function SiteHeader() {
           QRBid
         </Link>
 
-        <nav aria-label="Primary navigation" className="hidden items-center gap-2 lg:flex">
+        <nav aria-label={t("primaryNavigation")} className="hidden items-center gap-2 lg:flex">
           <Link href="/" className={navigationLinkClasses}>
-            Home
+            {t("home")}
           </Link>
           {showCreateAuctionLink ? (
             <CreateAuctionLink className={createAuctionClasses} showArrow />
@@ -56,8 +58,8 @@ export function SiteHeader() {
             <LanguagePreview />
           </div>
           <Show when="signed-out">
-            <SignInButton mode="modal" fallbackRedirectUrl="/">
-              <button type="button" className={signInClasses}>Sign in</button>
+            <SignInButton mode="modal" fallbackRedirectUrl={`/${locale}`}>
+              <button type="button" className={signInClasses}>{t("signIn")}</button>
             </SignInButton>
           </Show>
           <Show when="signed-in">
@@ -71,7 +73,7 @@ export function SiteHeader() {
           type="button"
           aria-controls="mobile-navigation"
           aria-expanded={isMenuOpen}
-          aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-label={isMenuOpen ? t("closeMenu") : t("openMenu")}
           className="inline-flex size-11 items-center justify-center rounded-soft border border-border bg-surface text-foreground transition-colors hover:bg-surface-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus lg:hidden"
           onClick={() => setIsMenuOpen((currentValue) => !currentValue)}
         >
@@ -86,12 +88,12 @@ export function SiteHeader() {
       {isMenuOpen ? (
         <nav
           id="mobile-navigation"
-          aria-label="Mobile navigation"
+          aria-label={t("mobileNavigation")}
           className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-border px-4 py-3 lg:hidden"
         >
           <div className="mx-auto grid w-full max-w-7xl gap-1">
             <Link href="/" className={navigationLinkClasses} onClick={closeMenu}>
-              Home
+              {t("home")}
             </Link>
             {showCreateAuctionLink ? (
               <CreateAuctionLink
@@ -104,9 +106,9 @@ export function SiteHeader() {
                 <LanguagePreview />
               </div>
               <Show when="signed-out">
-                <SignInButton mode="modal" fallbackRedirectUrl="/">
+                <SignInButton mode="modal" fallbackRedirectUrl={`/${locale}`}>
                   <button type="button" className={signInClasses} onClick={closeMenu}>
-                    Sign in
+                    {t("signIn")}
                   </button>
                 </SignInButton>
               </Show>
