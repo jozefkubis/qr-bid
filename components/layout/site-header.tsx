@@ -39,13 +39,25 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 shrink-0 border-b border-border bg-surface">
       <div className="mx-auto flex min-h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <Link
-          href="/"
-          className="inline-flex min-h-11 items-center rounded-soft font-heading text-xl font-semibold text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
-          onClick={closeMenu}
-        >
-          QRBid
-        </Link>
+        <div className="flex min-w-0 items-center gap-1 sm:gap-3">
+          <Link
+            href="/"
+            className="inline-flex min-h-11 shrink-0 items-center rounded-soft font-heading text-xl font-semibold text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
+            onClick={closeMenu}
+          >
+            QRBid
+          </Link>
+          <Show when="signed-in">
+            <Link
+              href="/my-auctions"
+              aria-current={pathname === "/my-auctions" ? "page" : undefined}
+              className="inline-flex min-h-11 min-w-0 items-center rounded-soft px-2 text-sm font-semibold text-foreground transition-colors hover:bg-surface-muted hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus sm:px-3 sm:text-base"
+              onClick={closeMenu}
+            >
+              {t("myAuctions")}
+            </Link>
+          </Show>
+        </div>
 
         <nav aria-label={t("primaryNavigation")} className="hidden items-center gap-2 lg:flex">
           <Link href="/" className={navigationLinkClasses}>

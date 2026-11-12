@@ -4,11 +4,11 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## Current Phase
 
-- Internationalization and authenticated public UI.
+- Authenticated dashboard UI.
 
 ## Current Goal
 
-- Review Feature 08 English/Slovak localization and language switching in the browser.
+- Review the completed Feature 10 demo-data refinement on mobile and in English while signed in.
 
 ## Completed
 
@@ -76,13 +76,24 @@ Update this file after meaningful implementation changes or approved product/arc
 - Clerk receives official EN/SK localization resources, and localized modal/dedicated auth URLs preserve locale. Provider-owned OAuth pages may remain provider-localized. Facebook remains disabled pending a working shared provider or dedicated Meta credentials; Feature 08 did not alter Clerk Dashboard settings or secrets.
 - Strengthened `/en|sk/auctions/new` protection in the single composed Clerk/locale proxy while retaining page-level `auth.protect()`. Signed-out HTTP checks now return `307` to the matching localized sign-in route and expose no protected form HTML.
 - Feature 08 verification passed: ESLint, standalone TypeScript, default Turbopack production build, `git diff --check`, catalog JSON/parity checks and targeted production HTTP tests. The build generated EN/SK variants of all confirmed routes with one Proxy entry point.
+- Implemented Feature 09 as a frontend-only authenticated My Auctions page at `/en/my-auctions` and `/sk/my-auctions`. The page uses the Terra system and contains the approved description/filter preview, exactly three summary cards, exactly two static non-interactive ghost auction cards, and a localized Create Auction CTA. No auction records, calculated statistics, filtering, QR tracking, database work or new dependencies were added.
+- Added page-level `auth.protect()` and extended the existing composed proxy protection for both localized My Auctions routes. Signed-out HTTP checks return `307` to the matching localized sign-in page with a fixed internal `redirect_url`; `/en` remains public and returns `200`.
+- Added the signed-in-only My Auctions link using the existing Clerk `Show` pattern. Product-owner refinement moved it directly beside QRBid in the top bar at every width and removed its duplicate from the right desktop navigation and expanded mobile menu. Added EN/SK translations with 129 matching catalog leaf keys and localized metadata, summary-card copy, accessible filter-preview help and ghost-card descriptions.
+- Feature 09 verification passed after the summary-card refinement: ESLint, standalone TypeScript with incremental mode disabled, default Turbopack production build, catalog JSON/parity validation and `git diff --check`. The build generated both localized My Auctions routes. The earlier signed-in English desktop check confirmed the protected route and overall page structure; the refined compact cards and left-aligned header link still need a refreshed browser visual check because the open Edge page remained on stale development output and was not reloaded automatically.
+- Implemented Feature 10 as a local frontend-only demo-data refinement of the authenticated My Auctions page. Added exactly four clearly fictional records (three active and one ended), responsive auction cards, localized EUR/date/countdown presentation, a zero-bid state and neutral Terra placeholders because the repository contains no approved local cover-image assets.
+- Replaced the Feature 09 preview filters and ghost cards with functional client-side All/Active/Ended filters and real demo cards. The countdown updates once per minute after hydration; filters do not reload the page. QR sharing and auction-detail controls remain disabled with visible explanations, and Feature 11/12 functionality was not implemented.
+- Replaced the earlier illustrative analytics with honest demo summaries: three active auctions, one ended auction and unavailable physical-scan data. No real-time, monetary-total or scan-tracking claims remain. No database, Supabase, API, persistence, QR generation, detail routes or new dependencies were added.
+- Added EN/SK Feature 10 copy with 143 matching catalog leaf keys and synchronized `context/ui-context.md`. Feature 10 verification passed with ESLint, standalone TypeScript with incremental mode disabled, the default Turbopack production build, catalog JSON/parity validation, demo-data count validation and `git diff --check`.
+- Manually reviewed the signed-in Slovak desktop page in Edge. Confirmed all four cards, accessible active/ended badges and countdowns, localized EUR values, the zero-bid state, disabled future actions with explanations and the All-to-Active filter transition without navigation. The browser's native control became unreliable when targeting the Ended button, so that exact interaction was not claimed as manually verified.
 
 ## In Progress
 
 - Feature 08 browser visual review and interactive Clerk/switcher smoke testing remain for the product owner because this Codex CLI session has no browser host. Code, build and HTTP behavior are verified.
+- Feature 10 mobile layout and signed-in English visual review remain. The Slovak desktop page and Active filter were manually verified; the Ended filter is covered by the same implemented filter path and code/build checks but still needs a clean manual click-through.
 
 ## Next Up
 
+- Review `/en/my-auctions` at desktop and narrow mobile widths while signed in; confirm no horizontal overflow and manually click All, Active and Ended in one clean session.
 - Review `/en`, `/sk`, localized auth modals/pages, switcher behavior and long Slovak labels on mobile and desktop.
 - Re-enable Facebook only after its OAuth provider is active; code integration alone does not activate provider-side OAuth.
 - Resolve the remaining auction lifecycle and registration requirements before implementing affected features.
@@ -160,3 +171,8 @@ Update this file after meaningful implementation changes or approved product/arc
 - Hydration-fix verification: ESLint, default Turbopack production build, standalone TypeScript and diff checks passed. On the existing development server at port 3000, Chrome at 375px and 1440px confirmed direct visits to both routes and Next.js Link navigation from home to the form, with correct CTA visibility and no browser runtime/console errors. A separate dev server was not used because Next.js detected the existing instance.
 - Applied the requested compact photo-picker styling: centered Choose photos control backed by the native file input, reduced vertical padding/icon spacing and smaller 14px action/12px supporting text. Native file selection and drag/drop remain available, with a visible focus outline on the browse label when the input receives keyboard focus. ESLint, standalone TypeScript and diff checks passed; Chrome checks at 375/1440px confirmed centered alignment, 216/208px drop-area height, keyboard focus and no horizontal overflow. Production build was not repeated for this focused styling change.
 - Moved the header language preview to the far right, after navigation actions, with the same left divider and spacing as the footer. Expanded mobile navigation places it at the right of the final Sign in row. Updated UI context. ESLint, standalone TypeScript and diff checks passed; Chrome at 375/1440px confirmed final/right-aligned position, a 1px divider, no overflow and no runtime exceptions. Production build was not repeated for this layout-only adjustment.
+- Feature 09 follows the approved frontend-only specification. `AuctionCardSkeleton` is presentation-only and receives one localized accessibility description; all visible skeleton geometry is `aria-hidden`. The visual All/Active/Ended control uses non-interactive text and explicitly announces that filtering is unavailable in this feature.
+- The signed-in desktop Edge review used the existing local development session at `/en/my-auctions`. It confirmed the protected page content and signed-in navigation without changing account state. The production server on port 3100 independently confirmed localized signed-out redirects and the public landing response.
+- Applied product-owner screenshot feedback to Feature 09: the visual page title moved into the top bar beside QRBid, while a screen-reader-only `h1` remains in the main content. Summary cards now use the reference Radio, Banknote and QR icons with a small label, larger bold value and small right-side meta text. The approved static EN reference content is `3 Active QR Assets / Real-time`, `€645.00 / 40 total bids` and `82 Direct Scans / Print Posters`; these values are explicitly UI-only and not calculated analytics.
+- Applied the requested Feature 09 typography refinement across all three summary cards: reduced the small labels and right-side meta text to 11px, and reduced the bold values to 16px on mobile and 18px from the small breakpoint. Card structure, icons, content and responsive layout are unchanged.
+- Shortened the first Slovak summary card to `Prebiehajúca aktivita / 3 aktívne aukcie / V reálnom čase`. Added the pointer cursor to interactive EN/SK language buttons while preserving the waiting cursor during a pending locale transition.

@@ -41,7 +41,7 @@ export function LanguagePreview() {
             aria-label={t(item === "en" ? "english" : "slovak", { current: isActive ? t("current") : "" })}
             disabled={isPending}
             onClick={() => switchLocale(item)}
-            className={`min-h-11 min-w-11 rounded-full px-2 text-xs transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus disabled:cursor-wait ${isActive ? "bg-surface font-bold text-primary shadow-sm" : "text-muted-foreground hover:text-primary"}`}
+            className={`min-h-11 min-w-11 cursor-pointer rounded-full px-2 text-xs transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus disabled:cursor-wait ${isActive ? "bg-surface font-bold text-primary shadow-sm" : "text-muted-foreground hover:text-primary"}`}
           >
             {item.toUpperCase()}
           </button>

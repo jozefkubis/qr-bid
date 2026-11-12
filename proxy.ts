@@ -30,10 +30,13 @@ function hasLocalePrefix(pathname: string) {
 
 export default clerkMiddleware(async (auth, request) => {
   if (hasLocalePrefix(request.nextUrl.pathname)) {
-    const privateRoute = request.nextUrl.pathname.match(/^\/(en|sk)\/auctions\/new\/?$/);
+    const privateRoute = request.nextUrl.pathname.match(
+      /^\/(en|sk)\/(?:auctions\/new|my-auctions)\/?$/,
+    );
     if (privateRoute) {
-      const signInUrl = new URL(`/${privateRoute[1]}/sign-in`, request.url).toString();
-      await auth.protect({ unauthenticatedUrl: signInUrl });
+      const signInUrl = new URL(`/${privateRoute[1]}/sign-in`, request.url);
+      signInUrl.searchParams.set("redirect_url", request.nextUrl.pathname);
+      await auth.protect({ unauthenticatedUrl: signInUrl.toString() });
     }
     return handleI18nRouting(request);
   }

@@ -5,12 +5,66 @@
   },
   "Navigation": {
     "home": "Domov",
+    "myAuctions": "Moje aukcie",
     "createAuction": "Vytvoriť aukciu",
     "signIn": "Prihlásiť sa",
     "primaryNavigation": "Hlavná navigácia",
     "mobileNavigation": "Mobilná navigácia",
     "openMenu": "Otvoriť navigačné menu",
     "closeMenu": "Zavrieť navigačné menu"
+  },
+  "MyAuctions": {
+    "pageTitle": "Moje aukcie",
+    "pageDescription": "Spravujte svoje aktívne a ukončené súkromné aukcie.",
+    "demoDisclosure": "Fiktívne ukážkové záznamy pre tento prototyp používateľského rozhrania.",
+    "filters": {
+      "label": "Filtrovať ukážkové aukcie podľa stavu",
+      "all": "Všetky ({count})",
+      "active": "Aktívne ({count})",
+      "ended": "Ukončené ({count})",
+      "results": "{count, plural, one {Zobrazuje sa # ukážková aukcia} few {Zobrazujú sa # ukážkové aukcie} other {Zobrazuje sa # ukážkových aukcií}}"
+    },
+    "summary": {
+      "demoData": "Ukážkové dáta",
+      "notAvailable": "Nedostupné",
+      "liveBiddingActivity": {
+        "label": "Prebiehajúca aktivita",
+        "value": "{count, plural, one {# aktívna aukcia} few {# aktívne aukcie} other {# aktívnych aukcií}}"
+      },
+      "finishedBidding": {
+        "label": "Ukončené prihadzovanie",
+        "value": "{count, plural, one {# ukončená aukcia} few {# ukončené aukcie} other {# ukončených aukcií}}"
+      },
+      "physicalScansToday": {
+        "label": "Dnešné fyzické skeny"
+      }
+    },
+    "card": {
+      "listLabel": "Ukážkové aukcie",
+      "coverPlaceholder": "Neutrálny ukážkový obrázok pre {title}",
+      "active": "Aktívna",
+      "ended": "Ukončená",
+      "remaining": "Zostáva {time}",
+      "endedOn": "Ukončená {date}",
+      "countdown": {
+        "days": "{count} d",
+        "hours": "{count} h",
+        "minutes": "{count} min"
+      },
+      "currentHighest": "Najvyššia ponuka",
+      "totalBids": "Počet ponúk",
+      "startingPrice": "Počiatočná cena",
+      "noBidsYet": "Zatiaľ bez ponúk",
+      "viewShareQr": "Zobraziť a zdieľať QR",
+      "auctionDetails": "Detail aukcie",
+      "qrComingSoon": "Zdieľanie QR pribudne v neskoršej funkcii.",
+      "detailsComingSoon": "Detail aukcie pribudne vo Feature 11."
+    },
+    "cta": {
+      "title": "Ste pripravení vytvoriť ďalšiu aukciu?",
+      "description": "Vytvorte novú aukciu a zdieľajte ju pomocou QR kódu.",
+      "action": "Vytvoriť aukciu"
+    }
   },
   "LanguageSwitcher": {
     "label": "Výber jazyka",

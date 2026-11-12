@@ -5,12 +5,66 @@
   },
   "Navigation": {
     "home": "Home",
+    "myAuctions": "My Auctions",
     "createAuction": "Create an auction",
     "signIn": "Sign in",
     "primaryNavigation": "Primary navigation",
     "mobileNavigation": "Mobile navigation",
     "openMenu": "Open navigation menu",
     "closeMenu": "Close navigation menu"
+  },
+  "MyAuctions": {
+    "pageTitle": "My Auctions",
+    "pageDescription": "Manage your active and completed private auctions.",
+    "demoDisclosure": "Fictional sample records for this UX prototype.",
+    "filters": {
+      "label": "Filter demo auctions by status",
+      "all": "All ({count})",
+      "active": "Active ({count})",
+      "ended": "Ended ({count})",
+      "results": "{count, plural, one {Showing # demo auction} other {Showing # demo auctions}}"
+    },
+    "summary": {
+      "demoData": "Demo data",
+      "notAvailable": "Not available",
+      "liveBiddingActivity": {
+        "label": "Live Bidding Activity",
+        "value": "{count, plural, one {# active auction} other {# active auctions}}"
+      },
+      "finishedBidding": {
+        "label": "Finished Bidding",
+        "value": "{count, plural, one {# ended auction} other {# ended auctions}}"
+      },
+      "physicalScansToday": {
+        "label": "Physical Scans Today"
+      }
+    },
+    "card": {
+      "listLabel": "Demo auctions",
+      "coverPlaceholder": "Neutral demo cover for {title}",
+      "active": "Active",
+      "ended": "Ended",
+      "remaining": "{time} remaining",
+      "endedOn": "Ended {date}",
+      "countdown": {
+        "days": "{count}d",
+        "hours": "{count}h",
+        "minutes": "{count}m"
+      },
+      "currentHighest": "Current Highest",
+      "totalBids": "Total Bids",
+      "startingPrice": "Starting Price",
+      "noBidsYet": "No bids yet",
+      "viewShareQr": "View & Share QR",
+      "auctionDetails": "Auction Details",
+      "qrComingSoon": "QR sharing is coming in a later feature.",
+      "detailsComingSoon": "Auction details are coming in Feature 11."
+    },
+    "cta": {
+      "title": "Ready to create another auction?",
+      "description": "Create a new auction and share it with a QR code.",
+      "action": "Create Auction"
+    }
   },
   "LanguageSwitcher": {
     "label": "Language selection",

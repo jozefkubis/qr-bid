@@ -42,6 +42,20 @@ Short hero, clear Create Auction action, and a simple three-step explanation. No
 
 Simple auction cards: image, title, status, current highest bid, time remaining, and links to details and QR sharing. No scans analytics or combined-value dashboard widgets in MVP.
 
+#### Feature 09 visual refinement (2026-11-12)
+
+- Signed-in **My Auctions / Moje aukcie** sits in the top bar directly beside the QRBid brand; the page keeps a semantic heading but does not repeat a large visual title in the content.
+- The three Feature 09 summary cards are compact reference-only UI: a circular Lucide icon, a very small label, a restrained bold value, and a very small right-aligned meta label. Their typography stays visually light and must not increase the compact card height. Their approved static values are not database-backed analytics and must be replaced by verified owner-scoped data in Feature 10.
+- This focused visual preview does not approve a broader analytics dashboard or QR scan tracking implementation.
+
+#### Feature 10 demo-data refinement (2026-11-12)
+
+- Replace the two layout-only ghost cards with exactly four clearly fictional local demo auctions: three active and one ended. Sample auction titles remain unlocalized user-content examples; all surrounding interface copy is localized.
+- With no suitable local image assets, use fixed-height neutral Terra media placeholders with accessible descriptions. Do not hotlink images or reuse chat screenshots as production assets.
+- Cards show localized status/countdown badges, title, compact location, current highest bid or a no-bids state, bid count, starting price, and two equally prominent disabled future actions with visible explanations.
+- All / Active / Ended is a keyboard-accessible client-side filter with counts. The visual countdown updates once per minute from a client-only demo clock and is not authoritative auction timing.
+- Summary cards derive active/ended counts only from the four demo records, label them as demo data, and keep physical scans unavailable. No Realtime claim, scan count or monetary aggregate is shown.
+
 ### Create Auction
 
 Single-column form: title, description, photos, starting price, minimum increment, end date/time. Clearly show the local time zone. Do not implement Save Draft unless separately approved.
@@ -74,5 +88,5 @@ Full name, email, phone number, and preferred language (EN/SK). Avoid unsupporte
 
 - Keep the header visible during scrolling with sticky positioning and preserve anchor clearance. Use the expanded mobile menu below 1024px.
 - Header includes a working EN/SK switcher, working Clerk authentication controls, and a prominent green Create an auction action. Signed-out authentication opens Clerk's localized modal; signed-in users see Clerk's account avatar.
-- The header language switcher follows the navigation actions and is separated by the same slim vertical border used in the footer. Its active locale is visually highlighted and exposed through `aria-pressed`; both controls meet the 44px touch-target guidance. When signed in, Clerk's user avatar sits immediately after EN/SK as the final item on the far right. The expanded mobile menu uses the same EN/SK-then-account order below the creation link.
+- The header language switcher follows the navigation actions and is separated by the same slim vertical border used in the footer. Its active locale is visually highlighted and exposed through `aria-pressed`; both controls meet the 44px touch-target guidance and use the pointer cursor when interactive. When signed in, Clerk's user avatar sits immediately after EN/SK as the final item on the far right. The expanded mobile menu uses the same EN/SK-then-account order below the creation link.
 - Footer follows the compact reference layout: brand/copyright left, planned resource labels and language preview right on desktop; wrap/stack on mobile. Terms, Privacy, Status and Documentation are disabled and marked “Coming soon”, with no fake routes or operational-status claim. Background remains identical to SiteHeader.
