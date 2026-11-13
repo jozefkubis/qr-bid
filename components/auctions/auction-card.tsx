@@ -3,7 +3,8 @@
 import { ArrowRight, ImageIcon, MapPin, QrCode } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { Card } from "@/components/ui/card";
-import type { DemoAuction, DemoCoverVariant } from "@/data/demo-auctions";
+import { Link } from "@/i18n/navigation";
+import { getAuctionBidSummary, type DemoAuction, type DemoCoverVariant } from "@/data/demo-auctions";
 
 type AuctionCardProps = {
   auction: DemoAuction;
@@ -52,11 +53,11 @@ export function AuctionCard({ auction, now }: AuctionCardProps) {
     : t("remaining", {
         time: countdownParts(endTime, now, (unit, count) => t(`countdown.${unit}`, { count })),
       });
-  const highestBid = auction.currentHighestBidMinor === undefined
+  const { bidCount, highestBidMinor } = getAuctionBidSummary(auction);
+  const highestBid = highestBidMinor === undefined
     ? t("noBidsYet")
-    : currencyFormatter.format(auction.currentHighestBidMinor / 100);
+    : currencyFormatter.format(highestBidMinor / 100);
   const qrHelpId = `${auction.id}-qr-help`;
-  const detailsHelpId = `${auction.id}-details-help`;
 
   return (
     <article>
@@ -93,7 +94,7 @@ export function AuctionCard({ auction, now }: AuctionCardProps) {
             </div>
             <div className="min-w-0 px-2">
               <dt className="text-[0.6875rem] leading-tight text-muted-foreground sm:text-xs">{t("totalBids")}</dt>
-              <dd className="mt-2 font-semibold">{auction.bidCount}</dd>
+              <dd className="mt-2 font-semibold">{bidCount}</dd>
             </div>
             <div className="min-w-0 px-2 last:pr-0">
               <dt className="text-[0.6875rem] leading-tight text-muted-foreground sm:text-xs">{t("startingPrice")}</dt>
@@ -115,16 +116,13 @@ export function AuctionCard({ auction, now }: AuctionCardProps) {
               <p id={qrHelpId} className="text-xs text-muted-foreground">{t("qrComingSoon")}</p>
             </div>
             <div className="grid content-start gap-2">
-              <button
-                type="button"
-                disabled
-                aria-describedby={detailsHelpId}
-                className="inline-flex min-h-11 cursor-not-allowed items-center justify-center gap-2 rounded-soft border border-primary bg-primary px-4 py-2 text-sm font-semibold text-white opacity-60"
+              <Link
+                href={`/my-auctions/${auction.id}`}
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-soft border border-primary bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
               >
                 {t("auctionDetails")}
                 <ArrowRight aria-hidden="true" className="size-4" />
-              </button>
-              <p id={detailsHelpId} className="text-xs text-muted-foreground">{t("detailsComingSoon")}</p>
+              </Link>
             </div>
           </div>
         </div>

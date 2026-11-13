@@ -30,15 +30,15 @@ No Prisma, Liveblocks, Trigger.dev, Vercel Blob, microservices, or payment provi
 - `lib/` — Small infrastructure helpers, including authenticated server access to Clerk and Supabase.
 - `features/` — **Optional**, introduce only if feature complexity justifies it; do not scaffold preemptively.
 - PostgreSQL — Source of truth for bids, auction timing, and highest valid offer.
-- Supabase Storage — Auction images, with upload/read/delete rules to be designed.
+- Supabase Storage — Auction images in the `auction-photos` bucket. Stage C uses public object reads for approved unlisted visitor media; authenticated upload/delete policies still require ownership of the active auction.
 - Resend — Delivery mechanism, not source of truth for auction state.
 
 Keep domain rules server-side. Browser clients must not be able to write trusted bid state directly.
 
-## Data Model — Conceptual, Not Yet a Migration
+## Data Model
 
-- **User profile:** linked to Clerk identity; full name, email, phone, preferred language (EN/SK). Clerk email verification is required; phone is collected but not verified in MVP.
-- **Auction:** owner, title, description, images, starting price, minimum increment, ending time, status, currency and timestamps (precise status/currency rules pending).
+- **User profile:** Stage A uses an internal UUID and a unique `clerk_user_id` mapped to the verified text `sub` from a native Clerk Third-Party Auth session token. Email remains in Clerk. Full name, phone and preferred language are added only when a concrete flow requires them; phone is not verified in MVP.
+- **Auction:** Stage B persists an internal UUID, immutable owner profile UUID, title, optional description, EUR amounts in integer minor units, start/end times and timestamps. Stage C adds ordered photo metadata with cascading deletion. Active/ended presentation is derived from trusted timestamps; bids, cancellation state and broader lifecycle persistence remain in later approved stages.
 - **Bid:** auction, bidder identity, amount, accepted timestamp; immutable accepted bid history.
 - **Notification delivery:** optional persistence/idempotency strategy to be decided when implementing email workflows.
 
@@ -51,7 +51,14 @@ Store monetary values as exact decimal or integer minor units, **never floating-
 - Authentication is required to place a bid or manage an auction. A verified email address in Clerk is additionally required to bid.
 - Full name, email, and phone are required at registration; phone verification by SMS is out of MVP scope. An unverified phone number is not proof of identity.
 - Every server mutation verifies Clerk identity and ownership/permission; never trust user IDs, auction status, price, or deadlines supplied by the browser.
-- Clerk ↔ Supabase identity mapping and the exact RLS/JWT integration approach **must be designed and verified** before database implementation. Do not assume Supabase `auth.uid()` equals a Clerk user ID.
+- Stage B auction creation uses a Server Action that re-verifies Clerk identity, derives `owner_id` from the current profile and validates text, exact minor-unit money conversion and a future end time. Database constraints independently enforce title/description bounds, positive safe-range amounts, EUR and `ends_at > starts_at`.
+- Owner-scoped auction SELECT/INSERT uses RLS against the verified Clerk `sub` through `profiles`; authenticated UPDATE/DELETE and all anonymous auction grants remain absent until a later stage explicitly needs them.
+- Stage C keeps direct auction UPDATE/DELETE grants absent. Narrow authenticated database functions lock the target row, derive ownership from the Clerk JWT mapping and require an active auction before changing or deleting it. Stage D must extend the same locked operations with accepted-bid checks.
+- Public real-auction reads use a parameterized database function that returns only title, description, EUR pricing, times and ordered photo paths. It does not return owner/profile IDs, Clerk subjects, emails or bidder data. Direct anonymous table access remains unavailable.
+- Auction photos are limited to five objects of at most 5 MB each and MIME types JPEG, PNG or WebP. The bucket enforces size/type and the server validates them before upload. Object keys use `<auction UUID>/<random UUID>.<extension>`; metadata records the path and stable sort slot. Partial create uploads remove written metadata/objects before rolling back the new auction.
+- Authenticated owners receive active-auction Storage SELECT only so the Storage API can resolve objects before an authorized delete. Deletion treats an empty/partial Storage response as failure and keeps database metadata; whole-auction cleanup lists the owned auction folder first so retry can also remove orphaned objects from an earlier partial failure.
+- Next.js Server Actions allow a 26 MB multipart body for the maximum five 5 MB photos plus form overhead; individual-file and count validation remains stricter. Hosting request limits must be verified before production deployment and may require direct authenticated Storage uploads if the platform limit is lower.
+- Clerk ↔ Supabase identity uses native Clerk Third-Party Auth. User-scoped Supabase clients pass the current Clerk session token. RLS compares the token's verified text `sub` with `profiles.clerk_user_id`; it does not assume `auth.uid()` equals a Clerk ID. `profiles.id` remains an independent internal UUID.
 - Enable RLS on exposed Supabase tables and define least-privilege policies. Keep privileged keys on the server only. Protect bidder contact details from public access; release to the owner only under the approved winner workflow.
 
 ## Bid Processing — Critical Invariants
@@ -70,6 +77,19 @@ Store monetary values as exact decimal or integer minor units, **never floating-
 **Implementation proposal, not yet approved:** a narrowly scoped server endpoint calling a transactional PostgreSQL function for bid acceptance. Review privilege boundaries, RLS, callable function grants, and identity verification before selecting the exact mechanism.
 
 ## Auction Editing
+
+#### Feature 12 Stage D transactional bidding (2026-11-13)
+
+- `bids` stores accepted absolute amounts and a bidder-scoped request UUID. Direct Data API writes are revoked; the only bid mutation is a narrowly granted authenticated database function.
+- Bid acceptance derives the bidder from the verified Clerk JWT/profile mapping, locks the auction row, checks an exact request replay before mutable auction state, then validates ownership, database time and the latest minimum in the same transaction. Exact retries return the original accepted record; reuse of the request UUID with another amount is rejected.
+- Public auction reads aggregate the current highest amount, count and anonymous amount/time history without returning `bidder_id`. Owner bid summaries are exposed through a separate identity-checked function.
+- The same auction-row lock protects owner update/delete decisions. Once a bid exists, details, schedule, photos and deletion are denied; an active owner may publish a timestamped `auction_notes` update instead.
+
+#### Feature 12 Stage E Realtime (2026-11-13)
+
+- An after-insert trigger on accepted `bids` emits a public Supabase Broadcast signal to `auction:{uuid}:bids`. Public channel visibility matches the approved anonymous unlisted detail; the UUID-scoped topic is shareable in the same way as the auction URL.
+- The payload contains only `{ changed: true }`. It never carries amount, bidder identity or authoritative auction state. Clients respond by refreshing the server-rendered detail from `get_public_auction`; PostgreSQL remains the only bid validator and source of truth during Realtime outages.
+- The trigger function has an empty search path and no direct `PUBLIC`, `anon` or `authenticated` execute grant. The browser uses only the publishable key and removes its channel on unmount.
 
 - **EDIT-001 (approved):** After the first accepted bid, lock the auction starting price, minimum increment and scheduled end time. Enforce this in server/database authorization and update logic, not only by disabling form fields.
 - Whether title, description, images or other fields may be edited after bidding starts remains undecided. Early cancellation is permitted under END-002; the remaining cancellation UX and pre-first-bid editing rules remain open.
@@ -125,9 +145,9 @@ Store monetary values as exact decimal or integer minor units, **never floating-
 14. Still open: currency and precision, bid cancellations, and tie/concurrency behavior.
 15. Auction lifecycle: draft/publish, edits to other fields after first bid, cancellation UX details, precise end semantics.
 16. Winner contact exchange and legal meaning of offers (including Slovak/EU legal review as appropriate).
-17. Clerk-to-Supabase authorization architecture and RLS design.
+17. **Resolved for Stage A:** native Clerk Third-Party Auth, request-scoped user token, text `sub` mapped to an internal profile UUID, and least-privilege profile RLS. Hosted configuration and A/B/anonymous verification remain pending.
 18. Closure scheduling and notification reliability/idempotency.
-19. Storage access model, upload limits and retention/deletion/GDPR policy.
+19. **Partially resolved for Stage C:** unlisted auction media uses public object reads, with owner-only active-auction upload/delete; five files, 5 MB each, JPEG/PNG/WebP. Long-term retention and GDPR policy remain open.
 20. Monetization (not required for first working auction).
 
 ## Architecture Invariants

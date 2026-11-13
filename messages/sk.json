@@ -14,6 +14,31 @@
     "closeMenu": "Zavrieť navigačné menu"
   },
   "MyAuctions": {
+    "live": {
+      "filterLabel": "Filtrova\u0165 aukcie pod\u013ea stavu",
+      "results": "{count, plural, one {Zobrazuje sa # aukcia} few {Zobrazuj\u00fa sa # aukcie} other {Zobrazuje sa # aukci\u00ed}}",
+      "filterEmpty": "Tomuto filtru nezodpoved\u00e1 \u017eiadna aukcia.",
+      "emptyState": "Zatia\u013e ste nevytvorili \u017eiadnu aukciu.",
+      "realData": "Aktu\u00e1lne d\u00e1ta",
+      "listLabel": "Va\u0161e aukcie",
+      "endsAt": "Kon\u010d\u00ed {date}",
+      "management": {
+        "eyebrow": "Spr\u00e1va aukcie",
+        "description": "Toto s\u00fakromn\u00e9 zobrazenie vlastn\u00edka na\u010d\u00edtava \u00fadaje zo Supabase.",
+        "auctionDescription": "Opis",
+        "noDescription": "Opis nebol zadan\u00fd.",
+        "startingPrice": "Po\u010diato\u010dn\u00e1 cena",
+        "minimumIncrement": "Minim\u00e1lne nav\u00fd\u0161enie",
+        "endsAt": "Koniec",
+        "stageNotice": "\u00dapravy, odstr\u00e1nenie, fotografie a verejn\u00e9 zdie\u013eanie s\u00fa z\u00e1merne ponechan\u00e9 na nasleduj\u00facu etapu implement\u00e1cie.",
+        "back": "Sp\u00e4\u0165 na Moje aukcie", "visitorPreview": "N\u00e1h\u013ead pre n\u00e1v\u0161tevn\u00edka", "editable": "Akt\u00edvna aukcia bez pon\u00fak. \u00dadaje a fotografie mo\u017eno meni\u0165.", "noteOnly": "Prihadzovanie sa za\u010dalo. P\u00f4vodn\u00e9 \u00fadaje a fotografie s\u00fa uzamknut\u00e9; m\u00f4\u017eete iba zverejni\u0165 doplnenie vlastn\u00edka.", "readOnly": "T\u00e1to aukcia sa skon\u010dila a je iba na \u010d\u00edtanie.", "readOnlyTitle": "Aukcia je uzavret\u00e1", "editTitle": "Upravi\u0165 \u00fadaje aukcie", "save": "Ulo\u017ei\u0165 zmeny",
+        "fields": { "title": "N\u00e1zov aukcie", "description": "Opis", "starting": "Vyvol\u00e1vacia cena (EUR)", "increment": "Minim\u00e1lne nav\u00fd\u0161enie (EUR)", "endAt": "D\u00e1tum a \u010das ukon\u010denia" },
+        "photosTitle": "Fotografie aukcie", "photosHelp": "Najviac {count} obr\u00e1zkov JPG, PNG alebo WebP, ka\u017ed\u00fd maxim\u00e1lne 5 MB.", "choosePhotos": "Vybra\u0165 fotografie", "noPhotosSelected": "Nie s\u00fa vybran\u00e9 \u017eiadne fotografie.", "addPhotos": "Nahra\u0165 fotografie", "photo": "Fotografia {number}", "removePhoto": "Odstr\u00e1ni\u0165 fotografiu {number}",
+        "deleteTitle": "Odstr\u00e1ni\u0165 aukciu", "deleteConsequence": "Aukcia aj jej nahrat\u00e9 fotografie bud\u00fa natrvalo odstr\u00e1nen\u00e9.", "deleteConfirmation": "Rozumiem, \u017ee t\u00fato akciu nemo\u017eno vr\u00e1ti\u0165 sp\u00e4\u0165.", "confirmDelete": "Odstr\u00e1ni\u0165 aukciu",
+        "noteTitle": "Informova\u0165 prihadzuj\u00facich", "noteLabel": "Doplnenie vlastn\u00edka", "publishNote": "Zverejni\u0165 doplnenie",
+        "status": { "saved": "Zmeny boli ulo\u017een\u00e9.", "photosSaved": "Fotografie boli aktualizovan\u00e9.", "noteAdded": "Doplnenie vlastn\u00edka bolo zverejnen\u00e9.", "invalid": "Skontrolujte zadan\u00e9 hodnoty.", "photoInvalid": "Vyberte najviac p\u00e4\u0165 podporovan\u00fdch obr\u00e1zkov do 5 MB.", "unavailable": "T\u00e1to akcia u\u017e nie je dostupn\u00e1." }
+      }
+    },
     "pageTitle": "Moje aukcie",
     "pageDescription": "Spravujte svoje aktívne a ukončené súkromné aukcie.",
     "demoDisclosure": "Fiktívne ukážkové záznamy pre tento prototyp používateľského rozhrania.",
@@ -22,7 +47,8 @@
       "all": "Všetky ({count})",
       "active": "Aktívne ({count})",
       "ended": "Ukončené ({count})",
-      "results": "{count, plural, one {Zobrazuje sa # ukážková aukcia} few {Zobrazujú sa # ukážkové aukcie} other {Zobrazuje sa # ukážkových aukcií}}"
+      "results": "{count, plural, one {Zobrazuje sa # ukážková aukcia} few {Zobrazujú sa # ukážkové aukcie} other {Zobrazuje sa # ukážkových aukcií}}",
+      "empty": "Tomuto filtru nezodpovedá žiadna demo aukcia."
     },
     "summary": {
       "demoData": "Ukážkové dáta",
@@ -42,6 +68,7 @@
     "card": {
       "listLabel": "Ukážkové aukcie",
       "coverPlaceholder": "Neutrálny ukážkový obrázok pre {title}",
+      "coverPhoto": "Titulná fotografia aukcie {title}",
       "active": "Aktívna",
       "ended": "Ukončená",
       "remaining": "Zostáva {time}",
@@ -65,6 +92,39 @@
       "description": "Vytvorte novú aukciu a zdieľajte ju pomocou QR kódu.",
       "action": "Vytvoriť aukciu"
     }
+  },
+  "AuctionDetail": {
+    "livePhotoAlt": "{title}, fotografia {number}",
+    "liveEndsOn": "Kon\u010d\u00ed {date}",
+    "noDescription": "Opis nebol zadan\u00fd.",
+    "backToAuctions": "Späť na Moje aukcie",
+    "backHome": "Späť domov",
+    "visitorPreview": "Náhľad pre návštevníka",
+    "demoDisclosure": "Fiktívna demo aukcia · Lokálne údaje prototypu",
+    "status": { "active": "Aktívna", "ended": "Ukončená" },
+    "remaining": "Zostáva {days, plural, =0 {} one {# deň } few {# dni } other {# dní }}{hours} h {minutes} min",
+    "endedOn": "Ukončená {date}",
+    "description": "Opis",
+    "price": { "current": "Aktuálna najvyššia ponuka", "starting": "Vyvolávacia cena", "increment": "Minimálne navýšenie", "noBids": "Zatiaľ bez ponúk" },
+    "gallery": { "label": "Galéria fotografií aukcie", "photoAlt": "{title}, demo fotografia {number}", "placeholderAlt": "Terra zástupná plocha fotografie pre {title}", "select": "Zobraziť fotografiu {number}" },
+    "history": { "title": "História prihodení", "count": "{count, plural, one {# demo ponuka} few {# demo ponuky} other {# demo ponúk}}", "empty": "Zatiaľ bez prihodení", "highest": "Najvyššia ponuka" },
+    "notes": { "title": "Doplnenia vlastníka" },
+    "notFound": { "title": "Aukcia sa nenašla", "description": "Táto demo aukcia neexistuje alebo bola odstránená z tejto lokálnej relácie." },
+    "management": {
+      "title": "Správa aukcie", "editable": "Táto aktívna aukcia nemá ponuky, preto možno upraviť jej údaje a fotografie.", "noteOnly": "Prihadzovanie sa začalo. Pôvodné údaje sú uzamknuté; môžete iba zverejniť doplnenie vlastníka.", "readOnly": "Táto ukončená aukcia je dostupná iba na čítanie.",
+      "edit": "Upraviť aukciu", "delete": "Odstrániť aukciu", "save": "Uložiť", "cancel": "Zrušiť", "saved": "Lokálne demo zmeny boli uložené.", "changedState": "Stav aukcie sa zmenil. Táto akcia už nie je dostupná.", "validation": "Vyplňte povinné polia, použite kladné ceny a vyberte budúci čas ukončenia.",
+      "fields": { "title": "Názov aukcie", "description": "Opis", "location": "Lokalita", "starting": "Vyvolávacia cena (EUR)", "increment": "Minimálne navýšenie (EUR)", "endAt": "Dátum a čas ukončenia" },
+      "addPhotos": "Pridať fotografie", "photo": "Fotografia {number}", "removePhoto": "Odstrániť fotografiu {number}",
+      "noteLabel": "Nové doplnenie vlastníka", "publishNote": "Zverejniť doplnenie", "noteAdded": "Doplnenie vlastníka bolo lokálne zverejnené.",
+      "deleteTitle": "Odstrániť „{title}“?", "deleteConsequence": "Demo aukcia sa odstráni zo zoznamu do konca tejto relácie prehliadača. Obnovenie stránky vráti pôvodné demo údaje.", "confirmDelete": "Áno, odstrániť aukciu"
+    },
+    "sharing": { "title": "QR a zdieľanie", "link": "Odkaz pre návštevníka", "copy": "Kopírovať odkaz pre návštevníka", "copied": "Odkaz pre návštevníka bol skopírovaný.", "manual": "Schránka nie je dostupná. Označte a skopírujte odkaz ručne.", "localOnly": "Lokálne úpravy vidíte počas navigácie v tejto relácii prehliadača. Otvorenie odkazu v inom prehliadači zobrazí pôvodný demo záznam.", "qrUnavailable": "QR kód zatiaľ nie je k dispozícii." }
+  },
+  "LiveBidding": {
+    "title": "Prihodi\u0165", "bidCount": "{count, plural, one {# prihodenie} few {# prihodenia} other {# prihoden\u00ed}}", "ended": "Prihadzovanie v tejto aukcii sa skon\u010dilo.", "signInDescription": "Na prihodenie sa prihl\u00e1ste. Aukciu si m\u00f4\u017eete pozrie\u0165 aj bez \u00fa\u010dtu.", "signIn": "Prihl\u00e1si\u0165 sa a prihodi\u0165",
+    "minimum": "Najni\u017e\u0161ia \u010fal\u0161ia ponuka: {amount}", "offer": "Pon\u00faknu\u0165 {amount}", "increment": "+{increment} (spolu {total})", "customLabel": "Va\u0161a celkov\u00e1 ponuka (EUR)", "review": "Skontrolova\u0165 ponuku",
+    "confirmTitle": "Potvr\u010fte svoju ponuku", "confirmDescription": "Odo\u0161le sa t\u00e1to celkov\u00e1 suma, nie iba nav\u00fd\u0161enie.", "minimumChanged": "Aukcia sa po\u010das kontroly zmenila. Va\u0161a suma zostala zachovan\u00e1; nov\u00e9 minimum je {minimum}.", "confirm": "Potvrdi\u0165 prihodenie", "cancel": "Zru\u0161i\u0165",
+    "status": { "accepted": "Va\u0161a ponuka bola prijat\u00e1.", "replayed": "T\u00e1to ponuka u\u017e bola prijat\u00e1. Duplicitn\u00fd z\u00e1pis nevznikol.", "signInRequired": "Pred prihoden\u00edm sa prihl\u00e1ste.", "invalidRequest": "Po\u017eiadavka nie je platn\u00e1. Skontrolujte ponuku znova.", "invalidAmount": "Zadajte platn\u00fa sumu.", "profile_missing": "V\u00e1\u0161 profil prihadzuj\u00faceho nie je pripraven\u00fd. Obnovte str\u00e1nku a sk\u00faste to znova.", "auction_not_found": "T\u00e1to aukcia nie je dostupn\u00e1.", "request_conflict": "Toto potvrdenie u\u017e bolo pou\u017eit\u00e9 pre in\u00fa sumu. Skontrolujte ponuku znova.", "own_auction": "Na vlastnej aukcii nem\u00f4\u017eete prihadzova\u0165.", "not_started": "Prihadzovanie sa e\u0161te neza\u010dalo.", "ended": "Prihadzovanie sa u\u017e skon\u010dilo.", "bid_too_low": "T\u00e1to suma u\u017e nesta\u010d\u00ed. Nov\u00e9 minimum je {minimum}." }
   },
   "LanguageSwitcher": {
     "label": "Výber jazyka",
@@ -122,6 +182,18 @@
     "comingSoonTitle": "{resource} — pripravujeme"
   },
   "AuctionForm": {
+    "active": {
+      "formLabel": "Vytvorenie aukcie",
+      "createAuction": "Vytvori\u0165 aukciu",
+      "creationHelp": "Vytvor\u00ed s\u00fakromn\u00fa aukciu. QR k\u00f3d a nahratie fotografi\u00ed pribudn\u00fa v neskor\u0161ej etape.",
+      "errors": {
+        "title": "Pou\u017eite 3 a\u017e 120 znakov.",
+        "description": "Pou\u017eite najviac 5 000 znakov.",
+        "money": "Zadajte kladn\u00fa sumu v EUR s najviac dvoma desatinn\u00fdmi miestami.",
+        "future": "Vyberte bud\u00faci d\u00e1tum a \u010das ukon\u010denia.",
+        "save": "Aukciu sa nepodarilo ulo\u017ei\u0165. Skontrolujte hodnoty a sk\u00faste to znova."
+      }
+    },
     "pageTitle": "Vytvoriť aukciu",
     "pageDescription": "Pridajte údaje o aukcii a vyberte, kedy sa prihadzovanie skončí.",
     "previewNote": "Iba náhľad rozhrania. Zmeny zostávajú na tejto stránke a neukladajú sa.",
@@ -159,6 +231,10 @@
     "unlistedDescription": "Aukciu môže zobraziť každý, kto má priamy odkaz alebo QR kód. Nezobrazí sa vo verejnom katalógu aukcií. Na prihodenie bude potrebné prihlásenie."
   },
   "PhotoPicker": {
+    "uploadHelp": "Najviac 5 obr\u00e1zkov JPG, PNG alebo WebP, ka\u017ed\u00fd maxim\u00e1lne 5 MB.",
+    "invalidFile": "Vyberte obr\u00e1zky JPG, PNG alebo WebP s ve\u013ekos\u0165ou najviac 5 MB.",
+    "tooMany": "M\u00f4\u017eete nahra\u0165 najviac 5 fotografi\u00ed.",
+    "selectedReady": "{size} KB \u00b7 Pripraven\u00e9 na nahratie",
     "label": "Fotografie / obrázky",
     "add": "Pridať fotografie",
     "dragOrBrowse": "Presuňte fotografie sem alebo ich vyberte kliknutím",

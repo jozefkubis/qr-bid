@@ -5,6 +5,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { MyAuctionsDashboard } from "@/components/auctions/my-auctions-dashboard";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { Link } from "@/i18n/navigation";
+import { listCurrentUserAuctions } from "@/lib/supabase/auctions";
+import { currentTimestamp } from "@/lib/server-time";
 
 export const instant = false;
 
@@ -26,6 +28,7 @@ export default async function MyAuctionsPage({
   await auth.protect({
     unauthenticatedUrl: `/${locale}/sign-in?redirect_url=${encodeURIComponent(returnPath)}`,
   });
+  const auctions = await listCurrentUserAuctions();
 
   const t = await getTranslations("MyAuctions");
 
@@ -33,7 +36,7 @@ export default async function MyAuctionsPage({
     <>
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
         <h1 id="my-auctions-title" className="sr-only">{t("pageTitle")}</h1>
-        <MyAuctionsDashboard />
+        <MyAuctionsDashboard auctions={auctions} now={currentTimestamp()} />
 
         <section className="mt-10 rounded-soft border border-border bg-surface p-6 shadow-soft sm:p-8">
           <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">

@@ -11,7 +11,7 @@ function localDateValue(date: Date) {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 }
 
-export function AuctionDuration() {
+export function AuctionDuration({ error }: { error?: string }) {
   const locale = useLocale();
   const t = useTranslations("AuctionDuration");
   const [date, setDate] = useState("");
@@ -35,6 +35,7 @@ export function AuctionDuration() {
   }, []);
 
   const end = date && time ? new Date(`${date}T${time}`) : null;
+  const endsAt = end && !Number.isNaN(end.getTime()) ? end.toISOString() : "";
   const summary = end && !Number.isNaN(end.getTime())
     ? t("summary", {
         date: new Intl.DateTimeFormat(locale === "sk" ? "sk-SK" : "en-IE", { weekday: "long", year: "numeric", month: "short", day: "numeric" }).format(end),
@@ -60,9 +61,11 @@ export function AuctionDuration() {
         {durationOptions.map(({ hours, label }) => <Button key={hours} variant={duration === hours ? "primary" : "secondary"} aria-pressed={duration === hours} onClick={() => chooseDuration(hours)} className="px-4 text-sm">{label}</Button>)}
       </div>
       <div className="grid gap-5 sm:grid-cols-2">
-        <Input id="end-date" label={t("endDate")} type="date" value={date} className="min-w-0" onChange={(event) => { setDate(event.target.value); setDuration(null); }} />
-        <Input id="end-time" label={t("endTime")} type="time" value={time} className="min-w-0" onChange={(event) => { setTime(event.target.value); setDuration(null); }} />
+        <Input id="end-date" label={t("endDate")} type="date" value={date} required className="min-w-0" onChange={(event) => { setDate(event.target.value); setDuration(null); }} />
+        <Input id="end-time" label={t("endTime")} type="time" value={time} required className="min-w-0" onChange={(event) => { setTime(event.target.value); setDuration(null); }} />
       </div>
+      <input type="hidden" name="endsAt" value={endsAt} />
+      {error ? <p className="mt-3 text-sm font-semibold text-error" role="alert">{error}</p> : null}
       <p role="status" className="mt-4 flex items-start gap-3 rounded-soft border border-border bg-surface-muted p-4 text-sm"><CalendarCheck aria-hidden="true" className="size-5 shrink-0 text-primary" />{summary}</p>
       <Card className="mt-8 flex items-start gap-4 bg-background shadow-none">
         <LockKeyhole aria-hidden="true" className="size-8 shrink-0 rounded-soft bg-surface-muted p-1.5 text-primary" />

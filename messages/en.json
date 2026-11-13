@@ -14,6 +14,31 @@
     "closeMenu": "Close navigation menu"
   },
   "MyAuctions": {
+    "live": {
+      "filterLabel": "Filter auctions by status",
+      "results": "{count, plural, one {Showing # auction} other {Showing # auctions}}",
+      "filterEmpty": "No auctions match this filter.",
+      "emptyState": "You have not created an auction yet.",
+      "realData": "Live data",
+      "listLabel": "Your auctions",
+      "endsAt": "Ends {date}",
+      "management": {
+        "eyebrow": "Auction management",
+        "description": "This private owner view is loaded from Supabase.",
+        "auctionDescription": "Description",
+        "noDescription": "No description provided.",
+        "startingPrice": "Starting price",
+        "minimumIncrement": "Minimum increment",
+        "endsAt": "Ends",
+        "stageNotice": "Editing, deletion, photos and public sharing are intentionally reserved for the next implementation stage.",
+        "back": "Back to My Auctions", "visitorPreview": "Visitor preview", "editable": "Active with no bids. Details and photos may be changed.", "noteOnly": "Bidding has started. Original details and photos are locked; you may only publish an owner update.", "readOnly": "This auction has ended and is read-only.", "readOnlyTitle": "Auction closed", "editTitle": "Edit auction details", "save": "Save changes",
+        "fields": { "title": "Auction title", "description": "Description", "starting": "Starting price (EUR)", "increment": "Minimum increment (EUR)", "endAt": "End date and time" },
+        "photosTitle": "Auction photos", "photosHelp": "Up to {count} JPG, PNG or WebP images, maximum 5 MB each.", "choosePhotos": "Choose photos", "noPhotosSelected": "No photos selected.", "addPhotos": "Upload photos", "photo": "Photo {number}", "removePhoto": "Remove photo {number}",
+        "deleteTitle": "Delete auction", "deleteConsequence": "The auction and its uploaded photos will be permanently removed.", "deleteConfirmation": "I understand that this cannot be undone.", "confirmDelete": "Delete auction",
+        "noteTitle": "Update bidders", "noteLabel": "Owner update", "publishNote": "Publish update",
+        "status": { "saved": "Changes saved.", "photosSaved": "Photos updated.", "noteAdded": "Owner update published.", "invalid": "Check the entered values.", "photoInvalid": "Choose no more than five supported images of up to 5 MB each.", "unavailable": "This action is no longer available." }
+      }
+    },
     "pageTitle": "My Auctions",
     "pageDescription": "Manage your active and completed private auctions.",
     "demoDisclosure": "Fictional sample records for this UX prototype.",
@@ -22,7 +47,8 @@
       "all": "All ({count})",
       "active": "Active ({count})",
       "ended": "Ended ({count})",
-      "results": "{count, plural, one {Showing # demo auction} other {Showing # demo auctions}}"
+      "results": "{count, plural, one {Showing # demo auction} other {Showing # demo auctions}}",
+      "empty": "No demo auctions match this filter."
     },
     "summary": {
       "demoData": "Demo data",
@@ -42,6 +68,7 @@
     "card": {
       "listLabel": "Demo auctions",
       "coverPlaceholder": "Neutral demo cover for {title}",
+      "coverPhoto": "Cover photo for {title}",
       "active": "Active",
       "ended": "Ended",
       "remaining": "{time} remaining",
@@ -65,6 +92,39 @@
       "description": "Create a new auction and share it with a QR code.",
       "action": "Create Auction"
     }
+  },
+  "AuctionDetail": {
+    "livePhotoAlt": "{title}, photo {number}",
+    "backToAuctions": "Back to My Auctions",
+    "backHome": "Back home",
+    "visitorPreview": "Visitor preview",
+    "demoDisclosure": "Fictional demo auction · Local prototype data",
+    "status": { "active": "Active", "ended": "Ended" },
+    "remaining": "{days, plural, =0 {} one {# day } other {# days }}{hours} h {minutes} min remaining",
+    "endedOn": "Ended {date}",
+    "description": "Description",
+    "price": { "current": "Current highest bid", "starting": "Starting price", "increment": "Minimum increment", "noBids": "No bids yet" },
+    "gallery": { "label": "Auction photo gallery", "photoAlt": "{title}, demo photo {number}", "placeholderAlt": "Terra photo placeholder for {title}", "select": "Show photo {number}" },
+    "liveEndsOn": "Ends {date}",
+    "noDescription": "No description provided.",
+    "history": { "title": "Bid History", "count": "{count, plural, one {# demo bid} other {# demo bids}}", "empty": "No bids yet", "highest": "Highest bid" },
+    "notes": { "title": "Owner updates" },
+    "notFound": { "title": "Auction not found", "description": "This demo auction does not exist or was removed from this local session." },
+    "management": {
+      "title": "Auction management", "editable": "This active auction has no bids, so its details and photos can be edited.", "noteOnly": "Bidding has started. Original details are locked; you may only publish an owner update.", "readOnly": "This ended auction is available in read-only mode.",
+      "edit": "Edit auction", "delete": "Delete auction", "save": "Save", "cancel": "Cancel", "saved": "Local demo changes saved.", "changedState": "The auction state changed. This action is no longer available.", "validation": "Complete all required fields, use positive prices and choose a future end time.",
+      "fields": { "title": "Auction title", "description": "Description", "location": "Location", "starting": "Starting price (EUR)", "increment": "Minimum increment (EUR)", "endAt": "End date and time" },
+      "addPhotos": "Add photos", "photo": "Photo {number}", "removePhoto": "Remove photo {number}",
+      "noteLabel": "New owner update", "publishNote": "Publish update", "noteAdded": "Owner update published locally.",
+      "deleteTitle": "Delete “{title}”?", "deleteConsequence": "This removes the demo auction from the list for the rest of this browser session. Refreshing the page restores the original demo data.", "confirmDelete": "Yes, delete auction"
+    },
+    "sharing": { "title": "QR and sharing", "link": "Visitor link", "copy": "Copy visitor link", "copied": "Visitor link copied.", "manual": "Clipboard is unavailable. Select and copy the link manually.", "localOnly": "Local edits are visible while navigating in this browser session. Opening this link in another browser shows the original demo record.", "qrUnavailable": "QR code is not available yet." }
+  },
+  "LiveBidding": {
+    "title": "Place a bid", "bidCount": "{count, plural, one {# bid} other {# bids}}", "ended": "Bidding for this auction has ended.", "signInDescription": "Sign in to place a bid. You can view the auction without an account.", "signIn": "Sign in to bid",
+    "minimum": "Minimum next bid: {amount}", "offer": "Offer {amount}", "increment": "+{increment} (total {total})", "customLabel": "Your total bid (EUR)", "review": "Review bid",
+    "confirmTitle": "Confirm your bid", "confirmDescription": "This is the full amount that will be submitted, not only the increase.", "minimumChanged": "The auction changed while you were reviewing. Your amount is preserved; the new minimum is {minimum}.", "confirm": "Confirm bid", "cancel": "Cancel",
+    "status": { "accepted": "Your bid was accepted.", "replayed": "This bid was already accepted. No duplicate was created.", "signInRequired": "Sign in before placing a bid.", "invalidRequest": "The bid request is invalid. Please review it again.", "invalidAmount": "Enter a valid amount.", "profile_missing": "Your bidder profile is not ready. Refresh the page and try again.", "auction_not_found": "This auction is unavailable.", "request_conflict": "This confirmation was already used for another amount. Review the bid again.", "own_auction": "You cannot bid on your own auction.", "not_started": "Bidding has not started yet.", "ended": "Bidding has already ended.", "bid_too_low": "That amount is no longer high enough. The new minimum is {minimum}." }
   },
   "LanguageSwitcher": {
     "label": "Language selection",
@@ -122,6 +182,18 @@
     "comingSoonTitle": "{resource} coming soon"
   },
   "AuctionForm": {
+    "active": {
+      "formLabel": "Create an auction",
+      "createAuction": "Create Auction",
+      "creationHelp": "Creates the private auction. QR generation and photo upload come in a later stage.",
+      "errors": {
+        "title": "Use 3 to 120 characters.",
+        "description": "Use no more than 5,000 characters.",
+        "money": "Enter a positive EUR amount with no more than two decimal places.",
+        "future": "Choose an end date and time in the future.",
+        "save": "The auction could not be saved. Check the values and try again."
+      }
+    },
     "pageTitle": "Create an auction",
     "pageDescription": "Add your auction details and choose when bidding ends.",
     "previewNote": "UI preview only. Changes stay on this page and are not saved.",
@@ -159,14 +231,18 @@
     "unlistedDescription": "Anyone with the direct link or QR code can view this auction. It will not appear in a public auction directory. Signing in will be required to place a bid."
   },
   "PhotoPicker": {
+    "uploadHelp": "Up to 5 JPG, PNG or WebP images, maximum 5 MB each.",
+    "selectedReady": "{size} KB · Ready to upload",
     "label": "Photos / Images",
     "add": "Add photos",
     "dragOrBrowse": "Drag photos here or click to browse",
     "choose": "Choose photos",
-    "help": "JPG, PNG or WebP. Local previews only; no photos are uploaded.",
+    "help": "Up to 5 JPG, PNG or WebP images, maximum 5 MB each.",
     "unsupported": "Choose JPG, PNG or WebP images. Other file types were skipped.",
+    "invalidFile": "Choose JPG, PNG or WebP images no larger than 5 MB.",
+    "tooMany": "You can upload up to 5 photos.",
     "previewAlt": "Preview of {name}",
-    "selectedLocally": "{size} KB · Selected locally",
+    "selectedLocally": "{size} KB · Ready to upload",
     "remove": "Remove {name}"
   },
   "Auth": { "signIn": "Sign in", "signUp": "Sign up" },

@@ -9,6 +9,7 @@ import { getMessages, getTranslations, setRequestLocale } from "next-intl/server
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { SiteHeader } from "@/components/layout/site-header";
+import { DemoAuctionsProvider } from "@/components/auctions/demo-auctions-provider";
 import { routing } from "@/i18n/routing";
 import "../globals.css";
 
@@ -92,7 +93,7 @@ export default async function LocaleLayout({
             <Suspense fallback={<SiteHeaderFallback locale={locale} />}>
               <SiteHeader />
             </Suspense>
-            {children}
+            <DemoAuctionsProvider>{children}</DemoAuctionsProvider>
           </ClerkProvider>
         </NextIntlClientProvider>
       </body>

@@ -31,7 +31,7 @@ function hasLocalePrefix(pathname: string) {
 export default clerkMiddleware(async (auth, request) => {
   if (hasLocalePrefix(request.nextUrl.pathname)) {
     const privateRoute = request.nextUrl.pathname.match(
-      /^\/(en|sk)\/(?:auctions\/new|my-auctions)\/?$/,
+      /^\/(en|sk)\/(?:auctions\/new|my-auctions(?:\/[^/]+)?)\/?$/,
     );
     if (privateRoute) {
       const signInUrl = new URL(`/${privateRoute[1]}/sign-in`, request.url);

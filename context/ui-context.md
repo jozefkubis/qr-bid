@@ -60,9 +60,45 @@ Simple auction cards: image, title, status, current highest bid, time remaining,
 
 Single-column form: title, description, photos, starting price, minimum increment, end date/time. Clearly show the local time zone. Do not implement Save Draft unless separately approved.
 
+#### Feature 12 Stage B persistence (2026-11-13)
+
+- The primary submit action creates a private owner-scoped auction after server validation. QR generation and photo upload remain explicitly unavailable; selected photos are still local previews and are not submitted.
+- My Auctions replaces demo records with owner-scoped Supabase rows, real active/ended counts derived from persisted end times and a clear first-auction empty state. QR scan analytics remain unavailable.
+- A persisted auction UUID opens a private read-only owner summary. Editing, deletion, photos and public sharing remain reserved for Stage C; existing clearly marked Feature 11 demo routes continue to support their local prototype behavior.
+
+#### Feature 12 Stage C persistence (2026-11-13)
+
+- Create Auction submits up to five selected JPEG, PNG or WebP photos together with the validated auction. Each file is limited to 5 MB; previews remain removable before submission and now clearly state that files are ready to upload.
+- A real UUID visitor route renders only the approved unlisted auction fields, persisted Storage gallery and an empty bid-history state. It does not show owner identity, profile details or contact information. Demo IDs continue to use the Feature 11 local prototype.
+- The private real-auction route provides active zero-bid editing, photo upload/removal and a required irreversible-deletion acknowledgement. Ended auctions render read-only. After Stage D introduces bids, this surface must switch active auctions with accepted bids to owner-note-only behavior.
+- Management photo controls place Choose photos and Upload photos side by side when space permits, wrap safely on narrow screens, and list selected filenames underneath.
+- Real My Auctions cards use the first ordered persisted photo as their cover. Auctions without photos keep the neutral Terra placeholder.
+
 ### Auction Detail (Mobile Priority)
 
 Show image, title, description, current highest bid, countdown, minimum valid next bid, clear Place Bid action, and a readable bid history. Visitors may view without signing in; authentication is required to submit a bid. Keep contact information private. The screenshot's quick-increment controls are a proposed UX convenience, not yet an approved bidding rule. A sticky mobile bid bar is optional and must not obscure content.
+
+#### Feature 11 demo-detail refinement (2026-11-13)
+
+- Public and owner demo details share a responsive gallery, price/status overview and anonymous bid history. Mobile orders media before pricing; desktop may place them side by side. Missing photos use the Terra placeholder.
+- Bid history is a compact, non-scrolling list ordered newest first. It shows only amount and localized time, with a text label on the highest bid; no bidder identity or contact data appears.
+- Management remains clearly separate from the public preview. Active zero-bid records expose editable Terra fields, local photo controls and a confirmed delete action; active records with bids expose only owner updates; ended records are read-only.
+- QR/share UI may expose Copy Link and a selectable absolute localized URL, but must label QR generation as unavailable and explain that local demo edits do not transfer to another browser.
+- Every screen labels fictional records and history as demo content. Local session behavior must never imply persistence, ownership authorization, real bidding or Realtime updates.
+
+#### Feature 12 Stage D bidding (2026-11-13)
+
+- A real auction shows its database-derived current highest amount, minimum next amount, bid count and newest-first anonymous history from one safe public response. History contains only amount and localized time.
+- Before the first bid, the primary action offers exactly the starting price. Afterwards, quick actions show 1x, 2x and 3x the minimum increment and always include the resulting absolute total. A custom absolute EUR amount remains available.
+- Every bid is reviewed in a separate confirmation panel displaying the full submitted amount. The confirmation keeps one request UUID for retry safety until it succeeds, is cancelled or a new amount is reviewed.
+- Signed-out visitors retain the public detail and receive a localized sign-in action. The current dedicated Clerk flow returns to localized home after authentication; direct return to the auction remains a later UX refinement. Ended auctions replace controls with a closed state.
+- Owner cards display real bid count/current highest. After the first accepted bid, private management hides editing, photo and deletion controls and exposes only a timestamped owner-update form while the auction remains active.
+
+#### Feature 12 Stage E Realtime (2026-11-13)
+
+- Every real public auction detail subscribes to its UUID-scoped public bid-change channel. A safe signal or successful reconnect refreshes the server-rendered current amount, minimum, count and anonymous history from the database-backed public response.
+- Realtime never accepts or validates a bid and does not display values taken from the event payload. An outage leaves normal page loads and transactional bidding functional.
+- If another accepted bid arrives while a confirmation is open, the full amount and request UUID remain unchanged. The panel displays the new database minimum and warns the bidder to review before submitting the preserved amount.
 
 ### Auction Published / QR Sharing
 
