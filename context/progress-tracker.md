@@ -4,14 +4,16 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## Current Phase
 
-- Supabase integration, Feature 12 Stage E implemented and deployed; final consolidated Feature 12 acceptance remains pending.
+- Supabase integration, Feature 12 Stage E and the corrective photo-policy migration are deployed; the Clerk PPR dependency pin remains local and awaits Vercel redeployment before final acceptance.
 
 ## Current Goal
 
-- Run the requested final consolidated Feature 12 acceptance pass, covering remaining Stage D/E multi-window, reconnect, replay, concurrency, authorization and time-boundary scenarios before declaring Feature 12 complete.
+- Redeploy and verify the Clerk 7.9.23 pin, exercise the corrected photo policies with real Clerk sessions, then run the remaining consolidated Stage D/E acceptance scenarios before declaring Feature 12 complete.
 
 ## Completed
 
+- Diagnosed the Vercel deployment failures after Feature 12 Stage D/E. Live hosted inspection confirmed `authenticated` had no direct `SELECT` on private `bids`, while four photo metadata/Storage RLS policies queried it as the caller, producing PostgreSQL `42501` and the same denial wrapped by Storage as HTTP 403. Deployed repository migration `20261113200417_fix_photo_policy_bid_permissions.sql` manually through the production SQL Editor after explicit approval. Dashboard execution returned success. Independent inspection confirmed the hardened helper is owned by `postgres`, uses `SECURITY DEFINER` with an empty search path, denies anonymous execution, permits authenticated execution, and lives in a schema unavailable to `anon`. All four policies now call the helper and no longer directly read `bids`; direct `anon`/`authenticated` bid-table SELECT remains revoked. Health is clean; security/performance advisors added no new findings. Because the dashboard application does not populate Supabase CLI migration history, the remote migration list remains empty and the repository file is the migration record.
+- Traced the React resume mismatch to the confirmed `@clerk/nextjs` 7.9.24+ App Router PPR `displayName` regression under Next.js 16.4.5 Cache Components. Pinned `@clerk/nextjs` exactly to the upstream-documented workaround version 7.9.23 in `package.json` and the lockfile. The default Turbopack production build passed with Cache Components/PPR enabled; four repeated production-server requests across `/en` and `/sk` returned HTTP 200, preserved identical EN response sizes and produced no provider resume mismatch in the server output.
 - Implemented Feature 12 Stage E locally. Migration `20261113190608_add_bid_realtime_broadcast.sql` adds an after-insert bid trigger that publishes only `{ changed: true }` to the public UUID-scoped `auction:{id}:bids` topic. The trigger function has an empty search path and no direct public/client execute grants. Public visibility matches the approved anonymous unlisted auction detail.
 - Added a browser publishable-key Realtime client and route-scoped subscription wrapper. Initial subscribe, reconnect and `bid_changed` signals refresh the server-rendered detail from the safe database RPC; unmount removes the channel. Realtime never supplies displayed values or validates bids. Open confirmations retain their absolute amount/request UUID and warn with the new database minimum after an external change.
 - Stage E local verification passes: standalone TypeScript, ESLint/React hooks, EN/SK catalog parity at 292 leaf keys, `git diff --check` and the default Turbopack production build. Hosted inspection confirmed the current `realtime.send(payload jsonb, event text, topic text, private boolean)` signature used by the migration. Applying the migration, advisors and live two-window/reconnect behavior remain pending.
@@ -129,14 +131,15 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## In Progress
 
+- Corrective migration `20261113200417_fix_photo_policy_bid_permissions.sql` is deployed and structurally verified. The exact Clerk 7.9.23 pin is still local only; Vercel redeployment and the live owner/no-bids, owner/with-bids and foreign-account photo authorization matrix remain pending. The MCP verification role could not impersonate `authenticated`, so no end-user Storage mutation is claimed from the structural audit.
 - Feature 08 browser visual review and interactive Clerk/switcher smoke testing remain for the product owner because this Codex CLI session has no browser host. Code, build and HTTP behavior are verified.
 - Feature 11 responsive visual review and clean interactive walkthrough remain. Code, build, catalogs and the signed-in English list are verified; isolated browser automation was unavailable and the open Edge window had concurrent user input.
 
 ## Next Up
 
-- Begin Feature 12 Stage D only after explicit approval; Stage C acceptance checks now pass with the documented non-fault-injected upload and ended-fixture boundaries.
+- Redeploy the pinned Clerk dependency and run the owner/no-bids, owner/with-bids and foreign-account photo checks; the direct-grant and policy-definition checks already pass on hosted project `hylkwkpuwkpdvqczlkma`.
+- Repeat the affected production route at least twice after redeployment to confirm the Clerk PPR shell resumes without the `ReactClerkProvider`/`ClerkProvider` mismatch.
 - Review public and management Feature 11 details at desktop and narrow mobile widths; exercise edit/cancel/save, owner note, delete cancel/confirm, copy fallback, unknown IDs and EN/SK switching in one clean session.
-- After Stage C live acceptance passes, review the gate before Feature 12 Stage D bidding and history.
 - Review `/en`, `/sk`, localized auth modals/pages, switcher behavior and long Slovak labels on mobile and desktop.
 - Re-enable Facebook only after its OAuth provider is active; code integration alone does not activate provider-side OAuth.
 - Resolve the remaining auction lifecycle and registration requirements before implementing affected features.

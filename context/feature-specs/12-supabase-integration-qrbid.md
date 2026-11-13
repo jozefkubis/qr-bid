@@ -58,6 +58,13 @@ Vlastník vychádza z overenej identity a pri bežných úpravách sa nemení. �
 - Prvé načítanie aj opätovné pripojenie zosúlaď s databázou. Po odchode z detailu zruš odber. Ak sa cena zmení počas otvoreného potvrdenia, zachovaj potvrdenú sumu a upozorni na nové minimum.
 - Over dve otvorené okná bez obnovovania stránky, odpojenie a návrat, neprístupný kanál a zastaranú ponuku. Rozhodnutie o prijatí ponuky zostáva v databáze aj počas výpadku Realtime.
 
+### Prevádzková oprava po nasadení etapy D
+
+- RLS politiky pre `auction_photos` a `storage.objects` nesmú kontrolovať existenciu ponúk priamym `SELECT` nad súkromnou tabuľkou `bids` v kontexte roly `authenticated`. Priamy prístup k `bids` zostáva odobratý.
+- Kontrolu existencie ponuky vykonáva úzka boolean helper funkcia v nevystavenej schéme `private`. Funkcia používa `SECURITY DEFINER`, prázdny `search_path`, plne kvalifikované názvy a explicitný grant iba pre `authenticated`; cez Data API nie je samostatne vystavená.
+- Po nasadení opravnej migrácie over nahratie a odstránenie fotky na vlastnej aktívnej aukcii bez ponúk, zamietnutie po prvej ponuke, zamietnutie cudziemu účtu a neprítomnosť priameho `SELECT` grantu na `bids`.
+- Pre produkčný Next.js Cache Components/PPR resume problém spôsobený `@clerk/nextjs` 7.9.24+ je dočasne pripnutá overená verzia `7.9.23`. Neuvoľňuj rozsah verzie, kým upstream oprava nebude samostatne overená produkčným buildom a opakovanými požiadavkami.
+
 ## 4. Kontrola po každej etape
 
 - Uveď dotknuté súbory a migrácie, cieľové prostredie, vykonané kontroly a ich výsledky. Pri zmenách aplikácie spusti lint, TypeScript, build a git diff --check podľa možností pracovného prostredia. Over SK/EN a mobilný tok na dotknutých obrazovkách.
