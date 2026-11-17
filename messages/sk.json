@@ -33,6 +33,7 @@
       "status": { "leading": "Vediem", "outbid": "Prekonaná", "ended": "Ukončená" },
       "remaining": "Zostáva {days, plural, =0 {} one {# deň } few {# dni } other {# dní }}{hours} h {minutes} min",
       "endedAt": "Ukončená {date}",
+      "timeLeft": "Zostávajúci čas",
       "currentHighest": "Aktuálna najvyššia",
       "finalHighest": "Konečná najvyššia",
       "myLatest": "Moja posledná ponuka",

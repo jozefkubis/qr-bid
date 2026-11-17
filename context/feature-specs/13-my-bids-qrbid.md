@@ -17,7 +17,7 @@ Prihadzujúci vidí, v ktorých aukciách vedie, kde ho prekonali a ktoré sa u�
 - Jedna karta na aukciu. Predvolené poradie je od najnovšej prijatej vlastnej ponuky.
 - Na karte je fotografia, ak je k dispozícii, názov aukcie, textový stav, aktuálna najvyššia suma, moja posledná prijatá suma a čas do konca. Po skončení sa zobrazuje konečná najvyššia suma a údaj o ukončení.
 - Tlačidlo **View Auction / Zobraziť aukciu** otvorí existujúci detail v aktuálnom jazyku. Ďalšie prihodenie prebieha cez existujúci postup vrátane potvrdenia.
-- Desktop zobrazuje údaje v jednom riadku, ak to šírka dovolí. Na mobile sú názov a stav hore, ceny vedľa seba a tlačidlo pod nimi. Použiť existujúce komponenty a schválenú Terra paletu. Stav je čitateľný aj bez farby.
+- Desktop zobrazuje údaje v jednom riadku, ak to šírka dovolí: farebný ľavý stavový pás, kompaktnú zaoblenú fotografiu, textový stav pri názve, tri oddelené údajové stĺpce a detailovú akciu. Na mobile sú názov a stav hore, ceny vedľa seba, čas pod nimi a tlačidlo naspodku. Použiť existujúce komponenty a schválenú Terra paletu. Stav je čitateľný aj bez farby.
 - Prázdny zoznam zobrazí „Zatiaľ nemáš žiadne ponuky.“ Prázdny filter zobrazí „V tomto filtri nemáš žiadne aukcie.“ Chyba načítania má vlastnú stručnú správu a možnosť skúsiť znova.
 
 | Filter EN | Filter SK | Zobrazené aukcie |

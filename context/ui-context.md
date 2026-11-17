@@ -115,7 +115,7 @@ Show auctions the user participated in, their latest bid, current highest bid, a
 - All Bids / Leading / Outbid / Ended filters are keyboard-operable, show auction counts and use explicit text states. Ended auctions appear only in All Bids and Ended.
 - Cards use the first persisted photo or the existing neutral placeholder, link to the localized public detail and expose no bidder identity. The list is refreshed by page navigation rather than a second Realtime subscription.
 - Feature 13 uses only the approved Terra palette. Selected filters, the caller's latest amount and the primary detail action use forest green; outbid may use the restrained brown tertiary accent and ended remains neutral. Every status remains understandable from text without color.
-- Cards have no inset media gutter. At wider widths the cover forms one flush column and the content forms the second; prices and the detail action share one aligned lower row instead of placing the action in a separate empty-height column.
+- Screenshot-approved cards use a slim state-colored left edge and a compact rounded thumbnail inside the card. At wider widths the identity, three separated data columns and detail action align in one row; mobile keeps the two prices side by side, time beneath them and the action last.
 
 ### Profile
 

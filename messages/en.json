@@ -33,6 +33,7 @@
       "status": { "leading": "Leading", "outbid": "Outbid", "ended": "Ended" },
       "remaining": "{days, plural, =0 {} one {# day } other {# days }}{hours} h {minutes} min remaining",
       "endedAt": "Ended {date}",
+      "timeLeft": "Time left",
       "currentHighest": "Current highest",
       "finalHighest": "Final highest",
       "myLatest": "My latest bid",

@@ -1,6 +1,13 @@
 "use client";
 
-import { ArrowRight, Clock3, ImageIcon } from "lucide-react";
+import {
+  Archive,
+  ArrowRight,
+  CircleCheck,
+  Clock3,
+  ImageIcon,
+  TriangleAlert,
+} from "lucide-react";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
@@ -32,74 +39,121 @@ function MyBidCard({ auction, now }: { auction: MyBidAuction; now: number }) {
   });
   const endTime = new Date(auction.endsAt).getTime();
   const remaining = countdownParts(endTime, now);
-  const timeText = auction.status === "ended"
-    ? t("endedAt", { date: date.format(endTime) })
-    : t("remaining", remaining);
-  const coverUrl = auction.photoPath ? getAuctionPhotoUrl(auction.photoPath) : null;
+  const timeText =
+    auction.status === "ended"
+      ? t("endedAt", { date: date.format(endTime) })
+      : t("remaining", remaining);
+  const coverUrl = auction.photoPath
+    ? getAuctionPhotoUrl(auction.photoPath)
+    : null;
   const statusClasses: Record<MyBidAuctionStatus, string> = {
     leading: "border-primary/25 bg-primary/10 text-primary",
     outbid: "border-tertiary/25 bg-tertiary/10 text-tertiary",
     ended: "border-border bg-surface-muted text-muted-foreground",
   };
+  const cardClasses: Record<MyBidAuctionStatus, string> = {
+    leading: "border-border",
+    outbid: "border-tertiary/35",
+    ended: "border-border",
+  };
+  const accentClasses: Record<MyBidAuctionStatus, string> = {
+    leading: "bg-primary/70",
+    outbid: "bg-tertiary",
+    ended: "bg-muted-foreground/70",
+  };
+  const StatusIcon =
+    auction.status === "leading"
+      ? CircleCheck
+      : auction.status === "outbid"
+        ? TriangleAlert
+        : Archive;
 
   return (
     <article>
-      <Card className="overflow-hidden !p-0">
-        <div className="grid md:grid-cols-[10rem_minmax(0,1fr)] lg:grid-cols-[11rem_minmax(0,1fr)]">
-          <div className="relative flex h-40 items-center justify-center overflow-hidden bg-linear-to-br from-primary/20 via-surface-muted to-tertiary/10 md:h-full md:min-h-48">
-            {coverUrl ? (
-              <Image
-                unoptimized
-                src={coverUrl}
-                alt={t("coverPhoto", { title: auction.title })}
-                fill
-                sizes="(min-width: 1024px) 176px, (min-width: 768px) 160px, 100vw"
-                className="object-cover"
-              />
-            ) : (
-              <ImageIcon aria-hidden="true" className="size-10 text-muted-foreground/70" />
-            )}
-          </div>
+      <Card
+        className={`relative overflow-hidden !p-0 ${cardClasses[auction.status]}`}
+      >
+        <span
+          aria-hidden="true"
+          className={`absolute inset-y-0 left-0 w-1.5 ${accentClasses[auction.status]}`}
+        />
 
-          <div className="min-w-0 p-5 sm:p-6">
-            <div className="flex flex-wrap items-start justify-between gap-3">
-              <h2 className="min-w-0 flex-1 text-lg font-semibold sm:text-xl">{auction.title}</h2>
-              <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${statusClasses[auction.status]}`}>
+        <div className="grid min-w-0 gap-5 p-5 pl-7 sm:p-6 sm:pl-8 lg:grid-cols-[minmax(18rem,1.15fr)_minmax(24rem,1fr)_auto] lg:items-center">
+          <div className="grid min-w-0 grid-cols-[5rem_minmax(0,1fr)] items-center gap-4">
+            <div className="relative flex size-20 items-center justify-center overflow-hidden rounded-soft bg-linear-to-br from-primary/20 via-surface-muted to-tertiary/10">
+              {coverUrl ? (
+                <Image
+                  unoptimized
+                  src={coverUrl}
+                  alt={t("coverPhoto", { title: auction.title })}
+                  fill
+                  sizes="80px"
+                  className="object-cover"
+                />
+              ) : (
+                <ImageIcon
+                  aria-hidden="true"
+                  className="size-8 text-muted-foreground/70"
+                />
+              )}
+            </div>
+
+            <div className="min-w-0">
+              <span
+                className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold ${statusClasses[auction.status]}`}
+              >
+                <StatusIcon aria-hidden="true" className="size-3.5" />
                 {t(`status.${auction.status}`)}
               </span>
-            </div>
-
-            <p className="mt-3 flex items-start gap-2 text-sm text-muted-foreground">
-              <Clock3 aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
-              <span>{timeText}</span>
-            </p>
-
-            <div className="mt-5 grid gap-5 border-t border-border pt-4 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
-              <dl className="grid grid-cols-2 divide-x divide-border">
-                <div className="min-w-0 pr-4">
-                  <dt className="text-xs text-muted-foreground">
-                    {auction.status === "ended" ? t("finalHighest") : t("currentHighest")}
-                  </dt>
-                  <dd className="mt-1 break-words font-semibold">
-                    {currency.format(auction.currentHighestMinor / 100)}
-                  </dd>
-                </div>
-                <div className="min-w-0 pl-4">
-                  <dt className="text-xs text-muted-foreground">{t("myLatest")}</dt>
-                  <dd className="mt-1 break-words font-semibold text-primary">
-                    {currency.format(auction.myLatestAmountMinor / 100)}
-                  </dd>
-                </div>
-              </dl>
-              <Link
-                href={`/auctions/${auction.id}`}
-                className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-soft border border-primary bg-primary px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:border-primary-hover hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus lg:w-auto"
+              <h2
+                title={auction.title}
+                className="mt-2 min-w-0 text-lg font-semibold lg:truncate"
               >
-                {t("viewAuction")}
-                <ArrowRight aria-hidden="true" className="size-4" />
-              </Link>
+                {auction.title}
+              </h2>
             </div>
           </div>
+
+          <dl className="grid min-w-0 grid-cols-2 border-t border-border pt-4 lg:grid-cols-3 lg:border-t-0 lg:border-l lg:pt-0">
+            <div className="min-w-0 pr-4 lg:pl-6">
+              <dt className="text-xs text-muted-foreground">
+                {auction.status === "ended"
+                  ? t("finalHighest")
+                  : t("currentHighest")}
+              </dt>
+              <dd className="mt-1 break-words text-lg font-semibold">
+                {currency.format(auction.currentHighestMinor / 100)}
+              </dd>
+            </div>
+            <div className="min-w-0 border-l border-border px-4">
+              <dt className="text-xs text-muted-foreground">
+                {t("myLatest")}
+              </dt>
+              <dd className="mt-1 break-words text-lg font-semibold text-primary">
+                {currency.format(auction.myLatestAmountMinor / 100)}
+              </dd>
+            </div>
+            <div className="col-span-2 mt-4 min-w-0 border-t border-border pt-4 lg:col-span-1 lg:mt-0 lg:border-t-0 lg:border-l lg:px-4 lg:pt-0">
+              <dt className="text-xs text-muted-foreground">
+                {auction.status === "ended" ? t("status.ended") : t("timeLeft")}
+              </dt>
+              <dd className="mt-1 flex items-start gap-2 text-sm font-semibold">
+                <Clock3
+                  aria-hidden="true"
+                  className="mt-0.5 size-4 shrink-0 text-tertiary"
+                />
+                <span>{timeText}</span>
+              </dd>
+            </div>
+          </dl>
+
+          <Link
+            href={`/auctions/${auction.id}`}
+            className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-primary bg-primary px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:border-primary-hover hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus lg:w-auto"
+          >
+            {t("viewAuction")}
+            <ArrowRight aria-hidden="true" className="size-4" />
+          </Link>
         </div>
       </Card>
     </article>
