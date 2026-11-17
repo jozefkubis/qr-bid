@@ -13,7 +13,7 @@ export default function MyBidsError({ reset }: { error: Error & { digest?: strin
         <button
           type="button"
           onClick={reset}
-          className="mt-6 inline-flex min-h-11 cursor-pointer items-center justify-center rounded-soft border border-bid-accent bg-bid-accent px-5 py-2.5 font-semibold text-white transition-colors hover:border-bid-accent-hover hover:bg-bid-accent-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
+          className="mt-6 inline-flex min-h-11 cursor-pointer items-center justify-center rounded-soft border border-primary bg-primary px-5 py-2.5 font-semibold text-white transition-colors hover:border-primary-hover hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
         >
           {t("retry")}
         </button>

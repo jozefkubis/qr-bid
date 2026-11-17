@@ -7,6 +7,7 @@ import { useState, useSyncExternalStore } from "react";
 import { CreateAuctionLink } from "@/components/auth/create-auction-link";
 import { LanguagePreview } from "@/components/layout/language-preview";
 import { Link, usePathname } from "@/i18n/navigation";
+import { Logo } from "@/components/layout/logo";
 
 const navigationLinkClasses =
   "inline-flex min-h-11 items-center rounded-soft px-3 font-semibold text-foreground transition-colors hover:bg-surface-muted hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";
@@ -40,13 +41,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 shrink-0 border-b border-border bg-surface">
       <div className="mx-auto flex min-h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <div className="flex min-w-0 items-center gap-1 sm:gap-3">
-          <Link
-            href="/"
-            className="inline-flex min-h-11 shrink-0 items-center rounded-soft font-heading text-xl font-semibold text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
-            onClick={closeMenu}
-          >
-            QRBid
-          </Link>
+          <Logo closeMenu={closeMenu} />
           <Show when="signed-in">
             <div className="hidden items-center gap-1 lg:flex">
               <Link
@@ -60,7 +55,7 @@ export function SiteHeader() {
               <Link
                 href="/my-bids"
                 aria-current={pathname === "/my-bids" ? "page" : undefined}
-                className="inline-flex min-h-11 min-w-0 items-center rounded-soft px-3 font-semibold text-foreground transition-colors hover:bg-bid-accent-soft hover:text-bid-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
+                className="inline-flex min-h-11 min-w-0 items-center rounded-soft px-3 font-semibold text-foreground transition-colors hover:bg-surface-muted hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
                 onClick={closeMenu}
               >
                 {t("myBids")}
@@ -69,7 +64,10 @@ export function SiteHeader() {
           </Show>
         </div>
 
-        <nav aria-label={t("primaryNavigation")} className="hidden items-center gap-2 lg:flex">
+        <nav
+          aria-label={t("primaryNavigation")}
+          className="hidden items-center gap-2 lg:flex"
+        >
           <Link href="/" className={navigationLinkClasses}>
             {t("home")}
           </Link>
@@ -81,7 +79,9 @@ export function SiteHeader() {
           </div>
           <Show when="signed-out">
             <SignInButton mode="modal" fallbackRedirectUrl={`/${locale}`}>
-              <button type="button" className={signInClasses}>{t("signIn")}</button>
+              <button type="button" className={signInClasses}>
+                {t("signIn")}
+              </button>
             </SignInButton>
           </Show>
           <Show when="signed-in">
@@ -114,14 +114,26 @@ export function SiteHeader() {
           className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-border px-4 py-3 lg:hidden"
         >
           <div className="mx-auto grid w-full max-w-7xl gap-1">
-            <Link href="/" className={navigationLinkClasses} onClick={closeMenu}>
+            <Link
+              href="/"
+              className={navigationLinkClasses}
+              onClick={closeMenu}
+            >
               {t("home")}
             </Link>
             <Show when="signed-in">
-              <Link href="/my-auctions" className={navigationLinkClasses} onClick={closeMenu}>
+              <Link
+                href="/my-auctions"
+                className={navigationLinkClasses}
+                onClick={closeMenu}
+              >
                 {t("myAuctions")}
               </Link>
-              <Link href="/my-bids" className={navigationLinkClasses} onClick={closeMenu}>
+              <Link
+                href="/my-bids"
+                className={navigationLinkClasses}
+                onClick={closeMenu}
+              >
                 {t("myBids")}
               </Link>
             </Show>
@@ -137,7 +149,11 @@ export function SiteHeader() {
               </div>
               <Show when="signed-out">
                 <SignInButton mode="modal" fallbackRedirectUrl={`/${locale}`}>
-                  <button type="button" className={signInClasses} onClick={closeMenu}>
+                  <button
+                    type="button"
+                    className={signInClasses}
+                    onClick={closeMenu}
+                  >
                     {t("signIn")}
                   </button>
                 </SignInButton>

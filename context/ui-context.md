@@ -114,7 +114,8 @@ Show auctions the user participated in, their latest bid, current highest bid, a
 - One responsive card is shown per participated auction, ordered by the caller's latest accepted bid. Mobile keeps title/status above two side-by-side prices and the detail action below; wider layouts place media, data and action in one row when space permits.
 - All Bids / Leading / Outbid / Ended filters are keyboard-operable, show auction counts and use explicit text states. Ended auctions appear only in All Bids and Ended.
 - Cards use the first persisted photo or the existing neutral placeholder, link to the localized public detail and expose no bidder identity. The list is refreshed by page navigation rather than a second Realtime subscription.
-- Feature 13's approved purple accent is narrowly tokenized as `bid-accent` and used only for this bidder overview's selected filter, own amount and primary detail action. The surrounding application remains on the approved Terra direction, and every status remains understandable from text without color.
+- Feature 13 uses only the approved Terra palette. Selected filters, the caller's latest amount and the primary detail action use forest green; outbid may use the restrained brown tertiary accent and ended remains neutral. Every status remains understandable from text without color.
+- Cards have no inset media gutter. At wider widths the cover forms one flush column and the content forms the second; prices and the detail action share one aligned lower row instead of placing the action in a separate empty-height column.
 
 ### Profile
 
@@ -131,6 +132,6 @@ Full name, email, phone number, and preferred language (EN/SK). Avoid unsupporte
 ## Shared Header and Footer Refinement (2026-11-06)
 
 - Keep the header visible during scrolling with sticky positioning and preserve anchor clearance. Use the expanded mobile menu below 1024px.
-- Header includes a working EN/SK switcher, working Clerk authentication controls, and a prominent green Create an auction action. Signed-out authentication opens Clerk's localized modal; signed-in users see Clerk's account avatar.
+- Header keeps the original text `QRBid` as the linked home identity and places a small square logo slot directly to its left. The current wide `public/logo.png` is temporarily cropped to its icon inside that slot; it may be replaced later by a dedicated icon image without changing the surrounding navigation. The header also includes a working EN/SK switcher, working Clerk authentication controls, and a prominent green Create an auction action. Signed-out authentication opens Clerk's localized modal; signed-in users see Clerk's account avatar.
 - The header language switcher follows the navigation actions and is separated by the same slim vertical border used in the footer. Its active locale is visually highlighted and exposed through `aria-pressed`; both controls meet the 44px touch-target guidance and use the pointer cursor when interactive. When signed in, Clerk's user avatar sits immediately after EN/SK as the final item on the far right. The expanded mobile menu uses the same EN/SK-then-account order below the creation link.
 - Footer follows the compact reference layout: brand/copyright left, planned resource labels and language preview right on desktop; wrap/stack on mobile. Terms, Privacy, Status and Documentation are disabled and marked “Coming soon”, with no fake routes or operational-status claim. Background remains identical to SiteHeader.

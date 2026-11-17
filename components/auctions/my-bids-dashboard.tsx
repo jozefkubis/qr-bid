@@ -37,16 +37,16 @@ function MyBidCard({ auction, now }: { auction: MyBidAuction; now: number }) {
     : t("remaining", remaining);
   const coverUrl = auction.photoPath ? getAuctionPhotoUrl(auction.photoPath) : null;
   const statusClasses: Record<MyBidAuctionStatus, string> = {
-    leading: "border-bid-accent/25 bg-bid-accent-soft text-bid-accent",
+    leading: "border-primary/25 bg-primary/10 text-primary",
     outbid: "border-tertiary/25 bg-tertiary/10 text-tertiary",
     ended: "border-border bg-surface-muted text-muted-foreground",
   };
 
   return (
     <article>
-      <Card className="overflow-hidden p-0">
-        <div className="grid md:grid-cols-[10rem_minmax(0,1fr)] lg:grid-cols-[11rem_minmax(0,1fr)_auto]">
-          <div className="relative flex h-40 items-center justify-center overflow-hidden bg-linear-to-br from-bid-accent/15 via-surface-muted to-primary/10 md:h-full md:min-h-44">
+      <Card className="overflow-hidden !p-0">
+        <div className="grid md:grid-cols-[10rem_minmax(0,1fr)] lg:grid-cols-[11rem_minmax(0,1fr)]">
+          <div className="relative flex h-40 items-center justify-center overflow-hidden bg-linear-to-br from-primary/20 via-surface-muted to-tertiary/10 md:h-full md:min-h-48">
             {coverUrl ? (
               <Image
                 unoptimized
@@ -74,32 +74,31 @@ function MyBidCard({ auction, now }: { auction: MyBidAuction; now: number }) {
               <span>{timeText}</span>
             </p>
 
-            <dl className="mt-5 grid grid-cols-2 divide-x divide-border border-y border-border py-4">
-              <div className="min-w-0 pr-4">
-                <dt className="text-xs text-muted-foreground">
-                  {auction.status === "ended" ? t("finalHighest") : t("currentHighest")}
-                </dt>
-                <dd className="mt-1 break-words font-semibold">
-                  {currency.format(auction.currentHighestMinor / 100)}
-                </dd>
-              </div>
-              <div className="min-w-0 pl-4">
-                <dt className="text-xs text-muted-foreground">{t("myLatest")}</dt>
-                <dd className="mt-1 break-words font-semibold text-bid-accent">
-                  {currency.format(auction.myLatestAmountMinor / 100)}
-                </dd>
-              </div>
-            </dl>
-          </div>
-
-          <div className="flex items-center px-5 pb-5 sm:px-6 sm:pb-6 lg:px-6 lg:py-6">
-            <Link
-              href={`/auctions/${auction.id}`}
-              className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-soft border border-bid-accent bg-bid-accent px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:border-bid-accent-hover hover:bg-bid-accent-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus lg:w-auto"
-            >
-              {t("viewAuction")}
-              <ArrowRight aria-hidden="true" className="size-4" />
-            </Link>
+            <div className="mt-5 grid gap-5 border-t border-border pt-4 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+              <dl className="grid grid-cols-2 divide-x divide-border">
+                <div className="min-w-0 pr-4">
+                  <dt className="text-xs text-muted-foreground">
+                    {auction.status === "ended" ? t("finalHighest") : t("currentHighest")}
+                  </dt>
+                  <dd className="mt-1 break-words font-semibold">
+                    {currency.format(auction.currentHighestMinor / 100)}
+                  </dd>
+                </div>
+                <div className="min-w-0 pl-4">
+                  <dt className="text-xs text-muted-foreground">{t("myLatest")}</dt>
+                  <dd className="mt-1 break-words font-semibold text-primary">
+                    {currency.format(auction.myLatestAmountMinor / 100)}
+                  </dd>
+                </div>
+              </dl>
+              <Link
+                href={`/auctions/${auction.id}`}
+                className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-soft border border-primary bg-primary px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:border-primary-hover hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus lg:w-auto"
+              >
+                {t("viewAuction")}
+                <ArrowRight aria-hidden="true" className="size-4" />
+              </Link>
+            </div>
           </div>
         </div>
       </Card>
@@ -141,7 +140,7 @@ export function MyBidsDashboard({ auctions, now }: { auctions: MyBidAuction[]; n
                 aria-pressed={filter === option}
                 aria-controls="my-bids-list"
                 onClick={() => setFilter(option)}
-                className={`min-h-11 shrink-0 cursor-pointer rounded-lg px-3 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus sm:px-4 sm:text-sm ${filter === option ? "bg-bid-accent text-white" : "text-muted-foreground hover:bg-bid-accent-soft hover:text-bid-accent"}`}
+                className={`min-h-11 shrink-0 cursor-pointer rounded-lg px-3 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus sm:px-4 sm:text-sm ${filter === option ? "bg-primary text-white" : "text-muted-foreground hover:bg-surface-muted hover:text-primary"}`}
               >
                 {t(`filters.${option}`, { count: counts[option] })}
               </button>
