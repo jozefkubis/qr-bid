@@ -141,6 +141,20 @@ export type Database = {
           current_highest_minor: number | null;
         }[];
       };
+      get_my_bid_auctions: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          auction_id: string;
+          currency: string;
+          current_highest_minor: number;
+          ends_at: string;
+          my_latest_amount_minor: number;
+          my_latest_bid_at: string;
+          photo_path: string | null;
+          status: string;
+          title: string;
+        }[];
+      };
       place_bid: {
         Args: {
           p_amount_minor: number;

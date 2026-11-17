@@ -42,7 +42,7 @@ export function LiveBiddingPanel(props: Props) {
     if (state.status === "accepted" || state.status === "replayed") {
       router.refresh();
     }
-  }, [router, state.status]);
+  }, [router, state.requestId, state.status]);
 
   function prepare(amountMinor: number) {
     setConfirmation({ amountMinor, minimumAtReviewMinor: props.minimumNextBidMinor, requestId: crypto.randomUUID() });
@@ -61,7 +61,9 @@ export function LiveBiddingPanel(props: Props) {
   const quickAmounts = props.bidCount === 0
     ? [props.minimumNextBidMinor]
     : [1, 2, 3].map((multiple) => (props.currentHighestMinor ?? 0) + props.minimumIncrementMinor * multiple);
-  const visibleConfirmation = state.status === "accepted" || state.status === "replayed" ? null : confirmation;
+  const bidSucceeded = state.status === "accepted" || state.status === "replayed";
+  const visibleConfirmation = bidSucceeded && state.requestId === confirmation?.requestId ? null : confirmation;
+  const visibleStatus = confirmation && state.requestId !== confirmation.requestId ? undefined : state.status;
 
   return <Card className="p-5 sm:p-6">
     <h2 className="text-xl font-semibold">{t("title")}</h2>
@@ -69,6 +71,6 @@ export function LiveBiddingPanel(props: Props) {
     <div className="mt-5 flex flex-wrap gap-3">{quickAmounts.map((amount, index) => <Button key={amount} variant={index === 0 ? "primary" : "secondary"} onClick={() => prepare(amount)}>{props.bidCount === 0 ? t("offer", { amount: money.format(amount / 100) }) : t("increment", { increment: money.format(props.minimumIncrementMinor * (index + 1) / 100), total: money.format(amount / 100) })}</Button>)}</div>
     <form onSubmit={prepareCustom} className="mt-6 grid gap-3 sm:grid-cols-[1fr_auto] sm:items-end"><Input id="custom-bid" type="number" min="0.01" step="0.01" required label={t("customLabel")} value={customAmount} onChange={(event) => setCustomAmount(event.target.value)} /><Button type="submit">{t("review")}</Button></form>
     {visibleConfirmation ? <form action={formAction} className="mt-6 rounded-soft border border-primary bg-primary/5 p-4"><p className="font-semibold">{t("confirmTitle")}</p><p className="mt-2 text-2xl font-bold text-primary">{money.format(visibleConfirmation.amountMinor / 100)}</p><p className="mt-2 text-sm text-muted-foreground">{t("confirmDescription")}</p>{visibleConfirmation.minimumAtReviewMinor !== props.minimumNextBidMinor ? <p role="alert" className="mt-3 rounded-soft bg-tertiary/15 p-3 text-sm font-semibold text-foreground">{t("minimumChanged", { minimum: money.format(props.minimumNextBidMinor / 100) })}</p> : null}<input type="hidden" name="amountMinor" value={visibleConfirmation.amountMinor} /><input type="hidden" name="requestId" value={visibleConfirmation.requestId} /><div className="mt-4 flex flex-wrap gap-3"><Button type="submit" isLoading={pending}><Gavel className="size-4" aria-hidden="true" />{t("confirm")}</Button><Button type="button" variant="secondary" disabled={pending} onClick={() => setConfirmation(null)}>{t("cancel")}</Button></div></form> : null}
-    {state.status ? <p role={state.status === "accepted" || state.status === "replayed" ? "status" : "alert"} className="mt-4 rounded-soft bg-surface-muted p-3 text-sm font-semibold">{t(`status.${state.status}`, { minimum: money.format((state.minimumNextBidMinor ?? props.minimumNextBidMinor) / 100) })}</p> : null}
+    {visibleStatus ? <p role={visibleStatus === "accepted" || visibleStatus === "replayed" ? "status" : "alert"} className="mt-4 rounded-soft bg-surface-muted p-3 text-sm font-semibold">{t(`status.${visibleStatus}`, { minimum: money.format((state.minimumNextBidMinor ?? props.minimumNextBidMinor) / 100) })}</p> : null}
   </Card>;
 }

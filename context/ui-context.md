@@ -108,6 +108,14 @@ Show auction URL, QR code, Copy Link, QR download, A4 PDF poster download, and V
 
 Show auctions the user participated in, their latest bid, current highest bid, and active/ended status. Do not include win-rate analytics, invoices, or claim workflows in MVP.
 
+#### Feature 13 first version (2026-11-17)
+
+- Signed-in navigation places My Bids beside My Auctions on desktop and includes both destinations in the mobile menu. The protected localized route is `/[locale]/my-bids`.
+- One responsive card is shown per participated auction, ordered by the caller's latest accepted bid. Mobile keeps title/status above two side-by-side prices and the detail action below; wider layouts place media, data and action in one row when space permits.
+- All Bids / Leading / Outbid / Ended filters are keyboard-operable, show auction counts and use explicit text states. Ended auctions appear only in All Bids and Ended.
+- Cards use the first persisted photo or the existing neutral placeholder, link to the localized public detail and expose no bidder identity. The list is refreshed by page navigation rather than a second Realtime subscription.
+- Feature 13's approved purple accent is narrowly tokenized as `bid-accent` and used only for this bidder overview's selected filter, own amount and primary detail action. The surrounding application remains on the approved Terra direction, and every status remains understandable from text without color.
+
 ### Profile
 
 Full name, email, phone number, and preferred language (EN/SK). Avoid unsupported SMS alerts, daily summaries, and advanced session-management UI.

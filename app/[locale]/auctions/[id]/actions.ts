@@ -30,5 +30,9 @@ export async function placeBidAction(
   const result = await placeBid(auctionId, Number(amountMinor), requestId);
   revalidatePath(`/${locale === "sk" ? "sk" : "en"}/auctions/${auctionId}`);
   revalidatePath(`/${locale === "sk" ? "sk" : "en"}/my-auctions`);
-  return { status: result.status, minimumNextBidMinor: result.minimumNextBidMinor ?? undefined };
+  return {
+    status: result.status,
+    minimumNextBidMinor: result.minimumNextBidMinor ?? undefined,
+    requestId,
+  };
 }

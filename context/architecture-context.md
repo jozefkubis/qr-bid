@@ -92,6 +92,13 @@ Store monetary values as exact decimal or integer minor units, **never floating-
 - The payload contains only `{ changed: true }`. It never carries amount, bidder identity or authoritative auction state. Clients respond by refreshing the server-rendered detail from `get_public_auction`; PostgreSQL remains the only bid validator and source of truth during Realtime outages.
 - The trigger function has an empty search path and no direct `PUBLIC`, `anon` or `authenticated` execute grant. The browser uses only the publishable key and removes its channel on unmount.
 
+#### Feature 13 My Bids overview (2026-11-17)
+
+- The protected My Bids list uses one authenticated, bidder-scoped database function. It derives the current profile from the verified Clerk JWT `sub`; the browser cannot select another bidder or provide an identity parameter.
+- The function reads the private `bids` table as `SECURITY DEFINER` with an empty search path, has no `PUBLIC` or `anon` execute grant, and is granted only to `authenticated`. Direct client table access remains revoked.
+- It returns one row per auction with only card data: auction UUID/title/currency/end time, first photo path, current highest amount, the caller's latest accepted amount/time and a database-derived `leading`, `outbid` or `ended` state. No other bidder ID, profile or contact field crosses the boundary.
+- Ended state uses PostgreSQL `statement_timestamp()`. The list is loaded on entry and re-entry; Realtime remains limited to the public auction detail and never determines list state.
+
 - **EDIT-001 (approved):** After the first accepted bid, lock the auction starting price, minimum increment and scheduled end time. Enforce this in server/database authorization and update logic, not only by disabling form fields.
 - Whether title, description, images or other fields may be edited after bidding starts remains undecided. Early cancellation is permitted under END-002; the remaining cancellation UX and pre-first-bid editing rules remain open.
 

@@ -6,12 +6,43 @@
   "Navigation": {
     "home": "Domov",
     "myAuctions": "Moje aukcie",
+    "myBids": "Moje ponuky",
     "createAuction": "Vytvoriť aukciu",
     "signIn": "Prihlásiť sa",
     "primaryNavigation": "Hlavná navigácia",
     "mobileNavigation": "Mobilná navigácia",
     "openMenu": "Otvoriť navigačné menu",
     "closeMenu": "Zavrieť navigačné menu"
+  },
+  "MyBids": {
+    "pageTitle": "Moje ponuky",
+    "pageDescription": "Sleduj aukcie, v ktorých máš prijatú ponuku.",
+    "filterLabel": "Filtrovať ponuky podľa stavu aukcie",
+    "filters": {
+      "all": "Všetky ({count})",
+      "leading": "Vediem ({count})",
+      "outbid": "Prekonané ({count})",
+      "ended": "Ukončené ({count})"
+    },
+    "results": "{count, plural, one {Zobrazuje sa # aukcia} few {Zobrazujú sa # aukcie} other {Zobrazuje sa # aukcií}}",
+    "listLabel": "Aukcie s tvojimi prijatými ponukami",
+    "emptyState": "Zatiaľ nemáš žiadne ponuky.",
+    "filterEmpty": "V tomto filtri nemáš žiadne aukcie.",
+    "card": {
+      "coverPhoto": "Titulná fotografia aukcie {title}",
+      "status": { "leading": "Vediem", "outbid": "Prekonaná", "ended": "Ukončená" },
+      "remaining": "Zostáva {days, plural, =0 {} one {# deň } few {# dni } other {# dní }}{hours} h {minutes} min",
+      "endedAt": "Ukončená {date}",
+      "currentHighest": "Aktuálna najvyššia",
+      "finalHighest": "Konečná najvyššia",
+      "myLatest": "Moja posledná ponuka",
+      "viewAuction": "Zobraziť aukciu"
+    },
+    "error": {
+      "title": "Ponuky sa nepodarilo načítať",
+      "description": "Skús túto stránku načítať znova.",
+      "retry": "Skúsiť znova"
+    }
   },
   "MyAuctions": {
     "live": {

@@ -12,6 +12,9 @@
   --border: #d9d0c4;
   --focus: #2f6f45;
   --error: #b42318;
+  --bid-accent: #6d28d9;
+  --bid-accent-hover: #5b21b6;
+  --bid-accent-soft: #f5f3ff;
   --radius-ui: 0.75rem;
   --shadow-ui: 0 4px 20px rgba(46, 50, 48, 0.06);
 }
@@ -28,6 +31,9 @@
   --color-border: var(--border);
   --color-focus: var(--focus);
   --color-error: var(--error);
+  --color-bid-accent: var(--bid-accent);
+  --color-bid-accent-hover: var(--bid-accent-hover);
+  --color-bid-accent-soft: var(--bid-accent-soft);
   --font-sans: var(--font-nunito-sans);
   --font-heading: var(--font-literata);
   --radius-soft: var(--radius-ui);

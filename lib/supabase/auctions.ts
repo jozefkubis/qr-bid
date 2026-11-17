@@ -21,6 +21,18 @@ export type OwnedAuction = {
 
 export type PublicBid = { amountMinor: number; createdAt: string };
 export type PublicOwnerNote = { body: string; createdAt: string };
+export type MyBidAuctionStatus = "ended" | "leading" | "outbid";
+export type MyBidAuction = {
+  currency: "EUR";
+  currentHighestMinor: number;
+  endsAt: string;
+  id: string;
+  myLatestAmountMinor: number;
+  myLatestBidAt: string;
+  photoPath: string | null;
+  status: MyBidAuctionStatus;
+  title: string;
+};
 export type PublicAuction = Omit<OwnedAuction, "createdAt"> & {
   bidHistory: PublicBid[];
   minimumNextBidMinor: number;
@@ -104,6 +116,24 @@ export async function listCurrentUserAuctions() {
   if (summaries.error) throw summaries.error;
   const summaryByAuction = new Map(summaries.data.map((summary) => [summary.auction_id, summary]));
   return result.data.map((row) => toOwnedAuction(row, summaryByAuction.get(row.id)));
+}
+
+export async function listCurrentUserBidAuctions(): Promise<MyBidAuction[]> {
+  const supabase = await currentSupabaseClient();
+  const result = await supabase.rpc("get_my_bid_auctions");
+
+  if (result.error) throw result.error;
+  return result.data.map((row) => ({
+    currency: row.currency as "EUR",
+    currentHighestMinor: row.current_highest_minor,
+    endsAt: row.ends_at,
+    id: row.auction_id,
+    myLatestAmountMinor: row.my_latest_amount_minor,
+    myLatestBidAt: row.my_latest_bid_at,
+    photoPath: row.photo_path,
+    status: row.status as MyBidAuctionStatus,
+    title: row.title,
+  }));
 }
 
 export async function getCurrentUserAuction(id: string) {

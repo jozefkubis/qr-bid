@@ -6,12 +6,43 @@
   "Navigation": {
     "home": "Home",
     "myAuctions": "My Auctions",
+    "myBids": "My Bids",
     "createAuction": "Create an auction",
     "signIn": "Sign in",
     "primaryNavigation": "Primary navigation",
     "mobileNavigation": "Mobile navigation",
     "openMenu": "Open navigation menu",
     "closeMenu": "Close navigation menu"
+  },
+  "MyBids": {
+    "pageTitle": "My Bids",
+    "pageDescription": "Follow the auctions where you have placed an accepted bid.",
+    "filterLabel": "Filter your bids by auction status",
+    "filters": {
+      "all": "All Bids ({count})",
+      "leading": "Leading ({count})",
+      "outbid": "Outbid ({count})",
+      "ended": "Ended ({count})"
+    },
+    "results": "{count, plural, one {Showing # auction} other {Showing # auctions}}",
+    "listLabel": "Auctions with your accepted bids",
+    "emptyState": "You have not placed any bids yet.",
+    "filterEmpty": "You have no auctions in this filter.",
+    "card": {
+      "coverPhoto": "Cover photo for {title}",
+      "status": { "leading": "Leading", "outbid": "Outbid", "ended": "Ended" },
+      "remaining": "{days, plural, =0 {} one {# day } other {# days }}{hours} h {minutes} min remaining",
+      "endedAt": "Ended {date}",
+      "currentHighest": "Current highest",
+      "finalHighest": "Final highest",
+      "myLatest": "My latest bid",
+      "viewAuction": "View Auction"
+    },
+    "error": {
+      "title": "Your bids could not be loaded",
+      "description": "Please try loading this page again.",
+      "retry": "Try again"
+    }
   },
   "MyAuctions": {
     "live": {

@@ -48,14 +48,24 @@ export function SiteHeader() {
             QRBid
           </Link>
           <Show when="signed-in">
-            <Link
-              href="/my-auctions"
-              aria-current={pathname === "/my-auctions" ? "page" : undefined}
-              className="inline-flex min-h-11 min-w-0 items-center rounded-soft px-2 text-sm font-semibold text-foreground transition-colors hover:bg-surface-muted hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus sm:px-3 sm:text-base"
-              onClick={closeMenu}
-            >
-              {t("myAuctions")}
-            </Link>
+            <div className="hidden items-center gap-1 lg:flex">
+              <Link
+                href="/my-auctions"
+                aria-current={pathname === "/my-auctions" ? "page" : undefined}
+                className="inline-flex min-h-11 min-w-0 items-center rounded-soft px-3 font-semibold text-foreground transition-colors hover:bg-surface-muted hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
+                onClick={closeMenu}
+              >
+                {t("myAuctions")}
+              </Link>
+              <Link
+                href="/my-bids"
+                aria-current={pathname === "/my-bids" ? "page" : undefined}
+                className="inline-flex min-h-11 min-w-0 items-center rounded-soft px-3 font-semibold text-foreground transition-colors hover:bg-bid-accent-soft hover:text-bid-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
+                onClick={closeMenu}
+              >
+                {t("myBids")}
+              </Link>
+            </div>
           </Show>
         </div>
 
@@ -107,6 +117,14 @@ export function SiteHeader() {
             <Link href="/" className={navigationLinkClasses} onClick={closeMenu}>
               {t("home")}
             </Link>
+            <Show when="signed-in">
+              <Link href="/my-auctions" className={navigationLinkClasses} onClick={closeMenu}>
+                {t("myAuctions")}
+              </Link>
+              <Link href="/my-bids" className={navigationLinkClasses} onClick={closeMenu}>
+                {t("myBids")}
+              </Link>
+            </Show>
             {showCreateAuctionLink ? (
               <CreateAuctionLink
                 className={navigationLinkClasses}
