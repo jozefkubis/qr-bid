@@ -29,7 +29,7 @@ Auctions are accessible to anyone who has the link, but they are not listed in a
 ## Core User Flow
 
 1. A user registers or signs in and opens **Create Auction**.
-2. The owner enters an auction title, description, photos, starting price, minimum bid increment, and closing date/time.
+2. The owner enters an auction title, public free-text location, description, photos, starting price, minimum bid increment, and closing date/time.
 3. The app creates a unique auction URL and QR code; the owner can share the link or download an A4 PDF poster.
 4. An interested person scans the QR code or opens the link and sees the auction detail without signing in.
 5. To place a bid, the visitor signs in or registers, providing their name, email address, and phone number. After authentication, they return to the same auction.
@@ -50,7 +50,7 @@ Auctions are accessible to anyone who has the link, but they are not listed in a
 
 ### Auction Creation and Management
 
-- Auction title, description, photographs, starting price, minimum increment, and closing date/time.
+- Auction title, public free-text location, description, photographs, starting price, minimum increment, and closing date/time.
 - **My Auctions** lists auctions created by the user, their status, current highest bid, and bid count.
 - Owners can open an auction detail and manage their own auctions subject to agreed lifecycle rules.
 

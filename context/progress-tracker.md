@@ -4,13 +4,25 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## Current Phase
 
-- Supabase integration, Feature 12 Stage E and the Feature 13 My Bids RPC are deployed. Feature 13 manual acceptance is in progress; the Clerk PPR dependency pin remains local and awaits Vercel redeployment.
+- Supabase integration, Feature 12 Stage E and the Feature 13 My Bids RPC are deployed. A corrective auction-location migration and matching application flow are prepared locally but not deployed. Feature 13 manual acceptance is in progress; the Clerk PPR dependency pin remains local and awaits Vercel redeployment.
 
 ## Current Goal
 
-- Complete Feature 13 visual and A/B acceptance without weakening the private bid-table boundary, while keeping the paused remainder of the Feature 12 acceptance matrix explicitly incomplete.
+- Deploy and verify the approved public auction-location correction, then complete Feature 13 visual and remaining acceptance without weakening the private bid-table boundary, while keeping the paused remainder of the Feature 12 acceptance matrix explicitly incomplete.
 
 ## Completed
+
+- The product owner completed the first hosted auction-location acceptance check: after the migration, a new Slovak auction was created successfully with a location and redirected to My Auctions, where its card displayed the exact submitted location. Public detail, My Bids, legacy fallback/backfill, EN and responsive views remain unverified.
+
+- The product owner manually ran `20261118204546_add_auction_location.sql` in the hosted Supabase SQL Editor and reported that it completed successfully. This establishes reported deployment of the location column, constraint and recreated RPCs; independent MCP schema/grant inspection remains unavailable because the connected role is denied access. End-to-end creation, legacy fallback/backfill and responsive EN/SK display checks remain pending.
+
+- Added the approved auction-location flow locally. New auctions now require one international free-text public location of 2–120 trimmed characters; create and eligible zero-bid owner-edit actions validate it server-side. Prepared CLI migration `20261118204546_add_auction_location.sql`, which adds a backward-compatible nullable column plus a `NOT VALID` check that still enforces a non-null trimmed value on new or updated rows, and safely recreates the public-auction, owner-update and My Bids RPCs with the new field and their existing least-privilege grants. Real public details, owner management, My Auctions and My Bids show the location with a localized explicit fallback for legacy rows. Project overview, architecture, UI context and Feature 12/13 specifications are synchronized. EN/SK JSON parsing, standalone TypeScript, ESLint, `git diff --check` and the default Turbopack production build pass. No hosted migration, legacy-row backfill or authenticated browser acceptance is claimed.
+
+- Replaced the hourglass beside the Feature 13 ended date with Lucide `CalendarClock` after screenshot review. Active cards retain the hourglass countdown icon; the ended icon now communicates a fixed completion date and time without implying a win or changing layout, color or data.
+
+- Removed the repeated `Ended / Ukončená` prefix from the Feature 13 ended-card date value after screenshot review. The data-column heading still communicates the ended state, while the value now contains only the localized date and time in EN/SK.
+
+- Shortened the Feature 13 own-bid card label from `My latest bid / Moja posledná ponuka` to `My bid / Moja ponuka` after screenshot review. The shorter EN/SK copy keeps the label on one line at the reviewed desktop width so the two price values align, without changing the latest-accepted-bid meaning or card layout.
 
 - The product owner confirmed the Feature 13 A/B scenario and verified that returning from the auction detail to My Bids loads the updated Outbid state without a manual browser refresh.
 
@@ -148,6 +160,8 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## In Progress
 
+- Auction location is reported live on hosted project `hylkwkpuwkpdvqczlkma` after the product owner manually ran the migration in SQL Editor. Existing auctions intentionally remain null and must receive truthful values through an explicitly approved backfill; until then the UI displays `Location not provided / Lokalita neuvedená`. End-to-end creation, hosted structural checks, EN/SK browser review and responsive card/detail review remain pending.
+
 - Feature 13 migration is live on hosted project `hylkwkpuwkpdvqczlkma`: after the product owner ran it manually, the authenticated English route loaded one real `Feature 12 final acceptance` card with EUR 37.00 as both current highest and latest own bid and classified it as Leading. This confirms the RPC is available and its basic one-card/leading rendering path works. The full A/B, account-isolation, ended, signed-out, empty-state and responsive EN/SK acceptance matrix remains pending; Supabase MCP table inspection was separately denied to the connected verification role.
 - Corrective migration `20261113200417_fix_photo_policy_bid_permissions.sql` is deployed and structurally verified. The exact Clerk 7.9.23 pin is still local only; Vercel redeployment and the live owner/no-bids, owner/with-bids and foreign-account photo authorization matrix remain pending. The MCP verification role could not impersonate `authenticated`, so no end-user Storage mutation is claimed from the structural audit.
 - Feature 08 browser visual review and interactive Clerk/switcher smoke testing remain for the product owner because this Codex CLI session has no browser host. Code, build and HTTP behavior are verified.
@@ -155,6 +169,7 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## Next Up
 
+- Inspect the new auction's public detail, then verify My Bids, legacy fallback/backfill, EN/responsive views and the hosted column/constraint/RPC grants before completing location acceptance.
 - Inspect the live `get_my_bid_auctions()` grants/search path, then run the Feature 13 A/B acceptance block followed by ended, account-isolation, signed-out, empty and responsive EN/SK checks.
 - Redeploy the pinned Clerk dependency and run the owner/no-bids, owner/with-bids and foreign-account photo checks; the direct-grant and policy-definition checks already pass on hosted project `hylkwkpuwkpdvqczlkma`.
 - Repeat the affected production route at least twice after redeployment to confirm the Clerk PPR shell resumes without the `ReactClerkProvider`/`ClerkProvider` mismatch.

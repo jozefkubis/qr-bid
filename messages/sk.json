@@ -30,13 +30,14 @@
     "filterEmpty": "V tomto filtri nemáš žiadne aukcie.",
     "card": {
       "coverPhoto": "Titulná fotografia aukcie {title}",
+      "locationUnavailable": "Lokalita neuvedená",
       "status": { "leading": "Vediem", "outbid": "Prekonaná", "ended": "Ukončená" },
       "remaining": "{days, plural, =0 {} other {#d }}{hours}h {minutes}m",
-      "endedAt": "Ukončená {date}",
+      "endedAt": "{date}",
       "timeLeft": "Zostávajúci čas",
       "currentHighest": "Aktuálna najvyššia",
       "finalHighest": "Konečná najvyššia",
-      "myLatest": "Moja posledná ponuka",
+      "myLatest": "Moja ponuka",
       "viewAuction": "Zobraziť aukciu"
     },
     "error": {
@@ -63,8 +64,8 @@
         "minimumIncrement": "Minim\u00e1lne nav\u00fd\u0161enie",
         "endsAt": "Koniec",
         "stageNotice": "\u00dapravy, odstr\u00e1nenie, fotografie a verejn\u00e9 zdie\u013eanie s\u00fa z\u00e1merne ponechan\u00e9 na nasleduj\u00facu etapu implement\u00e1cie.",
-        "back": "Sp\u00e4\u0165 na Moje aukcie", "visitorPreview": "N\u00e1h\u013ead pre n\u00e1v\u0161tevn\u00edka", "editable": "Akt\u00edvna aukcia bez pon\u00fak. \u00dadaje a fotografie mo\u017eno meni\u0165.", "noteOnly": "Prihadzovanie sa za\u010dalo. P\u00f4vodn\u00e9 \u00fadaje a fotografie s\u00fa uzamknut\u00e9; m\u00f4\u017eete iba zverejni\u0165 doplnenie vlastn\u00edka.", "readOnly": "T\u00e1to aukcia sa skon\u010dila a je iba na \u010d\u00edtanie.", "readOnlyTitle": "Aukcia je uzavret\u00e1", "editTitle": "Upravi\u0165 \u00fadaje aukcie", "save": "Ulo\u017ei\u0165 zmeny",
-        "fields": { "title": "N\u00e1zov aukcie", "description": "Opis", "starting": "Vyvol\u00e1vacia cena (EUR)", "increment": "Minim\u00e1lne nav\u00fd\u0161enie (EUR)", "endAt": "D\u00e1tum a \u010das ukon\u010denia" },
+        "back": "Sp\u00e4\u0165 na Moje aukcie", "visitorPreview": "N\u00e1h\u013ead pre n\u00e1v\u0161tevn\u00edka", "editable": "Akt\u00edvna aukcia bez pon\u00fak. \u00dadaje a fotografie mo\u017eno meni\u0165.", "noteOnly": "Prihadzovanie sa za\u010dalo. P\u00f4vodn\u00e9 \u00fadaje a fotografie s\u00fa uzamknut\u00e9; m\u00f4\u017eete iba zverejni\u0165 doplnenie vlastn\u00edka.", "readOnly": "T\u00e1to aukcia sa skon\u010dila a je iba na \u010d\u00edtanie.", "readOnlyTitle": "Aukcia je uzavret\u00e1", "editTitle": "Upravi\u0165 \u00fadaje aukcie", "save": "Ulo\u017ei\u0165 zmeny", "locationUnavailable": "Lokalita neuveden\u00e1",
+        "fields": { "title": "N\u00e1zov aukcie", "description": "Opis", "location": "Lokalita", "locationHelp": "Uve\u010fte mesto, mestsk\u00fa \u010das\u0165 alebo adresu, ktor\u00fa chcete verejne zobrazi\u0165.", "starting": "Vyvol\u00e1vacia cena (EUR)", "increment": "Minim\u00e1lne nav\u00fd\u0161enie (EUR)", "endAt": "D\u00e1tum a \u010das ukon\u010denia" },
         "photosTitle": "Fotografie aukcie", "photosHelp": "Najviac {count} obr\u00e1zkov JPG, PNG alebo WebP, ka\u017ed\u00fd maxim\u00e1lne 5 MB.", "choosePhotos": "Vybra\u0165 fotografie", "noPhotosSelected": "Nie s\u00fa vybran\u00e9 \u017eiadne fotografie.", "addPhotos": "Nahra\u0165 fotografie", "photo": "Fotografia {number}", "removePhoto": "Odstr\u00e1ni\u0165 fotografiu {number}",
         "deleteTitle": "Odstr\u00e1ni\u0165 aukciu", "deleteConsequence": "Aukcia aj jej nahrat\u00e9 fotografie bud\u00fa natrvalo odstr\u00e1nen\u00e9.", "deleteConfirmation": "Rozumiem, \u017ee t\u00fato akciu nemo\u017eno vr\u00e1ti\u0165 sp\u00e4\u0165.", "confirmDelete": "Odstr\u00e1ni\u0165 aukciu",
         "noteTitle": "Informova\u0165 prihadzuj\u00facich", "noteLabel": "Doplnenie vlastn\u00edka", "publishNote": "Zverejni\u0165 doplnenie",
@@ -101,6 +102,7 @@
       "listLabel": "Ukážkové aukcie",
       "coverPlaceholder": "Neutrálny ukážkový obrázok pre {title}",
       "coverPhoto": "Titulná fotografia aukcie {title}",
+      "locationUnavailable": "Lokalita neuvedená",
       "active": "Aktívna",
       "ended": "Ukončená",
       "remaining": "Zostáva {time}",
@@ -127,6 +129,7 @@
   },
   "AuctionDetail": {
     "livePhotoAlt": "{title}, fotografia {number}",
+    "locationUnavailable": "Lokalita neuvedená",
     "liveEndsOn": "Kon\u010d\u00ed {date}",
     "noDescription": "Opis nebol zadan\u00fd.",
     "backToAuctions": "Späť na Moje aukcie",
@@ -193,7 +196,7 @@
     "title": "Ako QRBid funguje",
     "description": "Tri jednoduché kroky na vytvorenie aukcie, jej zdieľanie so záujemcami a prijímanie ponúk online.",
     "steps": {
-      "1": { "label": "KROK 01", "title": "Vytvorte aukciu", "description": "Pridajte názov, opis, fotografie, počiatočnú cenu, minimálne navýšenie a dátum ukončenia.", "footer": "Nastavte pravidlá aukcie" },
+      "1": { "label": "KROK 01", "title": "Vytvorte aukciu", "description": "Pridajte názov, verejnú lokalitu, opis, fotografie, počiatočnú cenu, minimálne navýšenie a dátum ukončenia.", "footer": "Nastavte pravidlá aukcie" },
       "2": { "label": "KROK 02", "title": "Zdieľajte QR kód", "description": "Zdieľajte priamy odkaz alebo umiestnite QR kód na vytlačený plagát A4, aby záujemcovia mohli aukciu otvoriť.", "footer": "Dostupná cez priamy odkaz" },
       "3": { "label": "KROK 03", "title": "Prijímajte ponuky", "description": "Registrovaní účastníci môžu prihadzovať online. Sledujte aktuálnu najvyššiu ponuku a čas ukončenia aukcie.", "footer": "Ponuky sa aktualizujú v reálnom čase" }
     }
@@ -221,6 +224,7 @@
       "errors": {
         "title": "Pou\u017eite 3 a\u017e 120 znakov.",
         "description": "Pou\u017eite najviac 5 000 znakov.",
+        "location": "Pou\u017eite 2 a\u017e 120 znakov.",
         "money": "Zadajte kladn\u00fa sumu v EUR s najviac dvoma desatinn\u00fdmi miestami.",
         "future": "Vyberte bud\u00faci d\u00e1tum a \u010das ukon\u010denia.",
         "save": "Aukciu sa nepodarilo ulo\u017ei\u0165. Skontrolujte hodnoty a sk\u00faste to znova."
@@ -235,6 +239,9 @@
     "titlePlaceholder": "napr. Podzemné parkovacie miesto č. 42",
     "titleExample": "Podzemné parkovacie miesto č. 42 – City Tower",
     "titleHelp": "Zvoľte jasný a výstižný názov.",
+    "locationLabel": "Lokalita",
+    "locationPlaceholder": "napr. Bratislava – Ružinov, Slovensko",
+    "locationHelp": "Uveďte mesto, mestskú časť alebo adresu, ktorú chcete verejne zobraziť.",
     "descriptionLabel": "Opis",
     "descriptionExample": "Bezpečné podzemné parkovacie miesto na podlaží -2. Kamerový dohľad a vstup cez elektronickú bránu. Prístupový čip dostane víťaz aukcie.",
     "descriptionHelp": "Opíšte stav, prístup a dôležité podrobnosti.",

@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Clock3, ImageIcon } from "lucide-react";
+import { ArrowRight, Clock3, ImageIcon, MapPin } from "lucide-react";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { Card } from "@/components/ui/card";
@@ -25,6 +25,7 @@ export function OwnedAuctionCard({ auction, now }: { auction: OwnedAuction; now:
       </div>
       <div className="flex flex-1 flex-col p-5 sm:p-6">
         <h2 className="line-clamp-2 text-lg font-semibold sm:text-xl">{auction.title}</h2>
+        <p className="mt-2 flex items-start gap-2 text-sm text-muted-foreground"><MapPin aria-hidden="true" className="mt-0.5 size-4 shrink-0" /><span>{auction.location ?? t("locationUnavailable")}</span></p>
         <p className="mt-3 flex items-start gap-2 text-sm text-muted-foreground"><Clock3 aria-hidden="true" className="mt-0.5 size-4 shrink-0" /><span>{tLive("endsAt", { date })}</span></p>
         <dl className="mt-5 grid grid-cols-3 divide-x divide-border border-y border-border py-4 text-center">
           <div className="min-w-0 px-2 first:pl-0"><dt className="text-xs text-muted-foreground">{t("currentHighest")}</dt><dd className="mt-2 font-semibold">{auction.currentHighestMinor === null ? t("noBidsYet") : currency.format(auction.currentHighestMinor / 100)}</dd></div>

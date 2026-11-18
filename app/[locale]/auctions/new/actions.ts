@@ -28,6 +28,7 @@ export async function createAuctionAction(
 ): Promise<CreateAuctionState> {
   const title = text(formData, "title");
   const description = text(formData, "description");
+  const location = text(formData, "location");
   const startingPriceMinor = moneyToMinor(text(formData, "startingPrice"));
   const minimumIncrementMinor = moneyToMinor(text(formData, "minimumIncrement"));
   const endsAtValue = text(formData, "endsAt");
@@ -37,6 +38,7 @@ export async function createAuctionAction(
 
   if (title.length < 3 || title.length > 120) fieldErrors.title = "title";
   if (description.length > 5000) fieldErrors.description = "description";
+  if (location.length < 2 || location.length > 120) fieldErrors.location = "location";
   if (startingPriceMinor === null) fieldErrors.startingPrice = "money";
   if (minimumIncrementMinor === null) fieldErrors.minimumIncrement = "money";
   if (!endsAtValue || Number.isNaN(endsAt.getTime()) || endsAt.getTime() <= Date.now()) {
@@ -51,6 +53,7 @@ export async function createAuctionAction(
     const auction = await createAuction({
       title,
       description,
+      location,
       startingPriceMinor: startingPriceMinor!,
       minimumIncrementMinor: minimumIncrementMinor!,
       endsAt: endsAt.toISOString(),

@@ -11,6 +11,7 @@ export type OwnedAuction = {
   description: string;
   endsAt: string;
   id: string;
+  location: string | null;
   minimumIncrementMinor: number;
   currentHighestMinor: number | null;
   startingPriceMinor: number;
@@ -27,6 +28,7 @@ export type MyBidAuction = {
   currentHighestMinor: number;
   endsAt: string;
   id: string;
+  location: string | null;
   myLatestAmountMinor: number;
   myLatestBidAt: string;
   photoPath: string | null;
@@ -53,6 +55,7 @@ function toOwnedAuction(row: {
   description: string;
   ends_at: string;
   id: string;
+  location: string | null;
   min_increment_minor: number;
   starting_price_minor: number;
   starts_at: string;
@@ -66,6 +69,7 @@ function toOwnedAuction(row: {
     description: row.description,
     endsAt: row.ends_at,
     id: row.id,
+    location: row.location,
     minimumIncrementMinor: row.min_increment_minor,
     currentHighestMinor: summary?.current_highest_minor ?? null,
     startingPriceMinor: row.starting_price_minor,
@@ -75,11 +79,12 @@ function toOwnedAuction(row: {
   };
 }
 
-const auctionColumns = "id, title, description, currency, starting_price_minor, min_increment_minor, starts_at, ends_at, created_at, auction_photos(storage_path, sort_order)";
+const auctionColumns = "id, title, description, location, currency, starting_price_minor, min_increment_minor, starts_at, ends_at, created_at, auction_photos(storage_path, sort_order)";
 
 export async function createAuction(input: {
   description: string;
   endsAt: string;
+  location: string;
   minimumIncrementMinor: number;
   startingPriceMinor: number;
   title: string;
@@ -92,6 +97,7 @@ export async function createAuction(input: {
       owner_id: profile.id,
       title: input.title,
       description: input.description,
+      location: input.location,
       currency: "EUR",
       starting_price_minor: input.startingPriceMinor,
       min_increment_minor: input.minimumIncrementMinor,
@@ -128,6 +134,7 @@ export async function listCurrentUserBidAuctions(): Promise<MyBidAuction[]> {
     currentHighestMinor: row.current_highest_minor,
     endsAt: row.ends_at,
     id: row.auction_id,
+    location: row.location,
     myLatestAmountMinor: row.my_latest_amount_minor,
     myLatestBidAt: row.my_latest_bid_at,
     photoPath: row.photo_path,
@@ -159,6 +166,7 @@ export async function getPublicAuction(id: string): Promise<PublicAuction | null
     id: result.data.id,
     title: result.data.title,
     description: result.data.description,
+    location: result.data.location,
     currency: result.data.currency as "EUR",
     bidCount: result.data.bid_count,
     bidHistory: result.data.bid_history.map((bid) => ({ amountMinor: bid.amount_minor, createdAt: bid.created_at })),
@@ -208,6 +216,7 @@ export async function addCurrentUserAuctionNote(auctionId: string, body: string)
 export async function updateCurrentUserAuction(id: string, input: {
   description: string;
   endsAt: string;
+  location: string;
   minimumIncrementMinor: number;
   startingPriceMinor: number;
   title: string;
@@ -217,6 +226,7 @@ export async function updateCurrentUserAuction(id: string, input: {
     p_auction_id: id,
     p_title: input.title,
     p_description: input.description,
+    p_location: input.location,
     p_starting_price_minor: input.startingPriceMinor,
     p_min_increment_minor: input.minimumIncrementMinor,
     p_ends_at: input.endsAt,

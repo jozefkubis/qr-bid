@@ -22,6 +22,7 @@ export type Database = {
           description: string;
           ends_at: string;
           id: string;
+          location: string | null;
           min_increment_minor: number;
           owner_id: string;
           starting_price_minor: number;
@@ -35,6 +36,7 @@ export type Database = {
           description?: string;
           ends_at: string;
           id?: string;
+          location?: string | null;
           min_increment_minor: number;
           owner_id: string;
           starting_price_minor: number;
@@ -121,6 +123,7 @@ export type Database = {
           description: string;
           ends_at: string;
           id: string;
+          location: string | null;
           bid_count: number;
           bid_history: { amount_minor: number; created_at: string }[];
           current_highest_minor: number | null;
@@ -148,6 +151,7 @@ export type Database = {
           currency: string;
           current_highest_minor: number;
           ends_at: string;
+          location: string | null;
           my_latest_amount_minor: number;
           my_latest_bid_at: string;
           photo_path: string | null;
@@ -176,6 +180,7 @@ export type Database = {
           p_auction_id: string;
           p_description: string;
           p_ends_at: string;
+          p_location: string;
           p_min_increment_minor: number;
           p_starting_price_minor: number;
           p_title: string;

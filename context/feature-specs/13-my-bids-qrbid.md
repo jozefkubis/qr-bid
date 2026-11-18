@@ -15,7 +15,7 @@ Prihadzujúci vidí, v ktorých aukciách vedie, kde ho prekonali a ktoré sa u�
 
 - Chránená stránka v existujúcej EN/SK navigácii vedľa My Auctions. Navrhovaná trasa je `/[locale]/my-bids`, podľa konvencií projektu.
 - Jedna karta na aukciu. Predvolené poradie je od najnovšej prijatej vlastnej ponuky.
-- Na karte je fotografia, ak je k dispozícii, názov aukcie, textový stav, aktuálna najvyššia suma, moja posledná prijatá suma a čas do konca. Po skončení sa zobrazuje konečná najvyššia suma a údaj o ukončení.
+- Na karte je fotografia, ak je k dispozícii, názov aukcie, verejná lokalita, textový stav, aktuálna najvyššia suma, moja posledná prijatá suma a čas do konca. Po skončení sa zobrazuje konečná najvyššia suma a údaj o ukončení. Starší záznam bez lokality zobrazí lokalizovaný stav „Lokalita neuvedená / Location not provided“.
 - Tlačidlo **View Auction / Zobraziť aukciu** otvorí existujúci detail v aktuálnom jazyku. Ďalšie prihodenie prebieha cez existujúci postup vrátane potvrdenia.
 - Desktop zobrazuje údaje v jednom riadku, ak to šírka dovolí: farebný ľavý stavový pás, kompaktnú zaoblenú fotografiu, textový stav pri názve, tri oddelené údajové stĺpce a detailovú akciu. Na mobile sú názov a stav hore, ceny vedľa seba, čas pod nimi a tlačidlo naspodku. Použiť existujúce komponenty a schválenú Terra paletu. Stav je čitateľný aj bez farby.
 - Prázdny zoznam zobrazí „Zatiaľ nemáš žiadne ponuky.“ Prázdny filter zobrazí „V tomto filtri nemáš žiadne aukcie.“ Chyba načítania má vlastnú stručnú správu a možnosť skúsiť znova.
@@ -32,7 +32,7 @@ Počty pri filtroch počítajú aukcie. Ukončená aukcia patrí do filtrov Vše
 ## Údaje a správanie
 
 - Identitu používateľa určí server z aktuálnej Clerk session. Použiť existujúci bezpečný prístup k Supabase. Prehľad musí rešpektovať existujúce pravidlá prístupu a jeho údaje sa nesmú zdieľať medzi reláciami používateľov.
-- Načítať iba údaje potrebné pre karty. Server určí vlastnú poslednú prijatú ponuku, aktuálnu najvyššiu prijatú ponuku a stav. Stav ukončenia vychádza z existujúcich pravidiel aukcie a autoritatívneho času. Klient dostane stav a potrebné sumy bez identity či kontaktu iných prihadzujúcich.
+- Načítať iba údaje potrebné pre karty. Server vráti verejnú lokalitu aukcie a určí vlastnú poslednú prijatú ponuku, aktuálnu najvyššiu prijatú ponuku a stav. Stav ukončenia vychádza z existujúcich pravidiel aukcie a autoritatívneho času. Klient dostane stav, lokalitu a potrebné sumy bez identity či kontaktu iných prihadzujúcich.
 - Zoznam načíta aktuálne údaje pri otvorení a opätovnom vstupe na stránku. Realtime ostáva súčasťou detailu aukcie.
 - Vyhľadávanie, ďalšie možnosti zoradenia, priame prihodenie z karty a štatistiky sú kandidáti na neskoršie doladenie. Potvrdenie výhercu, kontakt a prevzatie sa budú riešiť po dohode o pravidlách vyhodnotenia aukcie.
 

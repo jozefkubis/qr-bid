@@ -20,6 +20,8 @@ Rozsah prvého kroku je **etapa A**. Pred zmenou popíš stručne konkrétne sú
 | auction_notes | id, auction_id, body, created_at. Doplnenia vlastníka po prvej ponuke. | auction_id → auctions.id |
 | bids | id, auction_id, bidder_id, amount_minor, created_at, request_id | auction_id → auctions.id, bidder_id → profiles.id. Unikátna kombinácia auction_id + bidder_id + request_id. |
 
+`location` je jeden povinný medzinárodný textový údaj pre nové aukcie, nie rozbaľovací výber krajiny/mesta ani automatické dopĺňanie adresy. Akceptuje 2–120 znakov, zostáva v jazyku vlastníka, automaticky sa neprekladá a zobrazuje sa verejne. Záznamy vytvorené pred migráciou môžu zostať bez hodnoty, kým sa bezpečne nedoplnia; rozhranie pri nich nesmie vymyslieť náhradnú lokalitu.
+
 Časové údaje ukladaj ako timestamptz a zobrazuj lokalizovane. Peniaze ukladaj v celých najmenších jednotkách meny. Pre prvý tok počítaj s EUR a centami. Nastav databázové obmedzenia pre kladné navýšenie, platný rozsah súm a koniec po začiatku. Over rozsah aj pri prevode medzi JavaScriptom a databázou. Začni indexom pre aukcie vlastníka a históriu podľa aukcie. Ďalšie indexy pridaj podľa reálnych dotazov.
 
 Vlastník vychádza z overenej identity a pri bežných úpravách sa nemení. Časový stav vychádza z databázového času a termínov. Aktuálna najvyššia ponuka a počet sa odvodzujú z prijatých riadkov v bids. Demo záznamy ostávajú oddelené od reálnych účtov a živých údajov. V testovacom prostredí použi jasne označené testovacie záznamy.

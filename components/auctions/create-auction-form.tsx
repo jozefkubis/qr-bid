@@ -31,6 +31,7 @@ export function CreateAuctionForm({ action }: CreateAuctionFormProps) {
         <fieldset className="grid min-w-0 gap-7">
           <legend className="sr-only">{t("details")}</legend>
           <Input id="auction-title" name="title" label={t("titleLabel")} required minLength={3} maxLength={120} placeholder={t("titlePlaceholder")} defaultValue={t("titleExample")} helpText={t("titleHelp")} error={errorText("title")} />
+          <Input id="auction-location" name="location" label={t("locationLabel")} required minLength={2} maxLength={120} placeholder={t("locationPlaceholder")} helpText={t("locationHelp")} error={errorText("location")} />
           <Textarea id="auction-description" name="description" label={t("descriptionLabel")} rows={5} maxLength={5000} defaultValue={t("descriptionExample")} helpText={t("descriptionHelp")} error={errorText("description")} />
           <PhotoPicker />
           {errorText("photos") ? <p className="text-sm font-semibold text-error">{errorText("photos")}</p> : null}

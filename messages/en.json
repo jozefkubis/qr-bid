@@ -30,13 +30,14 @@
     "filterEmpty": "You have no auctions in this filter.",
     "card": {
       "coverPhoto": "Cover photo for {title}",
+      "locationUnavailable": "Location not provided",
       "status": { "leading": "Leading", "outbid": "Outbid", "ended": "Ended" },
       "remaining": "{days, plural, =0 {} other {#d }}{hours}h {minutes}m",
-      "endedAt": "Ended {date}",
+      "endedAt": "{date}",
       "timeLeft": "Time left",
       "currentHighest": "Current highest",
       "finalHighest": "Final highest",
-      "myLatest": "My latest bid",
+      "myLatest": "My bid",
       "viewAuction": "View Auction"
     },
     "error": {
@@ -63,8 +64,8 @@
         "minimumIncrement": "Minimum increment",
         "endsAt": "Ends",
         "stageNotice": "Editing, deletion, photos and public sharing are intentionally reserved for the next implementation stage.",
-        "back": "Back to My Auctions", "visitorPreview": "Visitor preview", "editable": "Active with no bids. Details and photos may be changed.", "noteOnly": "Bidding has started. Original details and photos are locked; you may only publish an owner update.", "readOnly": "This auction has ended and is read-only.", "readOnlyTitle": "Auction closed", "editTitle": "Edit auction details", "save": "Save changes",
-        "fields": { "title": "Auction title", "description": "Description", "starting": "Starting price (EUR)", "increment": "Minimum increment (EUR)", "endAt": "End date and time" },
+        "back": "Back to My Auctions", "visitorPreview": "Visitor preview", "editable": "Active with no bids. Details and photos may be changed.", "noteOnly": "Bidding has started. Original details and photos are locked; you may only publish an owner update.", "readOnly": "This auction has ended and is read-only.", "readOnlyTitle": "Auction closed", "editTitle": "Edit auction details", "save": "Save changes", "locationUnavailable": "Location not provided",
+        "fields": { "title": "Auction title", "description": "Description", "location": "Location", "locationHelp": "Enter a city, area or address you want to display publicly.", "starting": "Starting price (EUR)", "increment": "Minimum increment (EUR)", "endAt": "End date and time" },
         "photosTitle": "Auction photos", "photosHelp": "Up to {count} JPG, PNG or WebP images, maximum 5 MB each.", "choosePhotos": "Choose photos", "noPhotosSelected": "No photos selected.", "addPhotos": "Upload photos", "photo": "Photo {number}", "removePhoto": "Remove photo {number}",
         "deleteTitle": "Delete auction", "deleteConsequence": "The auction and its uploaded photos will be permanently removed.", "deleteConfirmation": "I understand that this cannot be undone.", "confirmDelete": "Delete auction",
         "noteTitle": "Update bidders", "noteLabel": "Owner update", "publishNote": "Publish update",
@@ -101,6 +102,7 @@
       "listLabel": "Demo auctions",
       "coverPlaceholder": "Neutral demo cover for {title}",
       "coverPhoto": "Cover photo for {title}",
+      "locationUnavailable": "Location not provided",
       "active": "Active",
       "ended": "Ended",
       "remaining": "{time} remaining",
@@ -127,6 +129,7 @@
   },
   "AuctionDetail": {
     "livePhotoAlt": "{title}, photo {number}",
+    "locationUnavailable": "Location not provided",
     "backToAuctions": "Back to My Auctions",
     "backHome": "Back home",
     "visitorPreview": "Visitor preview",
@@ -193,7 +196,7 @@
     "title": "How QRBid works",
     "description": "Three simple steps to create an auction, share it with interested people, and receive bids online.",
     "steps": {
-      "1": { "label": "STEP 01", "title": "Create your auction", "description": "Add a title, description, photos, starting price, minimum bid increment, and end date.", "footer": "Set the rules for your auction" },
+      "1": { "label": "STEP 01", "title": "Create your auction", "description": "Add a title, public location, description, photos, starting price, minimum bid increment, and end date.", "footer": "Set the rules for your auction" },
       "2": { "label": "STEP 02", "title": "Share the QR code", "description": "Share a direct link or place a QR code on a printed A4 poster so interested people can open your auction.", "footer": "Accessible through a direct link" },
       "3": { "label": "STEP 03", "title": "Receive bids", "description": "Registered participants can place bids online. Follow the current highest bid and see when the auction ends.", "footer": "Bidding updates in real time" }
     }
@@ -221,6 +224,7 @@
       "errors": {
         "title": "Use 3 to 120 characters.",
         "description": "Use no more than 5,000 characters.",
+        "location": "Use 2 to 120 characters.",
         "money": "Enter a positive EUR amount with no more than two decimal places.",
         "future": "Choose an end date and time in the future.",
         "save": "The auction could not be saved. Check the values and try again."
@@ -235,6 +239,9 @@
     "titlePlaceholder": "e.g. Underground parking space #42",
     "titleExample": "Underground Parking Space #42 – City Tower",
     "titleHelp": "Choose a clear, descriptive title.",
+    "locationLabel": "Location",
+    "locationPlaceholder": "e.g. Bratislava – Ružinov, Slovakia",
+    "locationHelp": "Enter a city, area or address you want to display publicly.",
     "descriptionLabel": "Description",
     "descriptionExample": "Secure underground parking space located on level -2. Camera surveillance and electronic gate access. Access token provided to the winning bidder.",
     "descriptionHelp": "Describe the condition, access and important details.",

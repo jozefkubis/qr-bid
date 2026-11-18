@@ -21,12 +21,14 @@ function target(locale: string, id: string, status: string) {
 export async function updateAuctionAction(locale: string, id: string, data: FormData) {
   const title = text(data, "title");
   const description = text(data, "description");
+  const location = text(data, "location");
   const startingPriceMinor = moneyToMinor(text(data, "startingPrice"));
   const minimumIncrementMinor = moneyToMinor(text(data, "minimumIncrement"));
   const endsAt = new Date(text(data, "endsAt"));
-  if (title.length < 3 || title.length > 120 || description.length > 5000 || startingPriceMinor === null || minimumIncrementMinor === null || Number.isNaN(endsAt.getTime()) || endsAt.getTime() <= Date.now()) redirect(target(locale, id, "invalid"));
-  const updated = await updateCurrentUserAuction(id, { title, description, startingPriceMinor, minimumIncrementMinor, endsAt: endsAt.toISOString() });
+  if (title.length < 3 || title.length > 120 || description.length > 5000 || location.length < 2 || location.length > 120 || startingPriceMinor === null || minimumIncrementMinor === null || Number.isNaN(endsAt.getTime()) || endsAt.getTime() <= Date.now()) redirect(target(locale, id, "invalid"));
+  const updated = await updateCurrentUserAuction(id, { title, description, location, startingPriceMinor, minimumIncrementMinor, endsAt: endsAt.toISOString() });
   revalidatePath(`/${safeLocale(locale)}/auctions/${id}`);
+  revalidatePath(`/${safeLocale(locale)}/my-auctions`);
   revalidatePath(`/${safeLocale(locale)}/my-auctions/${id}`);
   redirect(target(locale, id, updated ? "saved" : "unavailable"));
 }

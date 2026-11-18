@@ -1,4 +1,4 @@
-export type AuctionField = "description" | "endsAt" | "minimumIncrement" | "photos" | "startingPrice" | "title";
+export type AuctionField = "description" | "endsAt" | "location" | "minimumIncrement" | "photos" | "startingPrice" | "title";
 
 export type CreateAuctionState = {
   fieldErrors?: Partial<Record<AuctionField, string>>;

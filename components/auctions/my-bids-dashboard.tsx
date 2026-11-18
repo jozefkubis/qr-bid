@@ -3,9 +3,11 @@
 import {
   Archive,
   ArrowRight,
+  CalendarClock,
   CircleCheck,
   Hourglass,
   ImageIcon,
+  MapPin,
   TriangleAlert,
 } from "lucide-react";
 import Image from "next/image";
@@ -67,6 +69,7 @@ function MyBidCard({ auction, now }: { auction: MyBidAuction; now: number }) {
       : auction.status === "outbid"
         ? TriangleAlert
         : Archive;
+  const TimeIcon = auction.status === "ended" ? CalendarClock : Hourglass;
 
   return (
     <article>
@@ -111,6 +114,10 @@ function MyBidCard({ auction, now }: { auction: MyBidAuction; now: number }) {
               >
                 {auction.title}
               </h2>
+              <p className="mt-1 flex min-w-0 items-start gap-1.5 text-xs text-muted-foreground">
+                <MapPin aria-hidden="true" className="mt-0.5 size-3.5 shrink-0" />
+                <span className="min-w-0 lg:truncate">{auction.location ?? t("locationUnavailable")}</span>
+              </p>
             </div>
           </div>
 
@@ -138,7 +145,7 @@ function MyBidCard({ auction, now }: { auction: MyBidAuction; now: number }) {
                 {auction.status === "ended" ? t("status.ended") : t("timeLeft")}
               </dt>
               <dd className="mt-1 flex items-start gap-2 text-sm font-semibold">
-                <Hourglass
+                <TimeIcon
                   aria-hidden="true"
                   className="mt-0.5 size-4 shrink-0 text-tertiary"
                 />

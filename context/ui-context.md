@@ -58,7 +58,7 @@ Simple auction cards: image, title, status, current highest bid, time remaining,
 
 ### Create Auction
 
-Single-column form: title, description, photos, starting price, minimum increment, end date/time. Clearly show the local time zone. Do not implement Save Draft unless separately approved.
+Single-column form: title, public free-text location, description, photos, starting price, minimum increment, end date/time. Location is one required international text input rather than a country/city dropdown or address autocomplete; its helper text explains that the value is publicly displayed. Clearly show the local time zone. Do not implement Save Draft unless separately approved.
 
 #### Feature 12 Stage B persistence (2026-11-13)
 
@@ -72,7 +72,7 @@ Single-column form: title, description, photos, starting price, minimum incremen
 - A real UUID visitor route renders only the approved unlisted auction fields, persisted Storage gallery and an empty bid-history state. It does not show owner identity, profile details or contact information. Demo IDs continue to use the Feature 11 local prototype.
 - The private real-auction route provides active zero-bid editing, photo upload/removal and a required irreversible-deletion acknowledgement. Ended auctions render read-only. After Stage D introduces bids, this surface must switch active auctions with accepted bids to owner-note-only behavior.
 - Management photo controls place Choose photos and Upload photos side by side when space permits, wrap safely on narrow screens, and list selected filenames underneath.
-- Real My Auctions cards use the first ordered persisted photo as their cover. Auctions without photos keep the neutral Terra placeholder.
+- Real My Auctions cards use the first ordered persisted photo as their cover and show the public auction location. Auctions without photos keep the neutral Terra placeholder. Legacy records without a location use an explicit localized unavailable state rather than an invented value.
 
 ### Auction Detail (Mobile Priority)
 
@@ -88,7 +88,7 @@ Show image, title, description, current highest bid, countdown, minimum valid ne
 
 #### Feature 12 Stage D bidding (2026-11-13)
 
-- A real auction shows its database-derived current highest amount, minimum next amount, bid count and newest-first anonymous history from one safe public response. History contains only amount and localized time.
+- A real auction shows its public user-authored location plus its database-derived current highest amount, minimum next amount, bid count and newest-first anonymous history from one safe public response. History contains only amount and localized time.
 - Before the first bid, the primary action offers exactly the starting price. Afterwards, quick actions show 1x, 2x and 3x the minimum increment and always include the resulting absolute total. A custom absolute EUR amount remains available.
 - Every bid is reviewed in a separate confirmation panel displaying the full submitted amount. The confirmation keeps one request UUID for retry safety until it succeeds, is cancelled or a new amount is reviewed.
 - Signed-out visitors retain the public detail and receive a localized sign-in action. The current dedicated Clerk flow returns to localized home after authentication; direct return to the auction remains a later UX refinement. Ended auctions replace controls with a closed state.
@@ -111,7 +111,7 @@ Show auctions the user participated in, their latest bid, current highest bid, a
 #### Feature 13 first version (2026-11-17)
 
 - Signed-in navigation places My Bids beside My Auctions on desktop and includes both destinations in the mobile menu. The protected localized route is `/[locale]/my-bids`.
-- One responsive card is shown per participated auction, ordered by the caller's latest accepted bid. Mobile keeps title/status above two side-by-side prices and the detail action below; wider layouts place media, data and action in one row when space permits.
+- One responsive card is shown per participated auction, ordered by the caller's latest accepted bid. Its identity area includes the public user-authored location. Mobile keeps title/status/location above two side-by-side prices and the detail action below; wider layouts place media, data and action in one row when space permits.
 - All Bids / Leading / Outbid / Ended filters are keyboard-operable, show auction counts and use explicit text states. Ended auctions appear only in All Bids and Ended.
 - Cards use the first persisted photo or the existing neutral placeholder, link to the localized public detail and expose no bidder identity. The list is refreshed by page navigation rather than a second Realtime subscription.
 - Feature 13 uses only the approved Terra palette. Selected filters, the caller's latest amount and the primary detail action use forest green; outbid may use the restrained brown tertiary accent and ended remains neutral. Every status remains understandable from text without color.
