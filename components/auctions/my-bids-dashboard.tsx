@@ -4,7 +4,7 @@ import {
   Archive,
   ArrowRight,
   CircleCheck,
-  Clock3,
+  Hourglass,
   ImageIcon,
   TriangleAlert,
 } from "lucide-react";
@@ -138,7 +138,7 @@ function MyBidCard({ auction, now }: { auction: MyBidAuction; now: number }) {
                 {auction.status === "ended" ? t("status.ended") : t("timeLeft")}
               </dt>
               <dd className="mt-1 flex items-start gap-2 text-sm font-semibold">
-                <Clock3
+                <Hourglass
                   aria-hidden="true"
                   className="mt-0.5 size-4 shrink-0 text-tertiary"
                 />

@@ -1,72 +1,13 @@
-17.11.2026
+18.11.2026
 
-
-Ahoj, pokračujeme v projekte QRBid.
-
-Lokálny projekt:
-C:\Users\kubis\Desktop\qr-bid
-
-Komunikuj so mnou po slovensky. Pri manuálnom testovaní mi vždy priprav iba jeden testovací blok. Commit, push a mazanie testovacích dát vyžadujú môj výslovný súhlas.
-
-Najprv si prečítaj projektovú dokumentáciu podľa AGENTS.md, najmä:
-- context/feature-specs/13-my-bids-qrbid.md
-- context/progress-tracker.md
-- context/ui-context.md
-
-Aktuálny stav z 2026-11-17:
-
-Dnes sme podľa referenčného screenshotu upravili dizajn kariet Feature 13 – My Bids / Moje ponuky.
-
-Karty teraz obsahujú:
-- tenký farebný ľavý pás podľa stavu,
-- kompaktnú zaoblenú fotografiu,
-- ikonu a textový stav pri názve,
-- samostatné stĺpce pre aktuálnu najvyššiu sumu, moju poslednú ponuku a zostávajúci čas,
-- zaoblené zelené tlačidlo na otvorenie aukcie,
-- výhradne schválenú Terra paletu z app/globals.css.
-
-Zo screenshotu sme zámerne nepridali neschválené údaje a funkcie:
-- adresu,
-- identitu vedúceho používateľa,
-- počet ponúk,
-- counter-bid tlačidlo,
-- kontaktovanie vlastníka,
-- claim workflow.
-
-Zmenené súbory:
-- components/auctions/my-bids-dashboard.tsx
-- messages/en.json
-- messages/sk.json
-- context/feature-specs/13-my-bids-qrbid.md
-- context/ui-context.md
-- context/progress-tracker.md
-
-Overenie už prešlo:
-- npx tsc --noEmit --incremental false
-- npm run lint
-- npm run build – predvolený Turbopack build
-- git diff --check
-- vizuálna kontrola prihlásenej EN desktop stránky /en/my-bids
-
-Nič nebolo commitnuté ani pushnuté. Testovacie dáta neboli zmazané.
-
-Začni týmto jediným otvoreným blokom:
-1. Over aktuálny git diff a zachovaj všetky existujúce zmeny.
-2. Dokonči úzku mobilnú vizuálnu kontrolu /sk/my-bids.
-3. Veď ma iba jedným manuálnym testovacím blokom. Mám otvoriť /sk/my-bids, zúžiť okno približne na šírku telefónu a poslať screenshot.
-4. Podľa screenshotu vyhodnoť poradie prvkov, zalamovanie textov, dve ceny vedľa seba, čas pod nimi a tlačidlo naspodku.
-5. Ak treba opravu, uprav iba My Bids dizajn, spusti primerané kontroly a aktualizuj tracker.
-
-Po vizuálnej akceptácii pokračujeme hlavným A/B scenárom Feature 13:
-- jedna karta na aukciu aj po viacerých vlastných ponukách,
-- stav Vediem,
-- po vyššej ponuke druhého účtu stav Prekonané,
-- aktuálna najvyššia suma sa zmení,
-- moja posledná vlastná suma zostane nezmenená,
-- odkaz Zobraziť aukciu otvorí správny lokalizovaný detail.
-
-Potom dokončíme zostávajúcu akceptačnú maticu Feature 13 podľa trackeru.
-
-Feature 14 – QR kód nezačínaj, kým Feature 13 výslovne neakceptujem. Pred jeho implementáciou najskôr dohodneme verejný odkaz v QR kóde a miesto, kde sa k nemu vlastník dostane. Rozsah A4 plagátu a PDF exportu sa musí schváliť samostatne.
-
-Over tiež aktuálny stav pripraveného zeleného loga a faviconu so šípkou, ale bez môjho súhlasu nerob ďalšiu nesúvisiacu dizajnovú zmenu.
+> Ahoj, pokračujeme v projekte QRBid. Komunikuj po slovensky. Prečítaj dokumentáciu podľa AGENTS.md, najmä špecifikáciu Feature 13, context/ui-context.md a context/progress-tracker.md. Skontroluj aktuálny git diff a zachovaj existujúce zmeny.
+>
+> Kde sme skončili: Slovenská karta Moje ponuky vizuálne prešla pri šírke 412 px. Ceny sú vedľa seba, odpočet je pod nimi a tlačidlo Zobraziť aukciu naspodku. V EN aj SK má odpočet formát 6d 3h 54m s presýpacími hodinami. A/B scenár prešiel vrátane toho, že stav Prekonané sa po návrate z detailu do Moje ponuky aktualizoval bez ručného obnovenia.
+>
+> Dnes najprv dokončíme UI Moje ponuky. Zosumarizuj otvorené vizuálne body podľa trackeru a pokračuj podľa mojej spätnej väzby. Prípadné úpravy obmedz na Feature 13, over ich a aktualizuj tracker.
+>
+> Po vizuálnom schválení pokračujeme zostávajúcou akceptačnou maticou Feature 13 podľa trackeru. Začni ukončenou aukciou. Vždy mi daj iba jeden manuálny testovací blok a počkaj na výsledok, kým dáš ďalší.
+>
+> Commit, push a mazanie testovacích dát vyžadujú môj výslovný súhlas.
+>
+> Feature 14 začneme pripravovať až po mojej výslovnej akceptácii Feature 13. Pred implementáciou si dohodneme verejný odkaz v QR kóde a miesto, kde k nemu vlastník získa prístup. A4 plagát a PDF export schválime samostatne.

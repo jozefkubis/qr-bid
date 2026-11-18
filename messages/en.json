@@ -31,7 +31,7 @@
     "card": {
       "coverPhoto": "Cover photo for {title}",
       "status": { "leading": "Leading", "outbid": "Outbid", "ended": "Ended" },
-      "remaining": "{days, plural, =0 {} one {# day } other {# days }}{hours} h {minutes} min remaining",
+      "remaining": "{days, plural, =0 {} other {#d }}{hours}h {minutes}m",
       "endedAt": "Ended {date}",
       "timeLeft": "Time left",
       "currentHighest": "Current highest",

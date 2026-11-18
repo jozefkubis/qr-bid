@@ -31,7 +31,7 @@
     "card": {
       "coverPhoto": "Titulná fotografia aukcie {title}",
       "status": { "leading": "Vediem", "outbid": "Prekonaná", "ended": "Ukončená" },
-      "remaining": "Zostáva {days, plural, =0 {} one {# deň } few {# dni } other {# dní }}{hours} h {minutes} min",
+      "remaining": "{days, plural, =0 {} other {#d }}{hours}h {minutes}m",
       "endedAt": "Ukončená {date}",
       "timeLeft": "Zostávajúci čas",
       "currentHighest": "Aktuálna najvyššia",
