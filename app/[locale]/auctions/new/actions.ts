@@ -49,6 +49,8 @@ export async function createAuctionAction(
 
   if (Object.keys(fieldErrors).length > 0) return { fieldErrors };
 
+  let auctionId = "";
+
   try {
     const auction = await createAuction({
       title,
@@ -58,6 +60,7 @@ export async function createAuctionAction(
       minimumIncrementMinor: minimumIncrementMinor!,
       endsAt: endsAt.toISOString(),
     });
+    auctionId = auction.id;
     try {
       await uploadAuctionPhotos(auction.id, photos);
     } catch (error) {
@@ -70,5 +73,5 @@ export async function createAuctionAction(
 
   const safeLocale = locale === "sk" ? "sk" : "en";
   revalidatePath(`/${safeLocale}/my-auctions`);
-  redirect(`/${safeLocale}/my-auctions`);
+  redirect(`/${safeLocale}/my-auctions/${auctionId}/share?published=1`);
 }

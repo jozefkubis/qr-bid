@@ -4,13 +4,21 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## Current Phase
 
-- Supabase integration, Feature 12 Stage E and the Feature 13 My Bids RPC are deployed. A corrective auction-location migration and matching application flow are prepared locally but not deployed. Feature 13 manual acceptance is in progress; the Clerk PPR dependency pin remains local and awaits Vercel redeployment.
+- Supabase integration, Feature 12 Stage E, Feature 13 My Bids and the corrective auction-location migration are reported deployed. The product owner reported Feature 14 Step 1 working and approved Step 2; the A4 PDF poster is implemented and locally rendered, with the final real-print/phone-scan acceptance still pending. Feature 13 acceptance and the paused remainder of Feature 12 remain incomplete.
 
 ## Current Goal
 
-- Deploy and verify the approved public auction-location correction, then complete Feature 13 visual and remaining acceptance without weakening the private bid-table boundary, while keeping the paused remainder of the Feature 12 acceptance matrix explicitly incomplete.
+- Complete Feature 14 acceptance block 4 by downloading the A4 poster from a real auction, printing it and scanning its QR code with a phone. Keep Feature 14 open until that physical check passes, and keep the unfinished Feature 12/13 checks explicit.
 
 ## Completed
+
+- On 2026-11-18 the product owner reported that Feature 14 Step 1 works and explicitly approved proceeding to Step 2. This records the handoff decision without inventing separate evidence for every Step 1 subscenario.
+- Implemented Feature 14 Step 2 locally. The sharing page now provides a localized **Download A4 poster (PDF)** action. The client dynamically loads stable `pdfmake` 0.3.14 and its embedded Roboto Unicode fonts only after the click, converts the first optional JPG/PNG/WebP auction photo to a bounded JPEG, and produces one portrait A4 page with Terra styling, title, optional location, photo, large high-error-correction QR code, scan instruction and clickable public URL. The QR and printed link use the exact same environment-specific public URL as copy, PNG and View Auction. Errors in photo/PDF preparation show localized retry feedback instead of silently omitting an available photo.
+- Generated a representative Slovak poster with a long title, diacritics, location and photo, then opened it in the Edge PDF renderer. Visual inspection confirmed exactly one A4 page, readable diacritics, an undistorted photo, generous QR quiet zone, and no clipped title, URL, instruction or footer. The temporary verification directory was removed afterward. Standalone TypeScript, ESLint, 355-key EN/SK catalog parity, production dependency audit with zero findings, `git diff --check` and the default Turbopack production build pass. A real paper print and phone scan are not claimed.
+
+- Implemented Feature 14 Step 1 locally. Successful real auction creation now redirects to the protected localized `/[locale]/my-auctions/[id]/share?published=1` page after photo processing; the query-only first-open state confirms publication, while the new management action reopens the same page without that confirmation. The route validates the auction UUID, is covered by both the shared Clerk proxy matcher and page-level protection with localized sign-in return, reuses `getCurrentUserAuction()` for owner scoping and returns 404 for missing or foreign-owned auctions.
+- Added the responsive EN/SK sharing UI with title, optional location, localized starting price and end time including the browser time-zone abbreviation. One absolute URL derived from the active environment is shared by the selectable field, clipboard action, public-detail action and QR payload. Clipboard failure selects the URL for manual copying. The Terra dark-on-white QR uses a quiet zone, is generated after page load and downloads as PNG; copy controls precede the QR on mobile. Added the focused `qrcode` runtime dependency and deferred its client import to the sharing page. Standalone TypeScript, ESLint, 349-key EN/SK catalog parity, production dependency audit with zero findings, `git diff --check` and the default Turbopack production build pass. Manual hosted acceptance remains separate; no A4 PDF is claimed because the specification gates Step 2 on Step 1 acceptance.
+- Local production smoke testing confirmed that a signed-out Slovak share request receives HTTP 307 to the localized sign-in route with the original share path preserved in `redirect_url`. The configured QR generator also produced a PNG data URL from a representative localized public-auction URL. This does not replace authenticated owner/foreign-owner browser checks, PNG decoding or phone scanning.
 
 - The product owner completed the first hosted auction-location acceptance check: after the migration, a new Slovak auction was created successfully with a location and redirected to My Auctions, where its card displayed the exact submitted location. Public detail, My Bids, legacy fallback/backfill, EN and responsive views remain unverified.
 
@@ -160,6 +168,8 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## In Progress
 
+- Feature 14 awaits only acceptance block 4: download the A4 PDF from a real auction, print the single page and scan its QR code with a phone. The code-generated sample was visually reviewed on screen, but physical print readability and the scanned destination remain unverified, so the feature is not yet complete.
+
 - Auction location is reported live on hosted project `hylkwkpuwkpdvqczlkma` after the product owner manually ran the migration in SQL Editor. Existing auctions intentionally remain null and must receive truthful values through an explicitly approved backfill; until then the UI displays `Location not provided / Lokalita neuvedená`. End-to-end creation, hosted structural checks, EN/SK browser review and responsive card/detail review remain pending.
 
 - Feature 13 migration is live on hosted project `hylkwkpuwkpdvqczlkma`: after the product owner ran it manually, the authenticated English route loaded one real `Feature 12 final acceptance` card with EUR 37.00 as both current highest and latest own bid and classified it as Leading. This confirms the RPC is available and its basic one-card/leading rendering path works. The full A/B, account-isolation, ended, signed-out, empty-state and responsive EN/SK acceptance matrix remains pending; Supabase MCP table inspection was separately denied to the connected verification role.
@@ -168,6 +178,8 @@ Update this file after meaningful implementation changes or approved product/arc
 - Feature 11 responsive visual review and clean interactive walkthrough remain. Code, build, catalogs and the signed-in English list are verified; isolated browser automation was unavailable and the open Edge window had concurrent user input.
 
 ## Next Up
+
+- On the available deployment, download the A4 PDF for a real auction with a photo and Slovak text, print it at 100%/actual size, then scan the printed QR with a phone and confirm it opens the same public detail shown in the printed URL.
 
 - Inspect the new auction's public detail, then verify My Bids, legacy fallback/backfill, EN/responsive views and the hosted column/constraint/RPC grants before completing location acceptance.
 - Inspect the live `get_my_bid_auctions()` grants/search path, then run the Feature 13 A/B acceptance block followed by ended, account-isolation, signed-out, empty and responsive EN/SK checks.

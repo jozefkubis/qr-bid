@@ -64,7 +64,7 @@
         "minimumIncrement": "Minim\u00e1lne nav\u00fd\u0161enie",
         "endsAt": "Koniec",
         "stageNotice": "\u00dapravy, odstr\u00e1nenie, fotografie a verejn\u00e9 zdie\u013eanie s\u00fa z\u00e1merne ponechan\u00e9 na nasleduj\u00facu etapu implement\u00e1cie.",
-        "back": "Sp\u00e4\u0165 na Moje aukcie", "visitorPreview": "N\u00e1h\u013ead pre n\u00e1v\u0161tevn\u00edka", "editable": "Akt\u00edvna aukcia bez pon\u00fak. \u00dadaje a fotografie mo\u017eno meni\u0165.", "noteOnly": "Prihadzovanie sa za\u010dalo. P\u00f4vodn\u00e9 \u00fadaje a fotografie s\u00fa uzamknut\u00e9; m\u00f4\u017eete iba zverejni\u0165 doplnenie vlastn\u00edka.", "readOnly": "T\u00e1to aukcia sa skon\u010dila a je iba na \u010d\u00edtanie.", "readOnlyTitle": "Aukcia je uzavret\u00e1", "editTitle": "Upravi\u0165 \u00fadaje aukcie", "save": "Ulo\u017ei\u0165 zmeny", "locationUnavailable": "Lokalita neuveden\u00e1",
+        "back": "Sp\u00e4\u0165 na Moje aukcie", "shareAuction": "Zdie\u013ea\u0165 aukciu", "visitorPreview": "N\u00e1h\u013ead pre n\u00e1v\u0161tevn\u00edka", "editable": "Akt\u00edvna aukcia bez pon\u00fak. \u00dadaje a fotografie mo\u017eno meni\u0165.", "noteOnly": "Prihadzovanie sa za\u010dalo. P\u00f4vodn\u00e9 \u00fadaje a fotografie s\u00fa uzamknut\u00e9; m\u00f4\u017eete iba zverejni\u0165 doplnenie vlastn\u00edka.", "readOnly": "T\u00e1to aukcia sa skon\u010dila a je iba na \u010d\u00edtanie.", "readOnlyTitle": "Aukcia je uzavret\u00e1", "editTitle": "Upravi\u0165 \u00fadaje aukcie", "save": "Ulo\u017ei\u0165 zmeny", "locationUnavailable": "Lokalita neuveden\u00e1",
         "fields": { "title": "N\u00e1zov aukcie", "description": "Opis", "location": "Lokalita", "locationHelp": "Uve\u010fte mesto, mestsk\u00fa \u010das\u0165 alebo adresu, ktor\u00fa chcete verejne zobrazi\u0165.", "starting": "Vyvol\u00e1vacia cena (EUR)", "increment": "Minim\u00e1lne nav\u00fd\u0161enie (EUR)", "endAt": "D\u00e1tum a \u010das ukon\u010denia" },
         "photosTitle": "Fotografie aukcie", "photosHelp": "Najviac {count} obr\u00e1zkov JPG, PNG alebo WebP, ka\u017ed\u00fd maxim\u00e1lne 5 MB.", "choosePhotos": "Vybra\u0165 fotografie", "noPhotosSelected": "Nie s\u00fa vybran\u00e9 \u017eiadne fotografie.", "addPhotos": "Nahra\u0165 fotografie", "photo": "Fotografia {number}", "removePhoto": "Odstr\u00e1ni\u0165 fotografiu {number}",
         "deleteTitle": "Odstr\u00e1ni\u0165 aukciu", "deleteConsequence": "Aukcia aj jej nahrat\u00e9 fotografie bud\u00fa natrvalo odstr\u00e1nen\u00e9.", "deleteConfirmation": "Rozumiem, \u017ee t\u00fato akciu nemo\u017eno vr\u00e1ti\u0165 sp\u00e4\u0165.", "confirmDelete": "Odstr\u00e1ni\u0165 aukciu",
@@ -126,6 +126,36 @@
       "description": "Vytvorte novú aukciu a zdieľajte ju pomocou QR kódu.",
       "action": "Vytvoriť aukciu"
     }
+  },
+  "AuctionSharing": {
+    "eyebrow": "Zdieľanie aukcie",
+    "title": "Zdieľať aukciu",
+    "publishedTitle": "Aukcia bola zverejnená",
+    "published": "Vaša aukcia bola úspešne zverejnená.",
+    "description": "Skopírujte verejný odkaz alebo si stiahnite QR kód. Obe možnosti otvoria rovnaký verejný detail aukcie.",
+    "startingPrice": "Vyvolávacia cena",
+    "endsAt": "Koniec aukcie",
+    "linkTitle": "Verejný odkaz na aukciu",
+    "linkDescription": "Pošlite tento odkaz priamo záujemcom.",
+    "publicLink": "Označiteľný verejný odkaz",
+    "copy": "Kopírovať odkaz",
+    "copied": "Odkaz bol skopírovaný.",
+    "manual": "Schránka nie je dostupná. Odkaz je označený; skopírujte ho ručne.",
+    "qrTitle": "QR kód",
+    "qrAlt": "QR kód pre verejnú aukciu {title}",
+    "generating": "Generujem QR kód…",
+    "qrError": "QR kód sa nepodarilo vygenerovať. Obnovte stránku a skúste to znova.",
+    "download": "Stiahnuť QR kód (PNG)",
+    "poster": {
+      "download": "Stiahnuť A4 plagát (PDF)",
+      "generating": "Vytváram A4 plagát…",
+      "error": "A4 plagát sa nepodarilo vytvoriť. Skúste to znova.",
+      "scan": "Naskenujte QR kód, zobrazte aukciu a prihoďte",
+      "publicLink": "Verejný odkaz na aukciu",
+      "footer": "Vytvorené pomocou QRBid"
+    },
+    "viewAuction": "Zobraziť aukciu",
+    "manageAuction": "Spravovať aukciu"
   },
   "AuctionDetail": {
     "livePhotoAlt": "{title}, fotografia {number}",

@@ -64,7 +64,7 @@
         "minimumIncrement": "Minimum increment",
         "endsAt": "Ends",
         "stageNotice": "Editing, deletion, photos and public sharing are intentionally reserved for the next implementation stage.",
-        "back": "Back to My Auctions", "visitorPreview": "Visitor preview", "editable": "Active with no bids. Details and photos may be changed.", "noteOnly": "Bidding has started. Original details and photos are locked; you may only publish an owner update.", "readOnly": "This auction has ended and is read-only.", "readOnlyTitle": "Auction closed", "editTitle": "Edit auction details", "save": "Save changes", "locationUnavailable": "Location not provided",
+        "back": "Back to My Auctions", "shareAuction": "Share auction", "visitorPreview": "Visitor preview", "editable": "Active with no bids. Details and photos may be changed.", "noteOnly": "Bidding has started. Original details and photos are locked; you may only publish an owner update.", "readOnly": "This auction has ended and is read-only.", "readOnlyTitle": "Auction closed", "editTitle": "Edit auction details", "save": "Save changes", "locationUnavailable": "Location not provided",
         "fields": { "title": "Auction title", "description": "Description", "location": "Location", "locationHelp": "Enter a city, area or address you want to display publicly.", "starting": "Starting price (EUR)", "increment": "Minimum increment (EUR)", "endAt": "End date and time" },
         "photosTitle": "Auction photos", "photosHelp": "Up to {count} JPG, PNG or WebP images, maximum 5 MB each.", "choosePhotos": "Choose photos", "noPhotosSelected": "No photos selected.", "addPhotos": "Upload photos", "photo": "Photo {number}", "removePhoto": "Remove photo {number}",
         "deleteTitle": "Delete auction", "deleteConsequence": "The auction and its uploaded photos will be permanently removed.", "deleteConfirmation": "I understand that this cannot be undone.", "confirmDelete": "Delete auction",
@@ -126,6 +126,36 @@
       "description": "Create a new auction and share it with a QR code.",
       "action": "Create Auction"
     }
+  },
+  "AuctionSharing": {
+    "eyebrow": "Auction sharing",
+    "title": "Share auction",
+    "publishedTitle": "Auction published",
+    "published": "Your auction was published successfully.",
+    "description": "Copy the public link or download the QR code. Both open the same public auction detail.",
+    "startingPrice": "Starting price",
+    "endsAt": "Ends",
+    "linkTitle": "Public auction link",
+    "linkDescription": "Send this link directly to interested bidders.",
+    "publicLink": "Selectable public link",
+    "copy": "Copy link",
+    "copied": "Link copied.",
+    "manual": "Clipboard is unavailable. The link is selected; copy it manually.",
+    "qrTitle": "QR code",
+    "qrAlt": "QR code for the public auction {title}",
+    "generating": "Generating QR code…",
+    "qrError": "The QR code could not be generated. Reload the page and try again.",
+    "download": "Download QR code (PNG)",
+    "poster": {
+      "download": "Download A4 poster (PDF)",
+      "generating": "Creating A4 poster…",
+      "error": "The A4 poster could not be created. Try again.",
+      "scan": "Scan the QR code to view this auction and place a bid",
+      "publicLink": "Public auction link",
+      "footer": "Created with QRBid"
+    },
+    "viewAuction": "View auction",
+    "manageAuction": "Manage auction"
   },
   "AuctionDetail": {
     "livePhotoAlt": "{title}, photo {number}",

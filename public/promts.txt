@@ -1,13 +1,15 @@
-18.11.2026
+19.11.2026
 
-> Ahoj, pokračujeme v projekte QRBid. Komunikuj po slovensky. Prečítaj dokumentáciu podľa AGENTS.md, najmä špecifikáciu Feature 13, context/ui-context.md a context/progress-tracker.md. Skontroluj aktuálny git diff a zachovaj existujúce zmeny.
+> Ahoj, pokračujeme v projekte QRBid. Komunikuj po slovensky. Najprv si prečítaj AGENTS.md a projektovú dokumentáciu v predpísanom poradí, najmä context/feature-specs/14-auction-sharing-qrbid.md, context/ui-context.md a context/progress-tracker.md. Skontroluj git status a aktuálny diff. Zachovaj všetky existujúce necommitnuté zmeny a neupravuj nič mimo dohodnutého rozsahu.
 >
-> Kde sme skončili: Slovenská karta Moje ponuky vizuálne prešla pri šírke 412 px. Ceny sú vedľa seba, odpočet je pod nimi a tlačidlo Zobraziť aukciu naspodku. V EN aj SK má odpočet formát 6d 3h 54m s presýpacími hodinami. A/B scenár prešiel vrátane toho, že stav Prekonané sa po návrate z detailu do Moje ponuky aktualizoval bez ručného obnovenia.
+> Kde sme skončili: Feature 14 Krok 1 je implementovaný a produktový vlastník potvrdil, že funguje, preto schválil pokračovanie na Krok 2. Po vytvorení aukcie sa vlastník dostane na chránenú lokalizovanú stránku zdieľania. Kopírovanie, verejné tlačidlo, PNG QR aj zobrazená URL používajú rovnaký absolútny verejný detail. Stránka overuje prihlásenie aj vlastníctvo aukcie.
 >
-> Dnes najprv dokončíme UI Moje ponuky. Zosumarizuj otvorené vizuálne body podľa trackeru a pokračuj podľa mojej spätnej väzby. Prípadné úpravy obmedz na Feature 13, over ich a aktualizuj tracker.
+> Feature 14 Krok 2 je tiež implementovaný lokálne. Stránka zdieľania obsahuje tlačidlo na stiahnutie jednostranového A4 PDF plagátu. Plagát obsahuje názov, voliteľnú lokalitu, prvú fotografiu, ak existuje, veľký QR kód, krátku lokalizovanú výzvu a rovnakú verejnú URL. PDF sa generuje až po kliknutí pomocou pdfmake 0.3.14 s vloženým Unicode fontom. JPG, PNG a WebP fotografia sa pred vložením pripraví ako JPEG. Pri chybe sa zobrazí lokalizované hlásenie.
 >
-> Po vizuálnom schválení pokračujeme zostávajúcou akceptačnou maticou Feature 13 podľa trackeru. Začni ukončenou aukciou. Vždy mi daj iba jeden manuálny testovací blok a počkaj na výsledok, kým dáš ďalší.
+> Lokálne prešli standalone TypeScript, ESLint, EN/SK zhoda 355 prekladových kľúčov, produkčný npm audit s 0 nálezmi, git diff --check, dynamický PDF runtime test a produkčný Turbopack build. Reprezentatívny slovenský PDF plagát s dlhým názvom, diakritikou, lokalitou a fotografiou bol otvorený v Edge PDF rendereri. Mal presne jednu A4 stranu, čitateľnú diakritiku, nedeformovanú fotografiu, veľký QR s voľným okrajom a nič nebolo odrezané. Dočasné overovacie súbory boli odstránené.
 >
-> Commit, push a mazanie testovacích dát vyžadujú môj výslovný súhlas.
+> Zajtra začni iba posledným manuálnym akceptačným blokom Feature 14: na reálnej aukcii s fotografiou a slovenským textom stiahnuť A4 PDF, skontrolovať jednu stranu, vytlačiť ho na 100 % / skutočnú veľkosť a naskenovať vytlačený QR kód telefónom. QR musí otvoriť rovnaký verejný detail ako vytlačená URL. Daj mi jeden jasný testovací blok a počkaj na môj výsledok.
 >
-> Feature 14 začneme pripravovať až po mojej výslovnej akceptácii Feature 13. Pred implementáciou si dohodneme verejný odkaz v QR kóde a miesto, kde k nemu vlastník získa prístup. A4 plagát a PDF export schválime samostatne.
+> Feature 14 označ za dokončenú a aktualizuj tracker aj špecifikáciu až po úspešnom papierovom výtlačku a telefónnom skene. Ak test zlyhá, najprv diagnostikuj presnú príčinu a oprav iba Feature 14. Neobnovuj automaticky zostávajúce testy Feature 12 alebo Feature 13 bez môjho pokynu.
+>
+> Nič necommituj, nepushuj ani nemaž testovacie dáta bez môjho výslovného súhlasu.

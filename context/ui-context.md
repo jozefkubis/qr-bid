@@ -102,7 +102,11 @@ Show image, title, description, current highest bid, countdown, minimum valid ne
 
 ### Auction Published / QR Sharing
 
-Show auction URL, QR code, Copy Link, QR download, A4 PDF poster download, and View Auction. QR output must be scannable and lead to the correct auction URL.
+After a real auction is created, redirect its owner to the protected localized sharing page. The first redirect confirms that the auction was published; later openings from auction management use the normal sharing heading. Show the auction title, optional public location, starting price and localized end time with its time-zone abbreviation.
+
+Use one absolute environment-specific public auction URL for the selectable link, clipboard action, View Auction action and QR payload. Keep copy controls above the QR code on narrow screens. Render a dark Terra QR mark on white with a quiet zone and provide a PNG download. If clipboard access fails, select the link and instruct the owner to copy it manually. Missing and foreign-owned auctions return 404 through the existing owner-scoped loading boundary.
+
+After acceptance of link and PNG sharing, provide a separate **Download A4 poster (PDF)** action. Generate one portrait A4 page in the browser only after the owner requests it. Use the localized auction title, optional public location, first auction photo when available, a large dark Terra QR code on white with a generous quiet zone, the same absolute public URL and a short localized scan instruction. Convert supported source photos to a print-safe JPEG before embedding, and keep the Unicode font embedded so EN/SK text and Slovak diacritics render correctly. A failed photo or PDF preparation must show a visible retryable error rather than silently downloading an incomplete poster.
 
 ### My Bids
 
