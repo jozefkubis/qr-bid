@@ -150,8 +150,11 @@
       "download": "Download A4 poster (PDF)",
       "generating": "Creating A4 poster…",
       "error": "The A4 poster could not be created. Try again.",
-      "scan": "Scan the QR code to view this auction and place a bid",
-      "publicLink": "Public auction link",
+      "scan": "Scan to view the auction",
+      "scanDescription": "Scan the QR code with your phone to open the public auction detail.",
+      "location": "Location",
+      "privateAuction": "Private auction",
+      "publicLink": "No QR code reader available? Open the direct link:",
       "footer": "Created with QRBid"
     },
     "viewAuction": "View auction",

@@ -108,10 +108,16 @@ export function AuctionSharing({
     try {
       const poster = await createAuctionPoster({
         copy: {
+          endsAt: t("endsAt"),
           footer: t("poster.footer"),
+          location: t("poster.location"),
+          privateAuction: t("poster.privateAuction"),
           publicLink: t("poster.publicLink"),
           scan: t("poster.scan"),
+          scanDescription: t("poster.scanDescription"),
         },
+        endsAt: endDate,
+        logoUrl: "/logo.png",
         location,
         photoUrl,
         publicUrl,

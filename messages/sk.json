@@ -150,8 +150,11 @@
       "download": "Stiahnuť A4 plagát (PDF)",
       "generating": "Vytváram A4 plagát…",
       "error": "A4 plagát sa nepodarilo vytvoriť. Skúste to znova.",
-      "scan": "Naskenujte QR kód, zobrazte aukciu a prihoďte",
-      "publicLink": "Verejný odkaz na aukciu",
+      "scan": "Naskenujte a zobrazte aukciu",
+      "scanDescription": "Naskenujte QR kód telefónom a otvorte verejný detail aukcie.",
+      "location": "Lokalita",
+      "privateAuction": "Súkromná aukcia",
+      "publicLink": "Nemáte po ruke čítačku QR kódov? Otvorte priamy odkaz:",
       "footer": "Vytvorené pomocou QRBid"
     },
     "viewAuction": "Zobraziť aukciu",
