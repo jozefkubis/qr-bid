@@ -4,13 +4,23 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## Current Phase
 
-- Supabase integration, Feature 12 Stage E, Feature 13 My Bids and the corrective auction-location migration are reported deployed. Feature 14 is complete after successful digital checks and product-owner confirmation of the real print and phone-scan acceptance. Feature 13 acceptance and the paused remainder of Feature 12 remain incomplete.
+- Supabase integration, Feature 12 Stage E, Feature 13 My Bids and the corrective auction-location migration are reported deployed. Feature 14 is complete. Feature 15's specification and implementation decisions are approved and ready for a separate incremental implementation step; no migration, application code, scheduler or e-mail delivery has been implemented yet. Feature 13 acceptance and the paused remainder of Feature 12 remain incomplete.
 
 ## Current Goal
 
-- Await the product owner's instructions for the next feature. Keep the unfinished Feature 12/13 checks explicit and do not resume them automatically.
+- Feature 15's documentation review gate is complete. Prepare implementation as a separate incremental step: profile identity/locale persistence, database workflow and concurrency tests first; protected reads and UI second; outbox/Resend/Cron third; hosted deployment and end-to-end acceptance only after review. No implementation has started yet.
 
 ## Completed
+
+- Closed the Feature 15 documentation review gate on 2026-11-20. The product owner approved approximately minutely Supabase Cron, the Vault-protected QRBid outbox worker, temporary retries after 1/5/30 minutes with stable idempotency, permanent-failure handling, a separate completion e-mail to both parties, owner-only recording of post-confirmation withdrawal in MVP, and production From `QRBid <aukcie@mail.getqrbid.com>` without dynamic user Reply-To. This approval covers the five concrete decisions listed in the specification, not undefined future scope. No implementation, migration, hosted configuration, e-mail send, deployment, commit or push was performed.
+
+- Approved the MVP meaning of **Confirm interest** on 2026-11-20. Confirmation permits the owner to contact the bidder through the verified e-mail exposed in protected QRBid UI so the parties can continue their direct agreement. It is not payment or automatic sale completion in QRBid. QRBid does not expose or send phone numbers; the owner may voluntarily provide their own number in a later personal e-mail. Documentation only; no application, e-mail, database or deployment change was performed.
+
+- Approved the Feature 15 identity/localization source on 2026-11-20. The display name will come from the server-verified Clerk profile; private QRBid profile data will persist the display name and `preferred_locale`, with `en` fallback when no language is stored. Verified e-mail remains in Clerk, and Feature 15 neither synchronizes nor shares phone. Documentation only; no schema, code, Clerk, Supabase or deployment change was performed.
+
+- Refined the Feature 15 documentation on 2026-11-20 with the product owner's confirmed rules. Name and verified email are visible only between the owner and current confirmed bidder in protected QRBid UI; phone is excluded, no contact appears before confirmation, and result-contact access is removed on recorded withdrawal before moving to a later confirmed bidder. All candidates receive 48 hours from database-backed availability in My Bids, independent of e-mail delivery. The lock-time boundary now treats `statement_timestamp() >= expires_at` as expired, while the partial unique index remains the database guarantee against two active offers. The working operations proposal uses approximately minutely Supabase Cron, a Vault-protected existing-app outbox worker, stable Resend idempotency, temporary retries after 1/5/30 minutes and stale-message suppression. Current code inspection found no persisted display-name source and only a browser `qrbid_locale` cookie, so name/profile-locale persistence remains the nearest approval question with English fallback proposed. Documentation only: no migration, application code, Supabase change, message, deployment, commit or push.
+
+- Prepared the first-step Feature 15 specification and data-model proposal on 2026-11-20 without implementing it. The proposal snapshots one highest valid bid per account, models confirmation separately from sale completion, serializes transitions with row locks, and adds a partial unique index guaranteeing at most one active result offer per auction. It defines private RPC boundaries, an immutable event audit, a transactional notification outbox, EN/SK e-mail events, retry semantics that never move the 48-hour deadline, and acceptance scenarios for response/expiry concurrency. Current `profiles` stores only UUID and Clerk subject, so contact and locale synchronization remains an explicit approval blocker. No migration, dependency, scheduler, hosted change or e-mail send was performed.
 
 - Completed Feature 14 acceptance block 4 on 2026-11-20 from the product owner's real-world test. The generated A4 poster printed clearly, remained easy to read in black and white, and its QR code scanned successfully from paper and opened the correct public auction detail. Feature 14 is complete; no commit or push was performed.
 
@@ -115,7 +125,7 @@ Update this file after meaningful implementation changes or approved product/arc
 - Approved WIN-001: if the top-ranked bidder declines, offer the item to subsequent eligible bidders by descending bid amount until one accepts or the list is exhausted; each may accept or decline.
 - Approved WIN-002: each next-ranked bidder receives 48 hours from system issuance of their offer to accept.
 - Approved WIN-003: an unanswered offer expires after 48 hours and the system automatically contacts the next eligible bidder; progression must avoid duplicate or simultaneous active offers.
-- Approved WIN-004: the original highest-ranked bidder also has 48 hours to accept; if no response, their offer expires and the next bidder is contacted. The original winner's period was specified as starting upon offer delivery; reliable delivery-time semantics still need design.
+- Approved WIN-004 was superseded by the clarified Feature 15 deadline rule: every contacted bidder, including the original highest-ranked bidder, has 48 hours from database-backed availability in My Bids. E-mail delivery and retries do not move the deadline; after locking, `statement_timestamp() >= expires_at` means expired.
 - Approved END-003: an early cancellation requires a reason, which is displayed to auction viewers and affected bidders.
 - Drafted the project overview, code standards, UI context, and AI workflow rules before implementation began.
 - Added the approved Terra design tokens and Literata/Nunito Sans font setup.
@@ -195,7 +205,7 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## Next Up
 
-- On the available deployment, download the A4 PDF for a real auction with a photo and Slovak text, print it at 100%/actual size, then scan the printed QR with a phone and confirm it opens the same public detail shown in the printed URL.
+- Begin Feature 15 implementation only as a new incremental step, starting with the private profile fields and local database workflow/migration design. Preserve the approved review gates before hosted Supabase, Resend or scheduler changes.
 
 - Inspect the new auction's public detail, then verify My Bids, legacy fallback/backfill, EN/responsive views and the hosted column/constraint/RPC grants before completing location acceptance.
 - Inspect the live `get_my_bid_auctions()` grants/search path, then run the Feature 13 A/B acceptance block followed by ended, account-isolation, signed-out, empty and responsive EN/SK checks.

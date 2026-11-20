@@ -36,7 +36,7 @@ Auctions are accessible to anyone who has the link, but they are not listed in a
 6. The bidder sees the current price, minimum next bid, countdown, and bid history, and submits a bid.
 7. The system validates and saves accepted bids securely; connected visitors see updated auction information in real time.
 8. At the closing time, no further bids are accepted. The highest valid bid determines the provisional winning bidder under the auction rules.
-9. The highest bidder receives an email about the result; the owner receives an email with the result and the winning bidder's name and contact details.
+9. After a bidder confirms interest, both parties receive a result email linking to the protected QRBid area, where only the owner and current confirmed bidder can see each other's name and verified email. Phone is not shared in the MVP.
 10. Registered users can revisit **My Auctions**, **My Bids**, and **Profile**.
 
 ## Features
@@ -74,7 +74,8 @@ Auctions are accessible to anyone who has the link, but they are not listed in a
 - Auctions stop accepting bids when their closing time is reached.
 - The highest valid bidder is identified according to the agreed rules.
 - The bidder receives a result email.
-- The owner receives a result email with the winning bidder's name, email, and phone number for follow-up.
+- After interest is confirmed, the owner and current confirmed bidder can see each other's name and verified email in protected QRBid UI for follow-up. Phone is not shared in the MVP.
+- Confirming interest permits the owner to contact the bidder by verified email and continue the agreement directly. It is not a payment or automatic sale completion in QRBid. The owner may voluntarily share their own phone number in a later personal email.
 - If there are no valid bids, the auction ends without a winner.
 - The legal effect of bids and the wording of winner notifications must be confirmed before launch.
 
@@ -137,6 +138,6 @@ Auctions are accessible to anyone who has the link, but they are not listed in a
 4. Invalid, late, and conflicting bids are handled correctly and safely.
 5. Connected participants see the current auction state update without manual refresh under normal conditions.
 6. The auction closes at the configured time and correctly identifies the highest valid bidder, or no winner if there were no bids.
-7. The winner and owner receive the appropriate result emails, including winner contact details for the owner.
+7. The current confirmed bidder and owner receive appropriate result emails linking to protected QRBid UI, where only that pair can access each other's name and verified email.
 8. One registered user can create auctions, participate in other auctions, and access My Auctions, My Bids, and Profile.
 9. Users can switch between English and Slovak, retain their preference, and receive auction result emails in their chosen language.
