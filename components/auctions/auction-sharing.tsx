@@ -111,6 +111,7 @@ export function AuctionSharing({
           endsAt: t("endsAt"),
           footer: t("poster.footer"),
           location: t("poster.location"),
+          locationUnavailable: t("poster.locationUnavailable"),
           privateAuction: t("poster.privateAuction"),
           publicLink: t("poster.publicLink"),
           scan: t("poster.scan"),

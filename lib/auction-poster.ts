@@ -1,9 +1,15 @@
-import type { Column, Content, TCreatedPdf, TDocumentDefinitions } from "pdfmake/interfaces";
+import type {
+  Column,
+  Content,
+  TCreatedPdf,
+  TDocumentDefinitions,
+} from "pdfmake/interfaces";
 
 type AuctionPosterCopy = {
   endsAt: string;
   footer: string;
   location: string;
+  locationUnavailable: string;
   privateAuction: string;
   publicLink: string;
   scan: string;
@@ -20,7 +26,10 @@ type AuctionPosterInput = {
   title: string;
 };
 
-type AuctionPosterDefinitionInput = Omit<AuctionPosterInput, "logoUrl" | "photoUrl"> & {
+type AuctionPosterDefinitionInput = Omit<
+  AuctionPosterInput,
+  "logoUrl" | "photoUrl"
+> & {
   logoDataUrl: string | null;
   photoDataUrl: string | null;
   qrSvg: string;
@@ -74,12 +83,10 @@ async function photoToJpegDataUrl(photoUrl: string) {
   const targetHeight = 576;
   const targetRatio = targetWidth / targetHeight;
   const sourceRatio = bitmap.width / bitmap.height;
-  const sourceWidth = sourceRatio > targetRatio
-    ? bitmap.height * targetRatio
-    : bitmap.width;
-  const sourceHeight = sourceRatio > targetRatio
-    ? bitmap.height
-    : bitmap.width / targetRatio;
+  const sourceWidth =
+    sourceRatio > targetRatio ? bitmap.height * targetRatio : bitmap.width;
+  const sourceHeight =
+    sourceRatio > targetRatio ? bitmap.height : bitmap.width / targetRatio;
   const sourceX = (bitmap.width - sourceWidth) / 2;
   const sourceY = (bitmap.height - sourceHeight) / 2;
   const canvas = document.createElement("canvas");
@@ -152,17 +159,19 @@ function buildInfoCard({
     width,
     stack: [
       {
-        canvas: [{
-          type: "rect",
-          x: 0,
-          y: 0,
-          w: width,
-          h: 68,
-          r: CARD_RADIUS,
-          color: TERRA_SURFACE,
-          lineColor: TERRA_BORDER,
-          lineWidth: 0.8,
-        }],
+        canvas: [
+          {
+            type: "rect",
+            x: 0,
+            y: 0,
+            w: width,
+            h: 50,
+            r: CARD_RADIUS,
+            color: TERRA_SURFACE,
+            lineColor: TERRA_BORDER,
+            lineWidth: 0.8,
+          },
+        ],
       },
       {
         columns: [
@@ -170,15 +179,17 @@ function buildInfoCard({
             width: 32,
             stack: [
               {
-                canvas: [{
-                  type: "rect",
-                  x: 0,
-                  y: 0,
-                  w: 30,
-                  h: 30,
-                  r: 7,
-                  color: TERRA_ICON_SURFACE,
-                }],
+                canvas: [
+                  {
+                    type: "rect",
+                    x: 0,
+                    y: 0,
+                    w: 30,
+                    h: 30,
+                    r: 7,
+                    color: TERRA_ICON_SURFACE,
+                  },
+                ],
               },
               {
                 svg: icon,
@@ -194,21 +205,21 @@ function buildInfoCard({
                 text: label,
                 bold: true,
                 color: TERRA_MUTED,
-                fontSize: 9,
-                margin: [0, 0, 0, 5],
+                fontSize: 8,
+                margin: [0, 0, 0, 3],
               },
               {
                 text: value,
                 bold: true,
                 color: TERRA_TEXT,
-                fontSize: 12,
+                fontSize: 10.5,
                 lineHeight: 1.1,
               },
             ],
           },
         ],
         columnGap: 10,
-        margin: [14, -49, 14, 12],
+        margin: [14, -40, 14, 10],
       },
     ],
   };
@@ -255,30 +266,34 @@ export function buildAuctionPosterDefinition({
           width: 116,
           stack: [
             {
-              canvas: [{
-                type: "rect",
-                x: 0,
-                y: 0,
-                w: 116,
-                h: 25,
-                r: 12.5,
-                color: "#f5faf6",
-                lineColor: TERRA_BORDER,
-                lineWidth: 0.7,
-              }],
+              canvas: [
+                {
+                  type: "rect",
+                  x: 0,
+                  y: 0,
+                  w: 116,
+                  h: 25,
+                  r: 12.5,
+                  color: "#f5faf6",
+                  lineColor: TERRA_BORDER,
+                  lineWidth: 0.7,
+                },
+              ],
             },
             {
               columns: [
                 {
                   width: 9,
-                  canvas: [{
-                    type: "ellipse",
-                    x: 2,
-                    y: 5,
-                    r1: 2.5,
-                    r2: 2.5,
-                    color: TERRA_PRIMARY,
-                  }],
+                  canvas: [
+                    {
+                      type: "ellipse",
+                      x: 2,
+                      y: 5,
+                      r1: 2.5,
+                      r2: 2.5,
+                      color: TERRA_PRIMARY,
+                    },
+                  ],
                 },
                 {
                   width: "*",
@@ -299,15 +314,17 @@ export function buildAuctionPosterDefinition({
       columnGap: 16,
     },
     {
-      canvas: [{
-        type: "line",
-        x1: 0,
-        y1: 0,
-        x2: CONTENT_WIDTH,
-        y2: 0,
-        lineColor: TERRA_DIVIDER,
-        lineWidth: 0.7,
-      }],
+      canvas: [
+        {
+          type: "line",
+          x1: 0,
+          y1: 0,
+          x2: CONTENT_WIDTH,
+          y2: 0,
+          lineColor: TERRA_DIVIDER,
+          lineWidth: 0.7,
+        },
+      ],
       margin: [0, 10, 0, 13],
     },
     {
@@ -321,23 +338,25 @@ export function buildAuctionPosterDefinition({
   ];
 
   const metaBlocks: Column[] = [];
-  const metaWidth = location ? (CONTENT_WIDTH - 12) / 2 : CONTENT_WIDTH;
+  const metaWidth = (CONTENT_WIDTH - 12) / 2;
 
-  if (location) {
-    metaBlocks.push(buildInfoCard({
+  metaBlocks.push(
+    buildInfoCard({
       icon: MAP_PIN_SVG,
       label: copy.location,
-      value: location,
+      value: location?.trim() || copy.locationUnavailable,
       width: metaWidth,
-    }));
-  }
+    }),
+  );
 
-  metaBlocks.push(buildInfoCard({
-    icon: CLOCK_SVG,
-    label: copy.endsAt,
-    value: endsAt,
-    width: metaWidth,
-  }));
+  metaBlocks.push(
+    buildInfoCard({
+      icon: CLOCK_SVG,
+      label: copy.endsAt,
+      value: endsAt,
+      width: metaWidth,
+    }),
+  );
 
   content.push({
     columns: metaBlocks,
@@ -348,7 +367,7 @@ export function buildAuctionPosterDefinition({
     content.push({
       image: photoDataUrl,
       width: CONTENT_WIDTH,
-      height: 192,
+      height: 240,
       margin: [0, 15, 0, 0],
     });
   }
@@ -357,17 +376,19 @@ export function buildAuctionPosterDefinition({
     {
       stack: [
         {
-          canvas: [{
-            type: "rect",
-            x: 0,
-            y: 0,
-            w: CONTENT_WIDTH,
-            h: 206,
-            r: CARD_RADIUS,
-            color: TERRA_SURFACE,
-            lineColor: TERRA_BORDER,
-            lineWidth: 1,
-          }],
+          canvas: [
+            {
+              type: "rect",
+              x: 0,
+              y: 0,
+              w: CONTENT_WIDTH,
+              h: 206,
+              r: CARD_RADIUS,
+              color: TERRA_SURFACE,
+              lineColor: TERRA_BORDER,
+              lineWidth: 1,
+            },
+          ],
         },
         {
           columns: [
@@ -375,17 +396,19 @@ export function buildAuctionPosterDefinition({
               width: 194,
               stack: [
                 {
-                  canvas: [{
-                    type: "rect",
-                    x: 0,
-                    y: 0,
-                    w: 194,
-                    h: 178,
-                    r: 8,
-                    color: "#ffffff",
-                    lineColor: "#ded7cb",
-                    lineWidth: 0.6,
-                  }],
+                  canvas: [
+                    {
+                      type: "rect",
+                      x: 0,
+                      y: 0,
+                      w: 194,
+                      h: 178,
+                      r: 8,
+                      color: "#ffffff",
+                      lineColor: "#ded7cb",
+                      lineWidth: 0.6,
+                    },
+                  ],
                 },
                 {
                   svg: qrSvg,
@@ -430,17 +453,19 @@ export function buildAuctionPosterDefinition({
     {
       stack: [
         {
-          canvas: [{
-            type: "rect",
-            x: 0,
-            y: 0,
-            w: CONTENT_WIDTH,
-            h: 50,
-            r: CARD_RADIUS,
-            color: TERRA_SURFACE,
-            lineColor: TERRA_BORDER,
-            lineWidth: 0.8,
-          }],
+          canvas: [
+            {
+              type: "rect",
+              x: 0,
+              y: 0,
+              w: CONTENT_WIDTH,
+              h: 50,
+              r: CARD_RADIUS,
+              color: TERRA_SURFACE,
+              lineColor: TERRA_BORDER,
+              lineWidth: 0.8,
+            },
+          ],
         },
         {
           columns: [
@@ -469,14 +494,16 @@ export function buildAuctionPosterDefinition({
 
   return {
     background: {
-      canvas: [{
-        type: "rect",
-        x: 0,
-        y: 0,
-        w: A4_WIDTH,
-        h: A4_HEIGHT,
-        color: TERRA_BACKGROUND,
-      }],
+      canvas: [
+        {
+          type: "rect",
+          x: 0,
+          y: 0,
+          w: A4_WIDTH,
+          h: A4_HEIGHT,
+          color: TERRA_BACKGROUND,
+        },
+      ],
     },
     content,
     defaultStyle: { font: "Roboto" },
@@ -498,7 +525,9 @@ export function buildAuctionPosterDefinition({
   };
 }
 
-export async function createAuctionPoster(input: AuctionPosterInput): Promise<TCreatedPdf> {
+export async function createAuctionPoster(
+  input: AuctionPosterInput,
+): Promise<TCreatedPdf> {
   const [logoDataUrl, photoDataUrl, qrSvg] = await Promise.all([
     input.logoUrl ? logoToJpegDataUrl(input.logoUrl) : null,
     input.photoUrl ? photoToJpegDataUrl(input.photoUrl) : null,
@@ -511,10 +540,12 @@ export async function createAuctionPoster(input: AuctionPosterInput): Promise<TC
   const pdfMake = unwrapDefault(pdfMakeModule);
 
   pdfMake.addVirtualFileSystem(pdfFonts.default);
-  return pdfMake.createPdf(buildAuctionPosterDefinition({
-    ...input,
-    logoDataUrl,
-    photoDataUrl,
-    qrSvg,
-  }));
+  return pdfMake.createPdf(
+    buildAuctionPosterDefinition({
+      ...input,
+      logoDataUrl,
+      photoDataUrl,
+      qrSvg,
+    }),
+  );
 }

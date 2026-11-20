@@ -153,6 +153,7 @@
       "scan": "Naskenujte a zobrazte aukciu",
       "scanDescription": "Naskenujte QR kód telefónom a otvorte verejný detail aukcie.",
       "location": "Lokalita",
+      "locationUnavailable": "Lokalita neuvedená",
       "privateAuction": "Súkromná aukcia",
       "publicLink": "Nemáte po ruke čítačku QR kódov? Otvorte priamy odkaz:",
       "footer": "Vytvorené pomocou QRBid"

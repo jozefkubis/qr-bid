@@ -153,6 +153,7 @@
       "scan": "Scan to view the auction",
       "scanDescription": "Scan the QR code with your phone to open the public auction detail.",
       "location": "Location",
+      "locationUnavailable": "Location not provided",
       "privateAuction": "Private auction",
       "publicLink": "No QR code reader available? Open the direct link:",
       "footer": "Created with QRBid"

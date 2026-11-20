@@ -4,13 +4,19 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## Current Phase
 
-- Supabase integration, Feature 12 Stage E, Feature 13 My Bids and the corrective auction-location migration are reported deployed. The product owner reported Feature 14 Step 1 working and approved Step 2; the A4 PDF poster is implemented and locally rendered, with the final real-print/phone-scan acceptance still pending. Feature 13 acceptance and the paused remainder of Feature 12 remain incomplete.
+- Supabase integration, Feature 12 Stage E, Feature 13 My Bids and the corrective auction-location migration are reported deployed. Feature 14 is complete after successful digital checks and product-owner confirmation of the real print and phone-scan acceptance. Feature 13 acceptance and the paused remainder of Feature 12 remain incomplete.
 
 ## Current Goal
 
-- Complete Feature 14 acceptance block 4 by downloading the A4 poster from a real auction, printing it and scanning its QR code with a phone. Keep Feature 14 open until that physical check passes, and keep the unfinished Feature 12/13 checks explicit.
+- Await the product owner's instructions for the next feature. Keep the unfinished Feature 12/13 checks explicit and do not resume them automatically.
 
 ## Completed
+
+- Completed Feature 14 acceptance block 4 on 2026-11-20 from the product owner's real-world test. The generated A4 poster printed clearly, remained easy to read in black and white, and its QR code scanned successfully from paper and opened the correct public auction detail. Feature 14 is complete; no commit or push was performed.
+
+- Updated the Feature 14 poster metadata on 2026-11-20 so the location card is always present. Auctions without a non-empty location now show the localized fallback `Lokalita neuvedená` / `Location not provided`; the matching icon, two-card layout and end-time card remain unchanged.
+
+- Refined the compact Feature 14 metadata cards on 2026-11-20 after product-owner feedback. The existing 50-point card height and enlarged 240-point photo band were preserved; location/end labels and values are smaller and the icon/text row is vertically centered within each card. The 30-point icon tile and 18-point icon remain unchanged. Standalone TypeScript, ESLint and `git diff --check` pass. Updated PDF rendering and visual acceptance remain pending, and Feature 14 stays open.
 
 - Applied the final 2026-11-19 poster feedback while keeping Feature 14 open: added a localized `Private auction` / `Súkromná aukcia` badge opposite the real logo, separated the header with a thin neutral rule, lightened all card surfaces, centered the location/time icon tiles vertically, increased the direct-link prompt, and refined spacing into a calmer modern hierarchy. Replaced the pdfmake QR primitive with a crisp vector generated from the existing `qrcode` dependency, including a four-module quiet zone and explicit optical centering inside the white QR surface. The payload remains the exact shared public-detail URL.
 - Regenerated and visually inspected the full Slovak photo and no-photo posters after this iteration. Both remain exactly one portrait A4 page (`595.28 × 841.89 pt`, rendered at `1191 × 1684` pixels), all content remains inside the printable page, the displayed URL is clickable, and the QR from each rendered PDF decodes to that exact URL. The lightened palette retains dark readable text and the no-photo version reserves no image space. Physical printing at 100% and a phone scan are still pending, so Feature 14 is not complete.
@@ -179,8 +185,6 @@ Update this file after meaningful implementation changes or approved product/arc
 - Stage A repository verification passed: ESLint, standalone TypeScript, default Turbopack build and production dependency audit with zero findings. Hosted migration, Third-Party Auth configuration and live RLS tests were intentionally not performed because the target environment is ambiguous and hosted changes require explicit approval.
 
 ## In Progress
-
-- Feature 14 awaits only acceptance block 4: download the A4 PDF from a real auction, print the single page and scan its QR code with a phone. The code-generated sample was visually reviewed on screen, but physical print readability and the scanned destination remain unverified, so the feature is not yet complete.
 
 - Auction location is reported live on hosted project `hylkwkpuwkpdvqczlkma` after the product owner manually ran the migration in SQL Editor. Existing auctions intentionally remain null and must receive truthful values through an explicitly approved backfill; until then the UI displays `Location not provided / Lokalita neuvedená`. End-to-end creation, hosted structural checks, EN/SK browser review and responsive card/detail review remain pending.
 
