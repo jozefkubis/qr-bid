@@ -29,6 +29,10 @@ function hasLocalePrefix(pathname: string) {
 }
 
 export default clerkMiddleware(async (auth, request) => {
+  if (request.nextUrl.pathname.startsWith("/api/")) {
+    return NextResponse.next();
+  }
+
   if (hasLocalePrefix(request.nextUrl.pathname)) {
     const privateRoute = request.nextUrl.pathname.match(
       /^\/(en|sk)\/(?:auctions\/new|my-auctions(?:\/[^/]+(?:\/share)?)?|my-bids)\/?$/,
