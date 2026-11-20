@@ -16,4 +16,5 @@ export async function saveLocalePreference(locale: AppLocale) {
     sameSite: "lax",
     secure: isSecure,
   });
+
 }

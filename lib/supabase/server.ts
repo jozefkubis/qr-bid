@@ -31,3 +31,14 @@ export function createSupabaseServerClient(token: string) {
     },
   );
 }
+
+export function createSupabaseAdminClient() {
+  const secretKey = process.env.SUPABASE_SECRET_KEY;
+  if (!secretKey) throw new Error("Missing required environment variable: SUPABASE_SECRET_KEY");
+
+  return createClient<Database>(
+    requiredEnvironmentVariable("NEXT_PUBLIC_SUPABASE_URL"),
+    secretKey,
+    { auth: { autoRefreshToken: false, detectSessionInUrl: false, persistSession: false } },
+  );
+}

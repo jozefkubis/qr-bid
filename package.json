@@ -18,7 +18,8 @@
     "pdfmake": "^0.3.14",
     "qrcode": "^1.5.4",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "resend": "6.39.0"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "^4",

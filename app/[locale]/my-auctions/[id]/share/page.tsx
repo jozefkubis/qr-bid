@@ -26,7 +26,7 @@ export default async function ShareAuctionPage({
     unauthenticatedUrl: `/${locale}/sign-in?redirect_url=${encodeURIComponent(returnUrl)}`,
   });
 
-  const auction = await getCurrentUserAuction(id);
+  const auction = await getCurrentUserAuction(id, locale);
   if (!auction) notFound();
   const photoUrl = auction.photoPaths[0]
     ? getAuctionPhotoUrl(auction.photoPaths[0])

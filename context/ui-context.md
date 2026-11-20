@@ -42,6 +42,12 @@ Short hero, clear Create Auction action, and a simple three-step explanation. No
 
 Simple auction cards: image, title, status, current highest bid, time remaining, and links to details and QR sharing. No scans analytics or combined-value dashboard widgets in MVP.
 
+#### Feature 15 finalization management (2026-11-20)
+
+- An ended real auction adds a protected finalization panel to its existing owner detail. It presents the authoritative result state without implying that confirmed interest is an automatic legal sale.
+- Only after `interest_confirmed` or `sale_completed`, the panel shows the current confirmed bidder's server-verified name and e-mail. It never exposes phone, another candidate, or contact data on the public auction detail.
+- In `interest_confirmed`, the owner may explicitly record sale completion or continue with the next ranked candidate after a withdrawal. Both are authenticated Server Actions backed by locked database transitions.
+
 #### Feature 09 visual refinement (2026-11-12)
 
 - Signed-in **My Auctions / Moje aukcie** sits in the top bar directly beside the QRBid brand; the page keeps a semantic heading but does not repeat a large visual title in the content.
@@ -124,6 +130,12 @@ Show auctions the user participated in, their latest bid, current highest bid, a
 - Cards use the first persisted photo or the existing neutral placeholder, link to the localized public detail and expose no bidder identity. The list is refreshed by page navigation rather than a second Realtime subscription.
 - Feature 13 uses only the approved Terra palette. Selected filters, the caller's latest amount and the primary detail action use forest green; outbid may use the restrained brown tertiary accent and ended remains neutral. Every status remains understandable from text without color.
 - Screenshot-approved cards use a slim state-colored left edge and a compact rounded thumbnail inside the card. At wider widths the identity, three separated data columns and detail action align in one row; mobile keeps the two prices side by side, time beneath them and the action last.
+
+#### Feature 15 result offers (2026-11-20)
+
+- My Bids adds a separate protected result section above the participated-auction cards. Each offer shows the user's own amount, exact database deadline with a time-zone abbreviation and an explicit textual state.
+- An active offer provides Confirm interest and Decline actions. The server rechecks ownership, locks and fresh database time; the browser does not decide whether the deadline still applies.
+- The owner's verified name and e-mail appear only after this bidder becomes the current confirmed candidate. E-mail delivery is only a notification path; the protected in-app offer and its original deadline remain authoritative.
 
 ### Profile
 

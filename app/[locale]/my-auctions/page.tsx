@@ -28,7 +28,7 @@ export default async function MyAuctionsPage({
   await auth.protect({
     unauthenticatedUrl: `/${locale}/sign-in?redirect_url=${encodeURIComponent(returnPath)}`,
   });
-  const auctions = await listCurrentUserAuctions();
+  const auctions = await listCurrentUserAuctions(locale);
 
   const t = await getTranslations("MyAuctions");
 

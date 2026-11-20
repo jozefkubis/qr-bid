@@ -18,7 +18,7 @@ export default async function CreateAuctionPage({ params }: PageProps<"/[locale]
   const { locale } = await params;
   setRequestLocale(locale);
   await auth.protect({ unauthenticatedUrl: `/${locale}/sign-in` });
-  await ensureCurrentProfile();
+  await ensureCurrentProfile(locale);
   const t = await getTranslations("AuctionForm");
   const action = createAuctionAction.bind(null, locale);
 

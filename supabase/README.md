@@ -9,7 +9,14 @@ Required application variables:
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
 
-The application must never receive a Supabase secret or `service_role` key.
+Feature 15 server-only variables:
+
+- `SUPABASE_SECRET_KEY`
+- `RESEND_API_KEY`
+- `QRBID_APP_URL`
+- `QRBID_WORKER_SECRET`
+
+Supabase and Resend secret keys, plus the dedicated worker secret, must remain server-only. Never expose them through a `NEXT_PUBLIC_*` variable, client bundle, SQL migration, logs or e-mail payload.
 
 ## Stage A verification
 

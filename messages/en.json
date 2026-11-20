@@ -40,6 +40,31 @@
       "myLatest": "My bid",
       "viewAuction": "View Auction"
     },
+    "finalization": {
+      "eyebrow": "Auction result",
+      "title": "Offers awaiting your decision",
+      "description": "A result offer is separate from your original bid. An active offer can be accepted or declined before its exact deadline.",
+      "status": {
+        "active": "Awaiting your response",
+        "accepted": "Interest confirmed",
+        "declined": "Declined",
+        "expired": "Expired",
+        "withdrawn": "Owner continued with another bidder"
+      },
+      "amount": "Your offered amount",
+      "deadline": "Response deadline",
+      "accept": "Confirm interest",
+      "decline": "Decline",
+      "consent": "Confirming allows the owner to contact you by verified email so you can continue your direct agreement. It is not a payment or automatic sale completion.",
+      "ownerContact": "Owner contact",
+      "actionStatus": {
+        "accepted": "Your interest was confirmed.",
+        "declined": "The offer was declined and the workflow continued safely.",
+        "expired": "The response deadline had passed, so the offer expired.",
+        "invalid": "The response request was invalid.",
+        "unavailable": "This action is no longer available."
+      }
+    },
     "error": {
       "title": "Your bids could not be loaded",
       "description": "Please try loading this page again.",
@@ -69,7 +94,26 @@
         "photosTitle": "Auction photos", "photosHelp": "Up to {count} JPG, PNG or WebP images, maximum 5 MB each.", "choosePhotos": "Choose photos", "noPhotosSelected": "No photos selected.", "addPhotos": "Upload photos", "photo": "Photo {number}", "removePhoto": "Remove photo {number}",
         "deleteTitle": "Delete auction", "deleteConsequence": "The auction and its uploaded photos will be permanently removed.", "deleteConfirmation": "I understand that this cannot be undone.", "confirmDelete": "Delete auction",
         "noteTitle": "Update bidders", "noteLabel": "Owner update", "publishNote": "Publish update",
-        "status": { "saved": "Changes saved.", "photosSaved": "Photos updated.", "noteAdded": "Owner update published.", "invalid": "Check the entered values.", "photoInvalid": "Choose no more than five supported images of up to 5 MB each.", "unavailable": "This action is no longer available." }
+        "finalization": {
+          "eyebrow": "Auction result",
+          "title": "Finalization",
+          "processing": "The auction is waiting for the next automatic finalization run.",
+          "state": {
+            "awaiting_response": "A bidder has an active 48-hour result offer.",
+            "interest_confirmed": "A bidder confirmed interest. Contact is available below; the sale is not completed yet.",
+            "sale_completed": "The sale was recorded as completed.",
+            "no_bids": "The auction ended without accepted bids.",
+            "exhausted": "All eligible bidders declined or expired. Create a new auction for another attempt."
+          },
+          "bidderContact": "Confirmed bidder contact",
+          "completeTitle": "Complete the sale",
+          "completeHelp": "Use this only after you and the confirmed bidder have completed your direct agreement.",
+          "complete": "Mark sale as completed",
+          "continueTitle": "Bidder withdrew",
+          "continueHelp": "Use this only after the confirmed bidder tells you they withdrew. Their contact access ends and the next eligible bidder receives a new 48-hour offer.",
+          "continue": "Continue with next bidder"
+        },
+        "status": { "saved": "Changes saved.", "photosSaved": "Photos updated.", "noteAdded": "Owner update published.", "continued": "The confirmed bidder was marked withdrawn and the workflow continued.", "saleCompleted": "The sale was recorded as completed.", "invalid": "Check the entered values.", "photoInvalid": "Choose no more than five supported images of up to 5 MB each.", "unavailable": "This action is no longer available." }
       }
     },
     "pageTitle": "My Auctions",

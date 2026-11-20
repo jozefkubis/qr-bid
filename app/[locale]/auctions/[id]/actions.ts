@@ -26,7 +26,7 @@ export async function placeBidAction(
   const amountMinor = BigInt(amountValue);
   if (amountMinor < BigInt(1) || amountMinor > maxMinorAmount) return { status: "invalidAmount" };
 
-  await ensureCurrentProfile();
+  await ensureCurrentProfile(locale);
   const result = await placeBid(auctionId, Number(amountMinor), requestId);
   revalidatePath(`/${locale === "sk" ? "sk" : "en"}/auctions/${auctionId}`);
   revalidatePath(`/${locale === "sk" ? "sk" : "en"}/my-auctions`);

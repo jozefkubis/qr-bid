@@ -8,6 +8,7 @@ import type { PublicAuction } from "@/lib/supabase/auctions";
 import { getAuctionPhotoUrl } from "@/lib/supabase/auction-photos";
 import { currentTimestamp } from "@/lib/server-time";
 import type { BidActionState } from "@/lib/bid-action-state";
+import { LocalAuctionEndTime } from "@/components/auctions/local-auction-end-time";
 
 export async function RealAuctionDetail({ auction, bidAction, locale, signedIn }: { auction: PublicAuction; bidAction: (state: BidActionState, formData: FormData) => Promise<BidActionState>; locale: string; signedIn: boolean }) {
   const t = await getTranslations("AuctionDetail");
@@ -26,7 +27,7 @@ export async function RealAuctionDetail({ auction, bidAction, locale, signedIn }
         <span className={`rounded-full px-3 py-1 text-xs font-semibold ${ended ? "bg-surface-muted text-muted-foreground" : "bg-primary text-white"}`}>{ended ? t("status.ended") : t("status.active")}</span>
         <h1 className="mt-4 text-2xl font-semibold sm:text-3xl">{auction.title}</h1>
         <p className="mt-3 flex items-start gap-2 text-sm text-muted-foreground"><MapPin aria-hidden="true" className="mt-0.5 size-4 shrink-0" /><span>{auction.location ?? t("locationUnavailable")}</span></p>
-        <p className="mt-4 font-semibold text-primary">{ended ? t("endedOn", { date: dateTime.format(new Date(auction.endsAt)) }) : t("liveEndsOn", { date: dateTime.format(new Date(auction.endsAt)) })}</p>
+        <LocalAuctionEndTime ended={ended} endsAt={auction.endsAt} />
         <dl className="mt-6 grid grid-cols-2 gap-4 border-t border-border pt-5">
           <div className="col-span-2"><dt className="text-sm text-muted-foreground">{t("price.current")}</dt><dd className="mt-1 text-3xl font-bold text-primary">{auction.currentHighestMinor === null ? t("price.noBids") : money.format(auction.currentHighestMinor / 100)}</dd></div>
           <div><dt className="text-sm text-muted-foreground">{t("price.starting")}</dt><dd className="mt-1 font-semibold">{money.format(auction.startingPriceMinor / 100)}</dd></div>

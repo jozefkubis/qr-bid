@@ -1,32 +1,27 @@
 import "server-only";
 
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
+import { getClerkDisplayName } from "@/lib/clerk-user";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
-const uniqueViolation = "23505";
+type SupportedLocale = "en" | "sk";
 
-export async function ensureCurrentProfile() {
+export async function ensureCurrentProfile(preferredLocale: string = "en") {
   const { getToken, userId } = await auth();
   if (!userId) throw new Error("A verified Clerk session is required to create a profile.");
-  const token = await getToken();
+  const [token, user] = await Promise.all([getToken(), currentUser()]);
   if (!token) throw new Error("A verified Clerk session token is required to create a profile.");
+  if (!user || user.id !== userId) throw new Error("The current Clerk user could not be verified.");
 
   const supabase = createSupabaseServerClient(token);
-  const inserted = await supabase
-    .from("profiles")
-    .insert({ clerk_user_id: userId })
-    .select("id, clerk_user_id, created_at")
+  const locale: SupportedLocale = preferredLocale === "sk" ? "sk" : "en";
+  const result = await supabase
+    .rpc("sync_current_profile", {
+      p_display_name: getClerkDisplayName(user),
+      p_preferred_locale: locale,
+    })
     .single();
 
-  if (!inserted.error) return inserted.data;
-  if (inserted.error.code !== uniqueViolation) throw inserted.error;
-
-  const existing = await supabase
-    .from("profiles")
-    .select("id, clerk_user_id, created_at")
-    .eq("clerk_user_id", userId)
-    .single();
-
-  if (existing.error) throw existing.error;
-  return existing.data;
+  if (result.error) throw result.error;
+  return result.data;
 }

@@ -86,10 +86,11 @@ export async function createAuction(input: {
   endsAt: string;
   location: string;
   minimumIncrementMinor: number;
+  preferredLocale: string;
   startingPriceMinor: number;
   title: string;
 }) {
-  const profile = await ensureCurrentProfile();
+  const profile = await ensureCurrentProfile(input.preferredLocale);
   const supabase = await currentSupabaseClient();
   const result = await supabase
     .from("auctions")
@@ -110,8 +111,8 @@ export async function createAuction(input: {
   return toOwnedAuction(result.data);
 }
 
-export async function listCurrentUserAuctions() {
-  await ensureCurrentProfile();
+export async function listCurrentUserAuctions(preferredLocale: string) {
+  await ensureCurrentProfile(preferredLocale);
   const supabase = await currentSupabaseClient();
   const [result, summaries] = await Promise.all([
     supabase.from("auctions").select(auctionColumns).order("created_at", { ascending: false }),
@@ -124,7 +125,8 @@ export async function listCurrentUserAuctions() {
   return result.data.map((row) => toOwnedAuction(row, summaryByAuction.get(row.id)));
 }
 
-export async function listCurrentUserBidAuctions(): Promise<MyBidAuction[]> {
+export async function listCurrentUserBidAuctions(preferredLocale: string): Promise<MyBidAuction[]> {
+  await ensureCurrentProfile(preferredLocale);
   const supabase = await currentSupabaseClient();
   const result = await supabase.rpc("get_my_bid_auctions");
 
@@ -143,8 +145,8 @@ export async function listCurrentUserBidAuctions(): Promise<MyBidAuction[]> {
   }));
 }
 
-export async function getCurrentUserAuction(id: string) {
-  await ensureCurrentProfile();
+export async function getCurrentUserAuction(id: string, preferredLocale: string) {
+  await ensureCurrentProfile(preferredLocale);
   const supabase = await currentSupabaseClient();
   const [result, summaries] = await Promise.all([
     supabase.from("auctions").select(auctionColumns).eq("id", id).maybeSingle(),

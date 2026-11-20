@@ -1,7 +1,9 @@
 "use server";
 
+import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { completeAuctionSale, continueWithNextAuctionCandidate } from "@/lib/supabase/auction-results";
 import { addCurrentUserAuctionNote, deleteCurrentUserAuction, getCurrentUserAuction, updateCurrentUserAuction } from "@/lib/supabase/auctions";
 import { MAX_AUCTION_PHOTOS, removeAllAuctionPhotoObjects, removeAuctionPhotos, uploadAuctionPhotos, validateAuctionPhotos } from "@/lib/supabase/auction-photos";
 
@@ -34,7 +36,7 @@ export async function updateAuctionAction(locale: string, id: string, data: Form
 }
 
 export async function addAuctionPhotosAction(locale: string, id: string, data: FormData) {
-  const auction = await getCurrentUserAuction(id);
+  const auction = await getCurrentUserAuction(id, locale);
   if (!auction || auction.bidCount > 0 || new Date(auction.endsAt).getTime() <= Date.now()) redirect(target(locale, id, "unavailable"));
   const files = data.getAll("photos").filter((value): value is File => value instanceof File && value.size > 0);
   if (!files.length || auction.photoPaths.length + files.length > MAX_AUCTION_PHOTOS || validateAuctionPhotos(files)) redirect(target(locale, id, "photoInvalid"));
@@ -45,7 +47,7 @@ export async function addAuctionPhotosAction(locale: string, id: string, data: F
 }
 
 export async function removeAuctionPhotoAction(locale: string, id: string, data: FormData) {
-  const auction = await getCurrentUserAuction(id);
+  const auction = await getCurrentUserAuction(id, locale);
   const path = text(data, "path");
   if (!auction || auction.bidCount > 0 || !auction.photoPaths.includes(path)) redirect(target(locale, id, "unavailable"));
   await removeAuctionPhotos([path]);
@@ -56,7 +58,7 @@ export async function removeAuctionPhotoAction(locale: string, id: string, data:
 
 export async function deleteAuctionAction(locale: string, id: string, data: FormData) {
   if (text(data, "confirmation") !== "delete") redirect(target(locale, id, "invalid"));
-  const auction = await getCurrentUserAuction(id);
+  const auction = await getCurrentUserAuction(id, locale);
   if (!auction || auction.bidCount > 0) redirect(target(locale, id, "unavailable"));
   await removeAllAuctionPhotoObjects(id);
   const deleted = await deleteCurrentUserAuction(id);
@@ -72,4 +74,26 @@ export async function addAuctionNoteAction(locale: string, id: string, data: For
   revalidatePath(`/${safeLocale(locale)}/auctions/${id}`);
   revalidatePath(`/${safeLocale(locale)}/my-auctions/${id}`);
   redirect(target(locale, id, added ? "noteAdded" : "unavailable"));
+}
+
+export async function completeAuctionSaleAction(locale: string, id: string) {
+  const { isAuthenticated } = await auth();
+  if (!isAuthenticated) throw new Error("Authentication is required.");
+  const result = await completeAuctionSale(id);
+  const safe = safeLocale(locale);
+  revalidatePath(`/${safe}/my-auctions`);
+  revalidatePath(`/${safe}/my-auctions/${id}`);
+  revalidatePath(`/${safe}/my-bids`);
+  redirect(target(locale, id, result === "sale_completed" ? "saleCompleted" : "unavailable"));
+}
+
+export async function continueWithNextAuctionCandidateAction(locale: string, id: string) {
+  const { isAuthenticated } = await auth();
+  if (!isAuthenticated) throw new Error("Authentication is required.");
+  const result = await continueWithNextAuctionCandidate(id);
+  const safe = safeLocale(locale);
+  revalidatePath(`/${safe}/my-auctions`);
+  revalidatePath(`/${safe}/my-auctions/${id}`);
+  revalidatePath(`/${safe}/my-bids`);
+  redirect(target(locale, id, result === "continued" ? "continued" : "unavailable"));
 }

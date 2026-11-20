@@ -40,6 +40,31 @@
       "myLatest": "Moja ponuka",
       "viewAuction": "Zobraziť aukciu"
     },
+    "finalization": {
+      "eyebrow": "Výsledok aukcie",
+      "title": "Ponuky čakajúce na tvoje rozhodnutie",
+      "description": "Výsledková ponuka je oddelená od pôvodného prihodenia. Aktívnu ponuku možno potvrdiť alebo odmietnuť pred jej presným termínom.",
+      "status": {
+        "active": "Čaká na tvoju odpoveď",
+        "accepted": "Záujem potvrdený",
+        "declined": "Odmietnutá",
+        "expired": "Expirovaná",
+        "withdrawn": "Vlastník pokračoval s iným záujemcom"
+      },
+      "amount": "Tvoja ponúknutá suma",
+      "deadline": "Termín odpovede",
+      "accept": "Potvrdiť záujem",
+      "decline": "Odmietnuť",
+      "consent": "Potvrdením dovolíš vlastníkovi kontaktovať ťa na overenom e-maile, aby ste mohli pokračovať v priamej dohode. Nejde o platbu ani automatické dokončenie predaja.",
+      "ownerContact": "Kontakt vlastníka",
+      "actionStatus": {
+        "accepted": "Tvoj záujem bol potvrdený.",
+        "declined": "Ponuka bola odmietnutá a postup bezpečne pokračoval.",
+        "expired": "Termín odpovede už uplynul, preto ponuka expirovala.",
+        "invalid": "Požiadavka na odpoveď nebola platná.",
+        "unavailable": "Táto akcia už nie je dostupná."
+      }
+    },
     "error": {
       "title": "Ponuky sa nepodarilo načítať",
       "description": "Skús túto stránku načítať znova.",
@@ -69,7 +94,26 @@
         "photosTitle": "Fotografie aukcie", "photosHelp": "Najviac {count} obr\u00e1zkov JPG, PNG alebo WebP, ka\u017ed\u00fd maxim\u00e1lne 5 MB.", "choosePhotos": "Vybra\u0165 fotografie", "noPhotosSelected": "Nie s\u00fa vybran\u00e9 \u017eiadne fotografie.", "addPhotos": "Nahra\u0165 fotografie", "photo": "Fotografia {number}", "removePhoto": "Odstr\u00e1ni\u0165 fotografiu {number}",
         "deleteTitle": "Odstr\u00e1ni\u0165 aukciu", "deleteConsequence": "Aukcia aj jej nahrat\u00e9 fotografie bud\u00fa natrvalo odstr\u00e1nen\u00e9.", "deleteConfirmation": "Rozumiem, \u017ee t\u00fato akciu nemo\u017eno vr\u00e1ti\u0165 sp\u00e4\u0165.", "confirmDelete": "Odstr\u00e1ni\u0165 aukciu",
         "noteTitle": "Informova\u0165 prihadzuj\u00facich", "noteLabel": "Doplnenie vlastn\u00edka", "publishNote": "Zverejni\u0165 doplnenie",
-        "status": { "saved": "Zmeny boli ulo\u017een\u00e9.", "photosSaved": "Fotografie boli aktualizovan\u00e9.", "noteAdded": "Doplnenie vlastn\u00edka bolo zverejnen\u00e9.", "invalid": "Skontrolujte zadan\u00e9 hodnoty.", "photoInvalid": "Vyberte najviac p\u00e4\u0165 podporovan\u00fdch obr\u00e1zkov do 5 MB.", "unavailable": "T\u00e1to akcia u\u017e nie je dostupn\u00e1." }
+        "finalization": {
+          "eyebrow": "Výsledok aukcie",
+          "title": "Finalizácia",
+          "processing": "Aukcia čaká na najbližšie automatické spracovanie výsledku.",
+          "state": {
+            "awaiting_response": "Jeden záujemca má aktívnu 48-hodinovú výsledkovú ponuku.",
+            "interest_confirmed": "Záujemca potvrdil záujem. Kontakt je dostupný nižšie; predaj ešte nie je dokončený.",
+            "sale_completed": "Predaj bol zaevidovaný ako dokončený.",
+            "no_bids": "Aukcia sa skončila bez prijatých ponúk.",
+            "exhausted": "Všetci oprávnení záujemcovia odmietli alebo im uplynul termín. Pre ďalší pokus vytvor novú aukciu."
+          },
+          "bidderContact": "Kontakt potvrdeného záujemcu",
+          "completeTitle": "Dokončiť predaj",
+          "completeHelp": "Použi to až potom, keď ste s potvrdeným záujemcom dokončili priamu dohodu.",
+          "complete": "Označiť predaj ako dokončený",
+          "continueTitle": "Záujemca odstúpil",
+          "continueHelp": "Použi to iba vtedy, keď ti potvrdený záujemca oznámil odstúpenie. Jeho prístup ku kontaktu zanikne a ďalší oprávnený záujemca dostane novú 48-hodinovú ponuku.",
+          "continue": "Pokračovať ďalším záujemcom"
+        },
+        "status": { "saved": "Zmeny boli ulo\u017een\u00e9.", "photosSaved": "Fotografie boli aktualizovan\u00e9.", "noteAdded": "Doplnenie vlastn\u00edka bolo zverejnen\u00e9.", "continued": "Potvrdený záujemca bol označený ako odstúpený a postup pokračoval.", "saleCompleted": "Predaj bol zaevidovaný ako dokončený.", "invalid": "Skontrolujte zadan\u00e9 hodnoty.", "photoInvalid": "Vyberte najviac p\u00e4\u0165 podporovan\u00fdch obr\u00e1zkov do 5 MB.", "unavailable": "T\u00e1to akcia u\u017e nie je dostupn\u00e1." }
       }
     },
     "pageTitle": "Moje aukcie",

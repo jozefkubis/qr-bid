@@ -1,7 +1,7 @@
 # Feature 15 – Ukončenie aukcie a potvrdenie výsledku
 
-**Stav:** Návrh na produktovú a technickú kontrolu  
-**Rozsah tohto kroku:** Iba špecifikácia, dátový model a pravidlá prechodov. Bez implementácie, migrácie, nasadenia alebo odoslania e-mailu.
+**Stav:** Schválené pre inkrementálnu implementáciu
+**Rozsah aktuálneho kroku:** Lokálny profilový a databázový základ s testami. Bez hosted migrácie, scheduleru, nasadenia alebo odoslania e-mailu.
 
 ## 1. Cieľ
 
@@ -65,7 +65,7 @@ Zrušená aukcia zostáva samostatný lifecycle stav podľa END-002/003 a finali
 | `expired` | Kandidát do presného termínu neodpovedal. |
 | `withdrawn` | Kandidát po potvrdení odstúpil a vlastník pokračoval ďalej. |
 
-Pri `statement_timestamp() >= expires_at` už potvrdenie ani odmietnutie nie je platné; transakcia najprv označí ponuku ako `expired` a pokúsi sa vytvoriť ďalšiu.
+Pri čerstvom `clock_timestamp() >= expires_at`, načítanom až po získaní autoritatívnych zámkov, už potvrdenie ani odmietnutie nie je platné; transakcia najprv označí ponuku ako `expired` a pokúsi sa vytvoriť ďalšiu.
 
 ## 5. Navrhovaný dátový model
 
@@ -148,8 +148,9 @@ Trvácna fronta pre e-maily vytvorená v rovnakej databázovej transakcii ako do
 - `recipient_profile_id uuid not null`
 - `notification_type text not null`
 - `locale text not null check (locale in ('en', 'sk'))`
-- `status text not null` – `pending`, `processing`, `retry`, `sent`, `permanent_failure`
+- `status text not null` – `pending`, `processing`, `retry`, `sent`, `permanent_failure`, `superseded`
 - `attempt_count integer not null default 0`
+- `processing_started_at timestamptz null`
 - `next_attempt_at timestamptz not null`
 - `provider_message_id text null`
 - `sent_at timestamptz null`
@@ -179,7 +180,7 @@ Autentifikované RPC odvodí profil iba z overeného Clerk JWT `sub`; klient nep
 
 1. Zamkne `auction_finalizations` a aktívnu ponuku `FOR UPDATE`.
 2. Overí, že ponuka patrí volajúcemu a finalizácia je `awaiting_response`.
-3. Až po získaní zámkov načíta nový databázový `statement_timestamp()` a porovná ho s `expires_at`; nepoužije čas z requestu ani čas načítaný pred čakaním na zámok.
+3. Až po získaní zámkov načíta čerstvý databázový `clock_timestamp()` a porovná ho s `expires_at`; nepoužije čas z requestu ani čas zmrazený na začiatku SQL príkazu pred čakaním na zámok.
 4. Pri včasnom potvrdení atomicky nastaví ponuku `accepted`, finalizáciu `interest_confirmed`, zapíše event a dva outbox joby.
 5. Pri odmietnutí alebo už uplynutej lehote uzavrie aktuálnu ponuku a v tej istej transakcii vytvorí ponuku pre ďalší nepoužitý rank; ak ďalší nie je, nastaví `exhausted`.
 
@@ -187,7 +188,7 @@ Autentifikované RPC odvodí profil iba z overeného Clerk JWT `sub`; klient nep
 
 Plánovaný interný worker vyberie aktívne ponuky s `expires_at <= statement_timestamp()` a pre každú zavolá rovnakú internú prechodovú funkciu ako oneskorená používateľská odpoveď.
 
-Pri súbehu kliknutia a workeru nerozhoduje čas príchodu HTTP requestu ani poradie začatia transakcií. Každá cesta najprv získa zámok finalizácie a aktívnej ponuky a až potom vyhodnotí aktuálny databázový čas a znovu načítaný stav. Ak je po získaní zámku `statement_timestamp() >= expires_at`, ponuka expirovala aj vtedy, keď kliknutie prišlo tesne pred termínom. Pri čase presne rovnajúcom sa `expires_at` vždy vyhrá expirácia. Druhá transakcia po získaní zámku uvidí už uzavretý stav a neurobí duplicitný prechod.
+Pri súbehu kliknutia a workeru nerozhoduje čas príchodu HTTP requestu ani poradie začatia transakcií. Každá cesta najprv získa zámok finalizácie a aktívnej ponuky a až potom vyhodnotí aktuálny databázový čas a znovu načítaný stav. Ak je po získaní zámku `clock_timestamp() >= expires_at`, ponuka expirovala aj vtedy, keď kliknutie prišlo tesne pred termínom. Pri čase presne rovnajúcom sa `expires_at` vždy vyhrá expirácia. Druhá transakcia po získaní zámku uvidí už uzavretý stav a neurobí duplicitný prechod.
 
 ### 6.4 Odstúpenie po potvrdení
 
@@ -230,7 +231,7 @@ Pracovný MVP variant bez novej mikro služby:
 4. zlyhanie alebo bounce e-mailu nemení doménový stav ani deadline,
 5. monitoring sleduje staré `pending/retry` joby a permanentné zlyhania.
 
-Navrhovaný scheduler je Supabase Cron približne raz za minútu. Jeden SQL job spustí interné idempotentné databázové funkcie pre nové ukončenia a expirácie. Druhý krok cez `pg_net` zavolá chránený interný endpoint existujúcej QRBid aplikácie, ktorý spracuje outbox cez Resend. Endpoint prijme iba požiadavku s osobitným náhodným worker secretom; tento secret bude uložený v Supabase Vault a zároveň ako serverová premenná QRBid, nikdy v migrácii, klientovi ani v Resend payload. Nepoužije sa publishable key ani Resend API key ako autentizačný token endpointu.
+Implementovaný scheduler používa Supabase Cron približne raz za minútu. Jeden SQL job spustí interné idempotentné databázové funkcie pre nové ukončenia a expirácie. Druhý krok cez `pg_net` zavolá chránený interný endpoint existujúcej QRBid aplikácie, ktorý spracuje outbox cez Resend. Endpoint prijme iba požiadavku s osobitným náhodným worker secretom; tento secret je pomenovaný v Supabase Vault a zároveň nastavený ako serverová premenná QRBid, nikdy nie v migrácii, klientovi ani Resend payload. Nepoužije sa publishable key ani Resend API key ako autentizačný token endpointu. Kým Vault neobsahuje obe hodnoty `qrbid_app_url` a `qrbid_worker_secret`, databázová funkcia bezpečne neodošle HTTP požiadavku.
 
 Worker v krátkej databázovej transakcii atomicky rezervuje pripravené joby pomocou zámku a `SKIP LOCKED`, zvýši počet pokusov a až potom odošle správu. Viaceré spustenia tak nespracujú rovnaký job súčasne. Resend volanie používa stabilný idempotency kľúč odvodený z ID outbox jobu. Pri dočasnej chybe sa naplánujú retry po 1, 5 a 30 minútach. Po poslednom dočasnom neúspechu alebo pri trvalej chybe príjemcu sa job označí `permanent_failure`, uloží sa bezpečný kód chyby a vznikne monitorovateľné upozornenie; ponuka však zostáva dostupná v aplikácii a jej deadline sa nemení. Ak dovtedy expiruje, databázový workflow pokračuje ďalším kandidátom nezávisle od stavu e-mailu. Oneskorený retry už uzavretej výzvy nesmie odoslať akčný e-mail; worker pred odoslaním znovu overí, že príslušná ponuka je stále `active`, inak job uzavrie ako neaktuálny.
 
@@ -285,7 +286,7 @@ Schválené sú aj význam **Potvrdiť záujem**, zdroj mena a uloženie jazyka,
 
 ## 12. Budúce implementačné kroky po schválení
 
-1. Schváliť otvorené rozhodnutia a synchronizovať `architecture-context.md` a UI kontext.
+1. Implementovať a lokálne overiť súkromný profilový a databázový základ podľa uzavretého review gate.
 2. Vytvoriť jednu kontrolovanú migráciu cez Supabase CLI až po návrhu a databázových testoch.
 3. Implementovať a testovať transakčné RPC vrátane súbehu odpovede a expirácie.
 4. Implementovať súkromné bidder/owner čítania a EN/SK UI.

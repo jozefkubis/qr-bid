@@ -58,6 +58,7 @@ export async function createAuctionAction(
       location,
       startingPriceMinor: startingPriceMinor!,
       minimumIncrementMinor: minimumIncrementMinor!,
+      preferredLocale: locale,
       endsAt: endsAt.toISOString(),
     });
     auctionId = auction.id;
