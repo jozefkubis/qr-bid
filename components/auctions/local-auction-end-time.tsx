@@ -11,9 +11,13 @@ export function LocalAuctionEndTime({ ended, endsAt }: { ended: boolean; endsAt:
   const t = useTranslations("AuctionDetail");
   const language = locale === "sk" ? "sk-SK" : "en-IE";
   const date = new Intl.DateTimeFormat(language, {
-    dateStyle: "medium",
-    timeStyle: "short",
-    ...(hydrated ? { timeZoneName: "short" as const } : { timeZone: "UTC", timeZoneName: "short" as const }),
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: hydrated ? undefined : "UTC",
+    timeZoneName: "short",
   }).format(new Date(endsAt));
 
   return <p className="mt-4 font-semibold text-primary">{ended ? t("endedOn", { date }) : t("liveEndsOn", { date })}</p>;
