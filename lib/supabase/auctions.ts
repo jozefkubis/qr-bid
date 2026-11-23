@@ -159,6 +159,22 @@ export async function getCurrentUserAuction(id: string, preferredLocale: string)
   return result.data ? toOwnedAuction(result.data, summary) : null;
 }
 
+export async function currentUserOwnsAuction(
+  id: string,
+  preferredLocale: string,
+) {
+  await ensureCurrentProfile(preferredLocale);
+  const supabase = await currentSupabaseClient();
+  const result = await supabase
+    .from("auctions")
+    .select("id")
+    .eq("id", id)
+    .maybeSingle();
+
+  if (result.error) throw result.error;
+  return result.data !== null;
+}
+
 export async function getPublicAuction(id: string): Promise<PublicAuction | null> {
   const supabase = createPublicSupabaseServerClient();
   const result = await supabase.rpc("get_public_auction", { p_auction_id: id }).maybeSingle();

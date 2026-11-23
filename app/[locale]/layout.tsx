@@ -87,6 +87,10 @@ export default async function LocaleLayout({
               elements: {
                 cardBox: "shadow-soft",
                 card: "border border-border",
+                formButtonPrimary: "qrbid-pressable",
+                socialButtonsBlockButton: "qrbid-pressable",
+                footerActionLink: "qrbid-pressable",
+                userButtonTrigger: "qrbid-pressable",
               },
             }}
           >

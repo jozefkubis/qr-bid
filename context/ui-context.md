@@ -26,6 +26,7 @@ Use CSS variables in `globals.css` and map them to Tailwind theme utilities. Kee
 - Use warm neutral surfaces, white or cream cards, soft borders, and generous whitespace.
 - Use a consistent radius near 12px for buttons, cards, and inputs; refine by component only when needed.
 - Primary buttons are solid accent color; secondary buttons are outlined or lightly tinted.
+- Active QRBid controls use a brief `scale(0.98)` press response and return to `1` on release. The shared rule covers buttons, button-styled links, file-picker labels and supported Clerk controls; disabled/loading controls and reduced-motion mode never transform.
 - Keep navigation short: My Auctions, My Bids, Create Auction, Profile, EN/SK switch.
 - Use clear labels, inline validation, and large touch targets (aim for at least 44 × 44 CSS pixels).
 - Use consistent loading, empty, error, active, and ended states.
@@ -105,6 +106,14 @@ Show image, title, description, current highest bid, countdown, minimum valid ne
 - Every real public auction detail subscribes to its UUID-scoped public bid-change channel. A safe signal or successful reconnect refreshes the server-rendered current amount, minimum, count and anonymous history from the database-backed public response.
 - Realtime never accepts or validates a bid and does not display values taken from the event payload. An outage leaves normal page loads and transactional bidding functional.
 - If another accepted bid arrives while a confirmation is open, the full amount and request UUID remain unchanged. The panel displays the new database minimum and warns the bidder to review before submitting the preserved amount.
+
+#### Feature 16 Step 1 bid confirmation (2026-11-23)
+
+- Quick bid choices are outlined before selection. The selected absolute amount uses the Terra primary surface, a check mark and `aria-pressed`; custom amount editing clears the quick selection.
+- Mobile quick choices lead with the absolute total and place the increase beneath it. The custom field follows the current database-backed minimum until the bidder edits it, then preserves the draft while continuing to show the latest minimum.
+- Valid quick and custom amounts open the same modal confirmation: bottom-anchored on mobile and centered from the small breakpoint. The native modal dialog blocks background interaction, traps keyboard focus, supports Escape before submission, returns focus to its opener and keeps actions outside its scrolling content with safe-area padding.
+- A pending confirmation keeps its amount and request UUID. A changed minimum never rewrites the reviewed amount; an insufficient amount must return to editing. Successful or idempotently replayed submission clears selection, resets the custom field to the server-returned minimum and announces the accepted amount plus next minimum in the panel.
+- The signed-in auction owner may inspect the same amount controls, but opening the modal shows an error-colored exclamation warning and only a Back action. The server supplies only an owner boolean derived through the existing owner-scoped RLS read; the PostgreSQL `own_auction` rejection remains the authoritative protection.
 
 ### Auction Published / QR Sharing
 

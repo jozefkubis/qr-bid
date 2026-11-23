@@ -10,7 +10,7 @@ import { currentTimestamp } from "@/lib/server-time";
 import type { BidActionState } from "@/lib/bid-action-state";
 import { LocalAuctionEndTime } from "@/components/auctions/local-auction-end-time";
 
-export async function RealAuctionDetail({ auction, bidAction, locale, signedIn }: { auction: PublicAuction; bidAction: (state: BidActionState, formData: FormData) => Promise<BidActionState>; locale: string; signedIn: boolean }) {
+export async function RealAuctionDetail({ auction, bidAction, isOwner, locale, signedIn }: { auction: PublicAuction; bidAction: (state: BidActionState, formData: FormData) => Promise<BidActionState>; isOwner: boolean; locale: string; signedIn: boolean }) {
   const t = await getTranslations("AuctionDetail");
   const biddingT = await getTranslations("LiveBidding");
   const language = locale === "sk" ? "sk-SK" : "en-IE";
@@ -37,7 +37,7 @@ export async function RealAuctionDetail({ auction, bidAction, locale, signedIn }
     </div>
     <Card className="p-5 sm:p-6"><h2 className="text-xl font-semibold">{t("description")}</h2><p className="mt-3 whitespace-pre-wrap text-muted-foreground">{auction.description || t("noDescription")}</p></Card>
     {auction.ownerNotes.length ? <Card className="p-5 sm:p-6"><h2 className="text-xl font-semibold">{t("notes.title")}</h2><ol className="mt-4 grid gap-4">{auction.ownerNotes.map((note) => <li key={`${note.createdAt}-${note.body}`} className="border-l-2 border-tertiary pl-4"><p>{note.body}</p><time className="mt-1 block text-xs text-muted-foreground">{dateTime.format(new Date(note.createdAt))}</time></li>)}</ol></Card> : null}
-    <LiveBiddingPanel action={bidAction} auctionId={auction.id} bidCount={auction.bidCount} currentHighestMinor={auction.currentHighestMinor} ended={ended} locale={locale} minimumIncrementMinor={auction.minimumIncrementMinor} minimumNextBidMinor={auction.minimumNextBidMinor} signedIn={signedIn} />
+    <LiveBiddingPanel action={bidAction} auctionId={auction.id} bidCount={auction.bidCount} currentHighestMinor={auction.currentHighestMinor} ended={ended} isOwner={isOwner} locale={locale} minimumIncrementMinor={auction.minimumIncrementMinor} minimumNextBidMinor={auction.minimumNextBidMinor} signedIn={signedIn} />
     <Card className="p-5 sm:p-6"><div className="flex flex-wrap items-center justify-between gap-2"><h2 className="text-xl font-semibold">{t("history.title")}</h2><span className="text-sm text-muted-foreground">{biddingT("bidCount", { count: auction.bidCount })}</span></div>{auction.bidHistory.length ? <ol className="mt-4 divide-y divide-border">{auction.bidHistory.map((bid, index) => <li key={`${bid.createdAt}-${bid.amountMinor}`} className="flex items-center justify-between gap-4 py-3"><div><p className="font-semibold">{money.format(bid.amountMinor / 100)}</p>{index === 0 ? <span className="text-xs font-semibold text-primary">{t("history.highest")}</span> : null}</div><time className="text-sm text-muted-foreground">{dateTime.format(new Date(bid.createdAt))}</time></li>)}</ol> : <p className="mt-3 text-muted-foreground">{t("history.empty")}</p>}</Card>
   </div>;
 }
