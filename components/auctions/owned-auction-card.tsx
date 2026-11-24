@@ -27,10 +27,10 @@ export function OwnedAuctionCard({ auction, now }: { auction: OwnedAuction; now:
         <h2 className="line-clamp-2 text-lg font-semibold sm:text-xl">{auction.title}</h2>
         <p className="mt-2 flex items-start gap-2 text-sm text-muted-foreground"><MapPin aria-hidden="true" className="mt-0.5 size-4 shrink-0" /><span>{auction.location ?? t("locationUnavailable")}</span></p>
         <p className="mt-3 flex items-start gap-2 text-sm text-muted-foreground"><Clock3 aria-hidden="true" className="mt-0.5 size-4 shrink-0" /><span>{tLive("endsAt", { date })}</span></p>
-        <dl className="mt-5 grid grid-cols-3 divide-x divide-border border-y border-border py-4 text-center">
-          <div className="min-w-0 px-2 first:pl-0"><dt className="text-xs text-muted-foreground">{t("currentHighest")}</dt><dd className="mt-2 font-semibold">{auction.currentHighestMinor === null ? t("noBidsYet") : currency.format(auction.currentHighestMinor / 100)}</dd></div>
-          <div className="min-w-0 px-2"><dt className="text-xs text-muted-foreground">{t("totalBids")}</dt><dd className="mt-2 font-semibold">{auction.bidCount}</dd></div>
-          <div className="min-w-0 px-2 last:pr-0"><dt className="text-xs text-muted-foreground">{t("startingPrice")}</dt><dd className="mt-2 break-words font-semibold">{currency.format(auction.startingPriceMinor / 100)}</dd></div>
+        <dl className="mt-5 grid grid-cols-2 border-y border-border py-4 text-center sm:grid-cols-3">
+          <div className="min-w-0 px-2"><dt className="text-[0.6875rem] leading-tight text-muted-foreground sm:text-xs">{t("currentHighest")}</dt><dd className={`mt-2 text-sm font-semibold sm:text-base ${auction.currentHighestMinor === null ? "break-words" : "whitespace-nowrap"}`}>{auction.currentHighestMinor === null ? t("noBidsYet") : currency.format(auction.currentHighestMinor / 100)}</dd></div>
+          <div className="min-w-0 border-l border-border px-2"><dt className="text-[0.6875rem] leading-tight text-muted-foreground sm:text-xs">{t("totalBids")}</dt><dd className="mt-2 text-sm font-semibold sm:text-base">{auction.bidCount}</dd></div>
+          <div className="col-span-2 mt-4 min-w-0 border-t border-border px-2 pt-4 sm:col-span-1 sm:mt-0 sm:border-t-0 sm:border-l sm:pt-0"><dt className="text-[0.6875rem] leading-tight text-muted-foreground sm:text-xs">{t("startingPrice")}</dt><dd className="mt-2 whitespace-nowrap text-sm font-semibold sm:text-base">{currency.format(auction.startingPriceMinor / 100)}</dd></div>
         </dl>
         <Link href={`/my-auctions/${auction.id}`} className="mt-5 inline-flex min-h-11 items-center justify-center gap-2 rounded-soft border border-primary bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus">{t("auctionDetails")}<ArrowRight aria-hidden="true" className="size-4" /></Link>
       </div>

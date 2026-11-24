@@ -61,6 +61,12 @@ html[data-theme="light"] body {
   }
 }
 
+@media (max-width: 39.999rem) {
+  body {
+    font-size: 0.9375rem;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   :where(
     button:not(:disabled):not([aria-busy="true"]),

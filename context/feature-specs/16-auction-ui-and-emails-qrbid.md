@@ -1,6 +1,6 @@
 # Feature 16 – Prihadzovanie, odozva tlačidiel a výsledkové e-maily
 
-**Stav:** Kroky 1 a 2 sú implementované a manuálne prijaté produktovým vlastníkom. Krok 3 je implementovaný lokálne vrátane 14 fiktívnych HTML/text náhľadov; produktový vlastník potvrdil, že prvý náhľad môže byť, a podrobnú kontrolu všetkých variantov odložil na nasledujúci deň. Žiadny e-mail nebol odoslaný.
+**Stav:** Dokončené. Kroky 1 a 2 sú implementované a manuálne prijaté produktovým vlastníkom. Krok 3 je implementovaný lokálne a všetkých 14 fiktívnych EN/SK HTML/text náhľadov produktový vlastník manuálne prijal 24. 11. 2026. Žiadny e-mail nebol odoslaný.
 
 **Umiestnenie v repozitári:** `context/feature-specs/16-auction-ui-and-emails-qrbid.md`
 
@@ -55,7 +55,7 @@ Prejdi úvod, detail aukcie, vytvorenie, Moje aukcie, Moje ponuky, zdieľanie a 
 
 Lokálny príkaz `npm run email:previews` vytvára sedem EN a sedem SK fiktívnych HTML/TXT párov plus `tmp/email-previews/index.html`; nič neposiela cez Resend. Generátor overuje počet variantov, názov aukcie v predmete, práve jedno HTML CTA, zhodný správny odkaz v HTML/text verzii a sumu/UTC termín vo výzve. Všetkých 14 náhľadov prešlo, rovnako TypeScript, ESLint, EN/SK katalógová parita, `git diff --check` a produkčný Next.js build. Obsahová a vizuálna kontrola v úzkom e-mailovom zobrazení zostáva otvorená; Resend odoslanie, inbox doručenie, outbox a hosted stav sa v tomto kroku nemenili ani netestovali.
 
-**Priebežná akceptácia (2026-11-23):** Produktový vlastník skontroloval prvý SK bidder preview a označil ho ako vyhovujúci. Kontrolu zostávajúcich EN/SK HTML/text variantov a reálneho e-mailového zobrazenia odložil na 2026-11-24. Krok 3 preto zostáva otvorený a toto potvrdenie nie je súhlas s odoslaním, nasadením, commitom alebo pushom.
+**Akceptácia (2026-11-24):** Produktový vlastník manuálne skontroloval a prijal celú sadu 14 EN/SK náhľadov vrátane HTML a textových verzií. Krok 3 a Feature 16 sú dokončené. Toto prijatie nie je súhlas s reálnym odoslaním cez Resend, nasadením, commitom ani pushom; tieto kroky zostávajú samostatne podmienené výslovným súhlasom.
 
 - Uprav existujúce šablóny Feature 15. Predmet pomenuje aukciu a výsledok alebo potrebnú akciu. Prvý odsek vysvetlí udalosť a čo nasleduje. Každý e-mail má jedno hlavné tlačidlo; textová verzia má rovnakú informáciu a odkaz.
 - Pri výzve zobraz vlastnú ponúknutú sumu a presný termín z `expires_at` s jednoznačným časovým pásmom. Jazyk príjemcu sám neurčuje jeho miestne časové pásmo. Pri ostatných udalostiach zobraz sumu iba tam, kde ju existujúca udalosť poskytuje. Názov aukcie spracuj ako text zadaný používateľom.

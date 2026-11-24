@@ -238,13 +238,15 @@ export function LiveBiddingPanel(props: Props) {
               key={amount}
               variant={selected ? "primary" : "secondary"}
               aria-pressed={selected}
-              className="flex-1 justify-between sm:flex-none"
+              className="relative min-w-[9.5rem] flex-[1_1_9.5rem] justify-center px-10 sm:flex-none"
               onClick={(event) => prepareQuick(amount, event)}
             >
-              <span className="grid text-left leading-tight">
-                <span>{money.format(amount / 100)}</span>
+              <span className="grid min-w-0 text-center leading-tight">
+                <span className="whitespace-nowrap text-base font-semibold">
+                  {money.format(amount / 100)}
+                </span>
                 {props.bidCount > 0 ? (
-                  <span className="text-xs font-normal opacity-80">
+                  <span className="whitespace-nowrap text-xs font-normal opacity-80">
                     {t("increase", {
                       amount: money.format(
                         (props.minimumIncrementMinor * (index + 1)) / 100,
@@ -253,9 +255,10 @@ export function LiveBiddingPanel(props: Props) {
                   </span>
                 ) : null}
               </span>
-              {selected ? (
-                <Check className="size-4 shrink-0" aria-hidden="true" />
-              ) : null}
+              <Check
+                className={`absolute inset-y-0 right-4 my-auto size-4 ${selected ? "opacity-100" : "opacity-0"}`}
+                aria-hidden="true"
+              />
             </Button>
           );
         })}

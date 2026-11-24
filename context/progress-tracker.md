@@ -4,13 +4,23 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## Current Phase
 
-- Feature 16 Steps 1 and 2 are implemented and accepted by the product owner. Step 3 result-email templates and 14 local fictional previews are implemented; the first SK bidder preview received preliminary approval, while the full review is deferred to 2026-11-24. No e-mail was sent. Supabase integration, Feature 12 Stage E, Feature 13 My Bids and the corrective auction-location migration are reported deployed. Features 14 and 15 are complete. Feature 15 is deployed and operational on hosted Supabase/Vercel with active Cron and accepted Resend deliveries. Feature 13 acceptance and the paused remainder of Feature 12 remain incomplete.
+- Feature 16 is complete. Feature 17 Sections 1–4 are implemented locally: Section 1 is manually accepted, while the combined product-owner acceptance for Sections 2–4 is explicitly deferred to an evening session and recorded in `public/promts.txt`. Supabase integration, Feature 12 Stage E, Feature 13 My Bids and the corrective auction-location migration are reported deployed. Features 14 and 15 are complete. Feature 15 is deployed and operational on hosted Supabase/Vercel with active Cron and accepted Resend deliveries. Feature 13 acceptance and the paused remainder of Feature 12 remain incomplete.
 
 ## Current Goal
 
-- On 2026-11-24, resume the review of the remaining local Feature 16 Step 3 e-mail previews for EN/SK content, role-specific links, offer amount/deadline and narrow-layout readability. Do not send or deploy e-mails until the full preview set is accepted.
+- Preserve the completed local Feature 17 implementation and run the deferred combined Sections 2–4 manual acceptance in the evening. Do not infer deployment, commit or push approval.
 
 ## Completed
+
+- Implemented Feature 17 Sections 3–4 locally on 2026-11-24 after the product owner explicitly asked to finish Feature 17 and defer manual acceptance. Below `lg`, the stable header row is compact QRBid → active-language chooser → Clerk profile/sign-in → menu; opening navigation renders the existing links below it. The chooser preserves the existing localized path/query/hash flow and form warning. The mobile footer now contains only QRBid and copyright, hiding nonfunctional resource placeholders and the duplicate language control; desktop behavior remains. Edge at 320px verified the signed-in SK closed header, EN/SK chooser, open navigation and compact footer without observed overflow. Signed-out, actual language switching, Clerk profile name, EN copy, physical mobile and desktop acceptance remain deferred. Targeted ESLint, standalone TypeScript, `git diff --check` and the Next.js 16.4.5 Turbopack production build pass. No commit, push or deployment was performed.
+
+- Implemented Feature 17 Section 2 locally on 2026-11-24 after explicit product-owner approval. A single shared mobile rule sets unclassified body text to 15px below `sm`; existing 14px supporting copy, 12px compact metadata, explicitly sized headings, current prices and confirmation amounts remain unchanged. Existing shared control minimums preserve approximately 44 × 44px touch targets, and desktop remains at its original 16px base. Product-owner screenshot feedback also refined two crowded areas below `sm`: My Auctions statistics now use two upper cells plus a full-width starting-price row, and public bid history stacks its compact amount and timestamp. A follow-up overflow in the no-bids owner card was fixed by allowing the textual state to wrap while preserving unbroken currency amounts. Their original horizontal layouts return at `sm`. Edge at 320px visually verified these refinements plus the EN home, real auction detail, creation form, My Bids cards and open menu and long SK My Bids copy without observed horizontal overflow or lost hierarchy. The final targeted ESLint, standalone TypeScript, `git diff --check` and Next.js 16.4.5 Turbopack production build pass; the build required execution under the owning Windows account because the sandbox identity could not trust the native SWC cache. Manual product-owner acceptance remains; Sections 3–4 were not started, and no commit, push or deployment was performed.
+
+- Completed Feature 17 Section 1 manual acceptance on 2026-11-24. The product owner successfully finished the real-auction test after the stale development cache was cleared: responsive quick-bid states, modal return behavior and a successful test bid passed, and the hydration warning no longer appeared. Section 1 is accepted. Sections 2–4 were not started, and no commit, push or deployment was performed.
+
+- Implemented Feature 17 Section 1 locally on 2026-11-24. The 320 px defect was reproduced: the three quick-bid buttons shrank into one row and the conditionally inserted check mark overlapped the selected amount. Quick choices now have a wrapping minimum flex basis, stable symmetric content space and an always-reserved absolutely positioned check slot; the total is the dominant line and the increase remains smaller below it. A temporary real-component preview verified uncut SK and EN amounts around 20,550 at 320 px without observed horizontal overflow and was then removed. The Server Action, confirmation modal, `aria-pressed`, touch height and submit flow are unchanged. Focused ESLint, standalone TypeScript, `git diff --check` and the Next.js 16.4.5 Turbopack production build pass. Real-auction selected-state, desktop and successful-submit acceptance remain for the product owner; Sections 2–4 were not started, and no commit, push or deployment was performed.
+
+- Completed Feature 16 Step 3 manual acceptance on 2026-11-24. The product owner reviewed and accepted the complete set of 14 fictional EN/SK e-mail previews, including HTML and text variants. Feature 16 is complete. This review did not send a real e-mail and did not authorize Resend delivery, deployment, commit or push.
 
 - Recorded preliminary Feature 16 Step 3 review on 2026-11-23. The product owner found the first SK bidder offer preview acceptable and deferred the detailed all-variant review until 2026-11-24. This does not close Step 3 and does not authorize a Resend call, deployment, commit or push.
 
@@ -224,6 +234,8 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## In Progress
 
+- Feature 17 Sections 2–4 are implemented locally and await the product owner's combined evening acceptance. The exact mobile/desktop, SK/EN, signed-in/signed-out and interaction matrix is saved in `public/promts.txt`.
+
 - Auction location is reported live on hosted project `hylkwkpuwkpdvqczlkma` after the product owner manually ran the migration in SQL Editor. Existing auctions intentionally remain null and must receive truthful values through an explicitly approved backfill; until then the UI displays `Location not provided / Lokalita neuvedená`. End-to-end creation, hosted structural checks, EN/SK browser review and responsive card/detail review remain pending.
 
 - Feature 13 migration is live on hosted project `hylkwkpuwkpdvqczlkma`: after the product owner ran it manually, the authenticated English route loaded one real `Feature 12 final acceptance` card with EUR 37.00 as both current highest and latest own bid and classified it as Leading. This confirms the RPC is available and its basic one-card/leading rendering path works. The full A/B, account-isolation, ended, signed-out, empty-state and responsive EN/SK acceptance matrix remains pending; Supabase MCP table inspection was separately denied to the connected verification role.
@@ -233,7 +245,7 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## Next Up
 
-- Open `tmp/email-previews/index.html` and review the 14 Feature 16 Step 3 fictional previews. After wording and narrow-layout acceptance, decide separately whether to perform a controlled real Resend delivery/deployment; do not infer approval to send, commit or push.
+- In the evening, run the saved Feature 17 Sections 2–4 acceptance block from `public/promts.txt`; if accepted, record Feature 17 complete before choosing the next feature. Do not commit, push or deploy without a separate explicit instruction.
 
 - Inspect the new auction's public detail, then verify My Bids, legacy fallback/backfill, EN/responsive views and the hosted column/constraint/RPC grants before completing location acceptance.
 - Inspect the live `get_my_bid_auctions()` grants/search path, then run the Feature 13 A/B acceptance block followed by ended, account-isolation, signed-out, empty and responsive EN/SK checks.

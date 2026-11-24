@@ -13,3 +13,14 @@
 > Po implementácii urob primerané kontroly: relevantný ESLint, TypeScript alebo build podľa rozsahu, EN/SK paritu, `git diff --check` a kontrolu diffu. Aktualizuj Feature 17 špecifikáciu a `context/progress-tracker.md` podľa skutočného stavu. Potom daj Jožkovi iba jeden jasný manuálny testovací blok podľa Feature 17: šírka 320 px, postupne všetky rýchle ponuky cez Back, kontrola orezania a horizontálneho scrollu, hodnoty okolo 20 500 € a jedno úspešné prihodenie.
 >
 > Nepokračuj do sekcií 2 až 4 Feature 17, kým Jožko manuálne neprijme predchádzajúci krok. Pozastavené acceptance testy Feature 12 a 13 automaticky neobnovuj. Nevypisuj secrety a nič necommituj, nepushuj, nenasadzuj ani nemaž dáta bez Jožkovho výslovného súhlasu.
+
+
+24.11.2026 – Večerná manuálna kontrola Feature 17
+
+> Ahoj, pokračujeme v projekte QRBid v `C:\Users\kubis\Desktop\qr-bid`. Komunikuj po slovensky a oslovuj ma Jožko. Najprv si prečítaj `AGENTS.md`, projektové kontexty v predpísanom poradí, `context/feature-specs/17-mobile-ui-qrbid.md` a `context/progress-tracker.md`. Skontroluj `git status` a zachovaj všetky existujúce zmeny. Feature 17 Sections 1–4 sú implementované lokálne; Section 1 je prijatá, ale spoločná manuálna acceptance kontrola Sections 2–4 bola odložená na tento večer. Nič neupravuj, kým manuálna kontrola neodhalí konkrétny problém.
+>
+> Daj mi testovanie po jednom krátkom bloku a po každom počkaj na výsledok. Najprv pri šírke 320 px v SK skontrolujeme domov, reálny detail aukcie, vytvorenie aukcie, My Bids a My Auctions: čitateľnosť, 44 px ovládanie, žiadny vodorovný posuv, kartu bez ponúk, dlhé ceny a históriu prihodení. Potom overíme hlavičku v zatvorenom a otvorenom stave: poradie logo → SK/EN → profil/prihlásenie → menu, stabilný horný riadok a navigačné odkazy pod ním. Otvoríme jazykový výber, prepneme SK/EN a overíme zachovanie aktuálnej stránky. Prihlásený profil musí ukázať avatar a po otvorení meno; v odhlásenom stave musí zostať dostupné prihlásenie.
+>
+> Nakoniec pri 320 px skontrolujeme pätu: iba kompaktné QRBid a copyright, bez nefunkčných Podmienok, Súkromia, Stavu, Dokumentácie, „Pripravujeme“ a bez druhého jazykového prepínača. Zopakujeme reprezentatívnu kontrolu na bežnej mobilnej šírke a potom na desktope overíme, že typografia, hlavička, navigácia a pätička zostali bez regresie. Ak všetko potvrdím, aktualizuj Feature 17 špecifikáciu a tracker a označ Feature 17 ako manuálne prijatú. Ak nájdeme chybu, oprav iba daný problém, spusti relevantný ESLint, TypeScript, `git diff --check` a build a znovu daj iba dotknutý testovací blok.
+>
+> Nič necommituj, nepushuj, nenasadzuj ani nemaž dáta bez môjho výslovného súhlasu. Pozastavené acceptance testy Features 12 a 13 automaticky neobnovuj.

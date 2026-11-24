@@ -33,6 +33,19 @@ Use CSS variables in `globals.css` and map them to Tailwind theme utilities. Kee
 - Avoid unnecessary charts, metrics, promotional panels, and complicated sidebars.
 - UI supports English and Slovak; allow space for longer translated labels.
 
+### Feature 17 Section 2 mobile typography (2026-11-24)
+
+- Below the existing `sm` breakpoint, unclassified body copy uses a shared 15px base. Existing 14px supporting copy and 12px compact metadata remain unchanged, as do explicitly sized headings, current auction prices and confirmation amounts.
+- Typography compaction never reduces control geometry. Shared buttons and form fields retain their existing approximately 44 × 44px minimum touch targets, and desktop keeps its original 16px base.
+- On mobile owner auction cards, the current amount and bid count share the first statistics row, while the starting price occupies a full second row so long currency values never break inside the number. The textual no-bids state may wrap inside its cell; currency values remain unbroken. The original three-column layout returns at `sm`.
+- On mobile public auction details, each bid-history amount is followed by its timestamp on a separate line. At `sm`, the amount and timestamp return to the horizontal row layout.
+
+### Feature 17 Sections 3–4 mobile shell (2026-11-24)
+
+- Below `lg`, the header keeps one stable row: compact QRBid brand on the left, then the active-language control, Clerk profile or sign-in control, and navigation trigger on the right. Opening navigation places the existing links below without replacing that row.
+- The compact language control shows the active `SK` or `EN` value and opens a two-language chooser. Every header control retains a 44 × 44px target and an accessible name.
+- The mobile footer contains only the compact QRBid home link and copyright. Placeholder resources and the duplicate footer language control remain available only in the existing desktop footer until they gain functional destinations.
+
 ## Screen Guidance
 
 ### Landing Page

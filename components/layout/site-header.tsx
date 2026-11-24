@@ -1,7 +1,7 @@
 "use client";
 
 import { Show, SignInButton, UserButton } from "@clerk/nextjs";
-import { Menu, X } from "lucide-react";
+import { Menu, UserRound, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useState, useSyncExternalStore } from "react";
 import { CreateAuctionLink } from "@/components/auth/create-auction-link";
@@ -39,7 +39,7 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 shrink-0 border-b border-border bg-surface">
-      <div className="mx-auto flex min-h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex min-h-16 w-full max-w-7xl items-center justify-between gap-2 px-4 sm:px-6 lg:gap-4 lg:px-8">
         <div className="flex min-w-0 items-center gap-1 sm:gap-3">
           <Logo closeMenu={closeMenu} />
           <Show when="signed-in">
@@ -91,20 +91,39 @@ export function SiteHeader() {
           </Show>
         </nav>
 
-        <button
-          type="button"
-          aria-controls="mobile-navigation"
-          aria-expanded={isMenuOpen}
-          aria-label={isMenuOpen ? t("closeMenu") : t("openMenu")}
-          className="inline-flex size-11 items-center justify-center rounded-soft border border-border bg-surface text-foreground transition-colors hover:bg-surface-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus lg:hidden"
-          onClick={() => setIsMenuOpen((currentValue) => !currentValue)}
-        >
-          {isMenuOpen ? (
-            <X aria-hidden="true" className="size-5" />
-          ) : (
-            <Menu aria-hidden="true" className="size-5" />
-          )}
-        </button>
+        <div className="flex shrink-0 items-center gap-1 lg:hidden">
+          <LanguagePreview compact />
+          <Show when="signed-out">
+            <SignInButton mode="modal" fallbackRedirectUrl={`/${locale}`}>
+              <button
+                type="button"
+                aria-label={t("signIn")}
+                className="inline-flex size-11 items-center justify-center rounded-soft border border-border bg-surface text-foreground transition-colors hover:bg-surface-muted hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
+              >
+                <UserRound aria-hidden="true" className="size-5" />
+              </button>
+            </SignInButton>
+          </Show>
+          <Show when="signed-in">
+            <div className="flex size-11 items-center justify-center">
+              <UserButton />
+            </div>
+          </Show>
+          <button
+            type="button"
+            aria-controls="mobile-navigation"
+            aria-expanded={isMenuOpen}
+            aria-label={isMenuOpen ? t("closeMenu") : t("openMenu")}
+            className="inline-flex size-11 items-center justify-center rounded-soft border border-border bg-surface text-foreground transition-colors hover:bg-surface-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
+            onClick={() => setIsMenuOpen((currentValue) => !currentValue)}
+          >
+            {isMenuOpen ? (
+              <X aria-hidden="true" className="size-5" />
+            ) : (
+              <Menu aria-hidden="true" className="size-5" />
+            )}
+          </button>
+        </div>
       </div>
 
       {isMenuOpen ? (
@@ -143,27 +162,6 @@ export function SiteHeader() {
                 onClick={closeMenu}
               />
             ) : null}
-            <div className="mt-2 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-3">
-              <div className="ml-auto border-l border-border pl-5">
-                <LanguagePreview />
-              </div>
-              <Show when="signed-out">
-                <SignInButton mode="modal" fallbackRedirectUrl={`/${locale}`}>
-                  <button
-                    type="button"
-                    className={signInClasses}
-                    onClick={closeMenu}
-                  >
-                    {t("signIn")}
-                  </button>
-                </SignInButton>
-              </Show>
-              <Show when="signed-in">
-                <div className="flex min-h-11 items-center">
-                  <UserButton />
-                </div>
-              </Show>
-            </div>
           </div>
         </nav>
       ) : null}

@@ -11,11 +11,11 @@ export function Logo({ closeMenu }: LogoProps) {
     <div>
       <Link
         href="/"
-        className="inline-flex min-h-11 shrink-0 items-center gap-0 rounded-soft font-heading text-xl font-semibold text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
+        className="inline-flex min-h-11 shrink-0 items-center gap-0 rounded-soft font-heading text-lg font-semibold text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus sm:text-xl"
         onClick={closeMenu}
       >
         <span
-          className="relative block size-9 shrink-0 overflow-hidden"
+          className="relative block size-8 shrink-0 overflow-hidden sm:size-9"
           aria-hidden="true"
         >
           <Image
