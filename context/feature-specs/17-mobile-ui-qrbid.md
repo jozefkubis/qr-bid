@@ -2,7 +2,7 @@
 
 Umiestnenie v repozitári po prenesení: `context/feature-specs/17-mobile-ui-qrbid.md`
 
-**Stav:** Implementácia sekcií 1–4 je lokálne dokončená. Sekcia 1 je manuálne prijatá; spoločná manuálna kontrola sekcií 2–4 je na žiadosť vlastníka produktu odložená na večer.
+**Stav:** Sekcie 1–4 sú implementované a manuálne prijaté. Feature 17 je dokončená.
 
 ## 1. Rýchle ponuky na mobile
 
@@ -39,7 +39,7 @@ Umiestnenie v repozitári po prenesení: `context/feature-specs/17-mobile-ui-qrb
 - Zdieľané tlačidlá, vstupy a textové polia nemenili rozmery. Ich existujúce `min-h-11` / `min-w-11` zachováva približne 44 × 44 px dotykové plochy.
 - Po kontrole vlastníkom produktu boli dve preplnené mobilné oblasti upravené cielene bez zmeny desktopu: štatistiky na karte My Auctions používajú pri 320 px dve položky v prvom riadku a vyvolávaciu cenu v celom druhom riadku; história prihodení zobrazuje sumu a čas pod sebou s kompaktnejším textom. Textový stav „Zatiaľ bez ponúk“ sa môže zalomiť vo svojom stĺpci, zatiaľ čo skutočné peňažné sumy zostávajú nezalomené. Od `sm` zostávajú obe oblasti v pôvodnom horizontálnom rozložení.
 - Edge pri 320 px vizuálne overil EN domovskú stránku, reálny detail aukcie, formulár vytvorenia, My Bids karty a otvorené mobilné menu, plus dlhšie slovenské texty na My Bids. Nebol pozorovaný vodorovný presah ani strata hierarchie. Desktop zostal na pôvodných 16 px.
-- ESLint, samostatná kontrola TypeScriptu, `git diff --check` a produkčný Next.js 16.4.5 Turbopack build prešli. Manuálne prijatie Sekcie 2 je súčasťou odloženej večernej kontroly Sekcií 2–4.
+- ESLint, samostatná kontrola TypeScriptu, `git diff --check` a produkčný Next.js 16.4.5 Turbopack build prešli. Jožko 25. novembra 2026 potvrdil čitateľnosť, ovládanie a rozloženie bez vodorovného posuvu pri 320 px vrátane dlhšej ceny, histórie prihodení a karty bez ponúk.
 
 ### Druhý manuálny test pre Jožka
 
@@ -59,7 +59,7 @@ Umiestnenie v repozitári po prenesení: `context/feature-specs/17-mobile-ui-qrb
 - Mobilná hlavička používa jeden stabilný riadok v poradí menšie logo QRBid, kompaktný prepínač aktívneho jazyka, Clerk profil alebo prihlásenie a tlačidlo menu. Rozbalená navigácia ponecháva tento riadok na mieste a existujúce odkazy zobrazuje pod ním.
 - Kompaktný jazykový ovládač zobrazuje aktívne `SK` alebo `EN`, po otvorení ponúka oba jazyky a používa existujúce zachovanie cesty, query, hash a upozornenie na neuložený formulár.
 - Prihlásený stav používa existujúci Clerk `UserButton`; odhlásený stav má samostatné 44 × 44 px tlačidlo prihlásenia s prístupným názvom. Autentifikačná ani smerovacia logika sa nemenila.
-- Edge pri 320 px overil prihlásený SK zatvorený stav, otvorený výber jazyka a otvorenú navigáciu bez vodorovného presahu. EN prepnutie, odhlásený stav, meno v Clerk profile a bežný fyzický mobil zostávajú vo večernom manuálnom teste.
+- Edge pri 320 px overil prihlásený SK zatvorený stav, otvorený výber jazyka a otvorenú navigáciu bez vodorovného presahu. Jožko 25. novembra 2026 pri 320 px potvrdil poradie ovládacích prvkov, stabilitu horného riadka, prepínanie SK/EN na tej istej aukcii, meno v profile aj dostupnosť prihlásenia po odhlásení.
 
 ## 4. Mobilná pätička
 
@@ -69,7 +69,7 @@ Umiestnenie v repozitári po prenesení: `context/feature-specs/17-mobile-ui-qrb
 ### Stav implementácie – 24. november 2026
 
 - Mobilná pätička je zjednodušená na menší názov QRBid a stručný copyright. Nefunkčné položky Podmienky, Súkromie, Stav, Dokumentácia, text „Pripravujeme“ a duplicitný jazykový prepínač sú pod `lg` skryté.
-- Existujúca desktopová pätička zostáva nezmenená. Edge pri 320 px vizuálne overil kompaktnú mobilnú pätu; konečné EN/SK a desktopové prijatie je odložené do spoločného večerného testu.
+- Existujúca desktopová pätička zostáva nezmenená. Edge pri 320 px vizuálne overil kompaktnú mobilnú pätu; Jožko 25. novembra 2026 potvrdil kompaktnú pätičku pri 320 a 390 px a desktopovú kontrolu typografie, navigácie a pätičky.
 
 ## Odovzdanie pre Codex
 

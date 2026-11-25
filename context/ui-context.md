@@ -27,6 +27,7 @@ Use CSS variables in `globals.css` and map them to Tailwind theme utilities. Kee
 - Use a consistent radius near 12px for buttons, cards, and inputs; refine by component only when needed.
 - Primary buttons are solid accent color; secondary buttons are outlined or lightly tinted.
 - Active QRBid controls use a brief `scale(0.98)` press response and return to `1` on release. The shared rule covers buttons, button-styled links, file-picker labels and supported Clerk controls; disabled/loading controls and reduced-motion mode never transform.
+- Devices with a fine primary pointer and hover support show a pointer cursor on enabled buttons, button-styled links, file-picker labels and supported Clerk controls, including in reduced-motion mode.
 - Keep navigation short: My Auctions, My Bids, Create Auction, Profile, EN/SK switch.
 - Use clear labels, inline validation, and large touch targets (aim for at least 44 × 44 CSS pixels).
 - Use consistent loading, empty, error, active, and ended states.

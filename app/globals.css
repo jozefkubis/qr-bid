@@ -67,6 +67,17 @@ html[data-theme="light"] body {
   }
 }
 
+@media (hover: hover) and (pointer: fine) {
+  :where(
+    button:not(:disabled):not([aria-disabled="true"]):not([aria-busy="true"]),
+    a[href].rounded-soft:not([aria-disabled="true"]):not([aria-busy="true"]),
+    label.rounded-soft:has(input:not(:disabled)),
+    .qrbid-pressable:not(:disabled):not([aria-disabled="true"]):not([aria-busy="true"])
+  ) {
+    cursor: pointer;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   :where(
     button:not(:disabled):not([aria-busy="true"]),

@@ -4,13 +4,15 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## Current Phase
 
-- Feature 16 is complete. Feature 17 Sections 1–4 are implemented locally: Section 1 is manually accepted, while the combined product-owner acceptance for Sections 2–4 is explicitly deferred to an evening session and recorded in `public/promts.txt`. Supabase integration, Feature 12 Stage E, Feature 13 My Bids and the corrective auction-location migration are reported deployed. Features 14 and 15 are complete. Feature 15 is deployed and operational on hosted Supabase/Vercel with active Cron and accepted Resend deliveries. Feature 13 acceptance and the paused remainder of Feature 12 remain incomplete.
+- Feature 16 is complete. Feature 17 is complete. Sections 1–4 are implemented locally and manually accepted. Supabase integration, Feature 12 Stage E, Feature 13 My Bids and the corrective auction-location migration are reported deployed. Features 14 and 15 are complete. Feature 15 is deployed and operational on hosted Supabase/Vercel with active Cron and accepted Resend deliveries. Feature 13 acceptance and the paused remainder of Feature 12 remain incomplete.
 
 ## Current Goal
 
-- Preserve the completed local Feature 17 implementation and run the deferred combined Sections 2–4 manual acceptance in the evening. Do not infer deployment, commit or push approval.
+- Feature 17 is ready for the next product decision. Deployment, commit and push require separate approval.
 
 ## Completed
+
+- Added a shared desktop pointer cursor for enabled buttons and related interactive controls on 2026-11-25. The cursor also applies with reduced motion enabled.
 
 - Implemented Feature 17 Sections 3–4 locally on 2026-11-24 after the product owner explicitly asked to finish Feature 17 and defer manual acceptance. Below `lg`, the stable header row is compact QRBid → active-language chooser → Clerk profile/sign-in → menu; opening navigation renders the existing links below it. The chooser preserves the existing localized path/query/hash flow and form warning. The mobile footer now contains only QRBid and copyright, hiding nonfunctional resource placeholders and the duplicate language control; desktop behavior remains. Edge at 320px verified the signed-in SK closed header, EN/SK chooser, open navigation and compact footer without observed overflow. Signed-out, actual language switching, Clerk profile name, EN copy, physical mobile and desktop acceptance remain deferred. Targeted ESLint, standalone TypeScript, `git diff --check` and the Next.js 16.4.5 Turbopack production build pass. No commit, push or deployment was performed.
 
@@ -234,7 +236,7 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## In Progress
 
-- Feature 17 Sections 2–4 are implemented locally and await the product owner's combined evening acceptance. The exact mobile/desktop, SK/EN, signed-in/signed-out and interaction matrix is saved in `public/promts.txt`.
+- On 2026-11-25, the product owner accepted Feature 17 Sections 2–4 in three manual blocks: 320 px layouts, mobile header and SK/EN switching in signed-in and signed-out states, and footer and layout checks at 320 px, 390 px and desktop. Feature 17 is complete with the previously accepted Section 1.
 
 - Auction location is reported live on hosted project `hylkwkpuwkpdvqczlkma` after the product owner manually ran the migration in SQL Editor. Existing auctions intentionally remain null and must receive truthful values through an explicitly approved backfill; until then the UI displays `Location not provided / Lokalita neuvedená`. End-to-end creation, hosted structural checks, EN/SK browser review and responsive card/detail review remain pending.
 
@@ -245,7 +247,7 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## Next Up
 
-- In the evening, run the saved Feature 17 Sections 2–4 acceptance block from `public/promts.txt`; if accepted, record Feature 17 complete before choosing the next feature. Do not commit, push or deploy without a separate explicit instruction.
+- Choose the next feature with the product owner.
 
 - Inspect the new auction's public detail, then verify My Bids, legacy fallback/backfill, EN/responsive views and the hosted column/constraint/RPC grants before completing location acceptance.
 - Inspect the live `get_my_bid_auctions()` grants/search path, then run the Feature 13 A/B acceptance block followed by ended, account-isolation, signed-out, empty and responsive EN/SK checks.
