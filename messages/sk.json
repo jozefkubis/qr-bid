@@ -220,7 +220,7 @@
     "description": "Opis",
     "price": { "current": "Aktuálna najvyššia ponuka", "starting": "Vyvolávacia cena", "increment": "Minimálne navýšenie", "noBids": "Zatiaľ bez ponúk" },
     "gallery": { "label": "Galéria fotografií aukcie", "photoAlt": "{title}, demo fotografia {number}", "placeholderAlt": "Terra zástupná plocha fotografie pre {title}", "select": "Zobraziť fotografiu {number}" },
-    "history": { "title": "História prihodení", "count": "{count, plural, one {# demo ponuka} few {# demo ponuky} other {# demo ponúk}}", "empty": "Zatiaľ bez prihodení", "highest": "Najvyššia ponuka" },
+    "history": { "title": "História prihodení", "count": "{count, plural, one {# demo ponuka} few {# demo ponuky} other {# demo ponúk}}", "empty": "Zatiaľ bez prihodení", "highest": "Najvyššia ponuka", "bidder": "Prihadzujúci {number}", "you": "Vy" },
     "notes": { "title": "Doplnenia vlastníka" },
     "notFound": { "title": "Aukcia sa nenašla", "description": "Táto demo aukcia neexistuje alebo bola odstránená z tejto lokálnej relácie." },
     "management": {

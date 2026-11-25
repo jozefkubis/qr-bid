@@ -220,7 +220,7 @@
     "gallery": { "label": "Auction photo gallery", "photoAlt": "{title}, demo photo {number}", "placeholderAlt": "Terra photo placeholder for {title}", "select": "Show photo {number}" },
     "liveEndsOn": "Ends {date}",
     "noDescription": "No description provided.",
-    "history": { "title": "Bid History", "count": "{count, plural, one {# demo bid} other {# demo bids}}", "empty": "No bids yet", "highest": "Highest bid" },
+    "history": { "title": "Bid History", "count": "{count, plural, one {# demo bid} other {# demo bids}}", "empty": "No bids yet", "highest": "Highest bid", "bidder": "Bidder {number}", "you": "You" },
     "notes": { "title": "Owner updates" },
     "notFound": { "title": "Auction not found", "description": "This demo auction does not exist or was removed from this local session." },
     "management": {

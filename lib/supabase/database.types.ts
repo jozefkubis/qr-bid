@@ -218,7 +218,7 @@ export type Database = {
           id: string;
           location: string | null;
           bid_count: number;
-          bid_history: { amount_minor: number; created_at: string }[];
+          bid_history: { amount_minor: number; bidder_number?: number; created_at: string }[];
           current_highest_minor: number | null;
           min_increment_minor: number;
           minimum_next_bid_minor: number;
@@ -228,6 +228,10 @@ export type Database = {
           starts_at: string;
           title: string;
         }[];
+      };
+      get_my_auction_bidder_number: {
+        Args: { p_auction_id: string };
+        Returns: number | null;
       };
       get_owned_bid_summaries: {
         Args: Record<PropertyKey, never>;

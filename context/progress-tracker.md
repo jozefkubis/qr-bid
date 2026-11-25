@@ -8,9 +8,15 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## Current Goal
 
-- Feature 17 is ready for the next product decision. Deployment, commit and push require separate approval.
+- Feature 18 is manually accepted. The database changes are live on hosted Supabase, and application deployment is pending.
 
 ## Completed
+
+- The product owner tested Feature 18 after the hosted database update and confirmed that bidder labels work. Manual acceptance is complete.
+
+- Applied the approved Feature 18 SQL in the hosted QRBid Supabase Dashboard on 2026-11-25 after the CLI could not access a login token. The dashboard SQL run did not register the migration in CLI migration history. The anonymous public RPC returned numbers 1 and 2 across all eight existing test bids and exposed only amount, timestamp and bidder number in each row. The anonymous caller was denied access to the own-number RPC. The local browser displayed numbered rows after refresh. No new bids were created during this verification. The first-bid avatar and cross-window Realtime checks remain pending.
+
+- Implemented Feature 18 on 2026-11-25. The public real-auction history exposes an auction-scoped bidder number derived from the first accepted amount per account. An authenticated RPC returns only the caller's number. The live detail highlights the caller's rows with their Clerk avatar or a localized You label. Existing bid submission and Realtime refresh remain in use. Targeted ESLint, standalone TypeScript and PostgreSQL checks in PGlite passed, including historical bids, equal and out-of-order timestamps, empty history, stable numbers, anonymous access and isolated results for two simulated accounts. The local Supabase stack was unavailable because Docker was stopped. Hosted migration and the first-bid avatar and cross-window Realtime checks in the browser remain pending.
 
 - Added a shared desktop pointer cursor for enabled buttons and related interactive controls on 2026-11-25. The cursor also applies with reduced motion enabled.
 

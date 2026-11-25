@@ -2,6 +2,7 @@ import { ArrowLeft, MapPin } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { RealAuctionGallery } from "@/components/auctions/real-auction-gallery";
 import { LiveBiddingPanel } from "@/components/auctions/live-bidding-panel";
+import { OwnBidIndicator } from "@/components/auctions/own-bid-indicator";
 import { Card } from "@/components/ui/card";
 import { Link } from "@/i18n/navigation";
 import type { PublicAuction } from "@/lib/supabase/auctions";
@@ -10,7 +11,7 @@ import { currentTimestamp } from "@/lib/server-time";
 import type { BidActionState } from "@/lib/bid-action-state";
 import { LocalAuctionEndTime } from "@/components/auctions/local-auction-end-time";
 
-export async function RealAuctionDetail({ auction, bidAction, isOwner, locale, signedIn }: { auction: PublicAuction; bidAction: (state: BidActionState, formData: FormData) => Promise<BidActionState>; isOwner: boolean; locale: string; signedIn: boolean }) {
+export async function RealAuctionDetail({ auction, avatarUrl, bidAction, isOwner, locale, ownBidderNumber, signedIn }: { auction: PublicAuction; avatarUrl: string | null; ownBidderNumber: number | null; bidAction: (state: BidActionState, formData: FormData) => Promise<BidActionState>; isOwner: boolean; locale: string; signedIn: boolean }) {
   const t = await getTranslations("AuctionDetail");
   const biddingT = await getTranslations("LiveBidding");
   const language = locale === "sk" ? "sk-SK" : "en-IE";
@@ -38,6 +39,38 @@ export async function RealAuctionDetail({ auction, bidAction, isOwner, locale, s
     <Card className="p-5 sm:p-6"><h2 className="text-xl font-semibold">{t("description")}</h2><p className="mt-3 whitespace-pre-wrap text-muted-foreground">{auction.description || t("noDescription")}</p></Card>
     {auction.ownerNotes.length ? <Card className="p-5 sm:p-6"><h2 className="text-xl font-semibold">{t("notes.title")}</h2><ol className="mt-4 grid gap-4">{auction.ownerNotes.map((note) => <li key={`${note.createdAt}-${note.body}`} className="border-l-2 border-tertiary pl-4"><p>{note.body}</p><time className="mt-1 block text-xs text-muted-foreground">{dateTime.format(new Date(note.createdAt))}</time></li>)}</ol></Card> : null}
     <LiveBiddingPanel action={bidAction} auctionId={auction.id} bidCount={auction.bidCount} currentHighestMinor={auction.currentHighestMinor} ended={ended} isOwner={isOwner} locale={locale} minimumIncrementMinor={auction.minimumIncrementMinor} minimumNextBidMinor={auction.minimumNextBidMinor} signedIn={signedIn} />
-    <Card className="p-5 sm:p-6"><div className="flex flex-wrap items-center justify-between gap-2"><h2 className="text-xl font-semibold">{t("history.title")}</h2><span className="text-sm text-muted-foreground">{biddingT("bidCount", { count: auction.bidCount })}</span></div>{auction.bidHistory.length ? <ol className="mt-4 divide-y divide-border">{auction.bidHistory.map((bid, index) => <li key={`${bid.createdAt}-${bid.amountMinor}`} className="grid gap-1 py-3 sm:grid-cols-[1fr_auto] sm:items-center sm:gap-4"><div><p className="text-sm font-semibold sm:text-base">{money.format(bid.amountMinor / 100)}</p>{index === 0 ? <span className="text-xs font-semibold text-primary">{t("history.highest")}</span> : null}</div><time className="text-xs text-muted-foreground sm:text-sm">{dateTime.format(new Date(bid.createdAt))}</time></li>)}</ol> : <p className="mt-3 text-muted-foreground">{t("history.empty")}</p>}</Card>
+    <Card className="p-5 sm:p-6">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <h2 className="text-xl font-semibold">{t("history.title")}</h2>
+        <span className="text-sm text-muted-foreground">{biddingT("bidCount", { count: auction.bidCount })}</span>
+      </div>
+      {auction.bidHistory.length ? (
+        <ol className="mt-4 divide-y divide-border">
+          {auction.bidHistory.map((bid, index) => {
+            const isOwnBid = ownBidderNumber !== null && bid.bidderNumber === ownBidderNumber;
+            return (
+              <li
+                key={`${bid.createdAt}-${bid.amountMinor}`}
+                className={`grid min-w-0 gap-1 px-2 py-3 sm:grid-cols-[1fr_auto] sm:items-center sm:gap-4 ${isOwnBid ? "bg-primary/5" : ""}`}
+              >
+                <div className="min-w-0">
+                  {bid.bidderNumber !== null ? (
+                    <div className="mb-1 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+                      <span>{t("history.bidder", { number: bid.bidderNumber })}</span>
+                      {isOwnBid ? <OwnBidIndicator avatarUrl={avatarUrl} label={t("history.you")} /> : null}
+                    </div>
+                  ) : null}
+                  <p className="text-sm font-semibold sm:text-base">{money.format(bid.amountMinor / 100)}</p>
+                  {index === 0 ? <span className="text-xs font-semibold text-primary">{t("history.highest")}</span> : null}
+                </div>
+                <time className="text-xs text-muted-foreground sm:text-sm" dateTime={bid.createdAt}>
+                  {dateTime.format(new Date(bid.createdAt))}
+                </time>
+              </li>
+            );
+          })}
+        </ol>
+      ) : <p className="mt-3 text-muted-foreground">{t("history.empty")}</p>}
+    </Card>
   </div>;
 }

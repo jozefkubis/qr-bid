@@ -20,7 +20,7 @@ export type OwnedAuction = {
   photoPaths: string[];
 };
 
-export type PublicBid = { amountMinor: number; createdAt: string };
+export type PublicBid = { amountMinor: number; bidderNumber: number | null; createdAt: string };
 export type PublicOwnerNote = { body: string; createdAt: string };
 export type MyBidAuctionStatus = "ended" | "leading" | "outbid";
 export type MyBidAuction = {
@@ -187,7 +187,11 @@ export async function getPublicAuction(id: string): Promise<PublicAuction | null
     location: result.data.location,
     currency: result.data.currency as "EUR",
     bidCount: result.data.bid_count,
-    bidHistory: result.data.bid_history.map((bid) => ({ amountMinor: bid.amount_minor, createdAt: bid.created_at })),
+    bidHistory: result.data.bid_history.map((bid) => ({
+      amountMinor: bid.amount_minor,
+      bidderNumber: bid.bidder_number ?? null,
+      createdAt: bid.created_at,
+    })),
     currentHighestMinor: result.data.current_highest_minor,
     startingPriceMinor: result.data.starting_price_minor,
     minimumIncrementMinor: result.data.min_increment_minor,
@@ -197,6 +201,13 @@ export async function getPublicAuction(id: string): Promise<PublicAuction | null
     endsAt: result.data.ends_at,
     photoPaths: result.data.photo_paths,
   };
+}
+
+export async function getCurrentUserAuctionBidderNumber(auctionId: string) {
+  const supabase = await currentSupabaseClient();
+  const result = await supabase.rpc("get_my_auction_bidder_number", { p_auction_id: auctionId });
+  if (result.error) throw result.error;
+  return result.data;
 }
 
 export type PlaceBidResult = {

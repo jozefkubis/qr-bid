@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -8,6 +8,7 @@ import { RealAuctionDetail } from "@/components/auctions/real-auction-detail";
 import { routing } from "@/i18n/routing";
 import {
   currentUserOwnsAuction,
+  getCurrentUserAuctionBidderNumber,
   getPublicAuction,
 } from "@/lib/supabase/auctions";
 import { placeBidAction } from "@/app/[locale]/auctions/[id]/actions";
@@ -23,6 +24,27 @@ export default async function PublicAuctionPage({ params }: PageProps<"/[locale]
   const auction = await getPublicAuction(id);
   if (!auction) notFound();
   const { userId } = await auth();
-  const isOwner = userId ? await currentUserOwnsAuction(id, locale) : false;
-  return <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 lg:px-8"><AuctionRealtimeRefresh auctionId={id}><RealAuctionDetail auction={auction} locale={locale} signedIn={Boolean(userId)} isOwner={isOwner} bidAction={placeBidAction.bind(null, locale, id)} /></AuctionRealtimeRefresh></main>;
+  const [isOwner, ownBidderNumber] = userId ? await Promise.all([
+    currentUserOwnsAuction(id, locale),
+    auction.bidHistory.some((bid) => bid.bidderNumber !== null)
+      ? getCurrentUserAuctionBidderNumber(id)
+      : null,
+  ]) : [false, null] as const;
+  const user = ownBidderNumber !== null ? await currentUser() : null;
+
+  return (
+    <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 lg:px-8">
+      <AuctionRealtimeRefresh auctionId={id}>
+        <RealAuctionDetail
+          auction={auction}
+          avatarUrl={user?.hasImage ? user.imageUrl : null}
+          bidAction={placeBidAction.bind(null, locale, id)}
+          isOwner={isOwner}
+          locale={locale}
+          ownBidderNumber={ownBidderNumber}
+          signedIn={Boolean(userId)}
+        />
+      </AuctionRealtimeRefresh>
+    </main>
+  );
 }

@@ -64,6 +64,8 @@ Store monetary values as exact decimal or integer minor units, **never floating-
 
 ## Bid Processing — Critical Invariants
 
+Feature 18 derives public auction-scoped bidder numbers from each bidder's first accepted amount, using the strictly increasing amounts enforced by the bid transaction. A separate authenticated RPC uses the verified Clerk subject and returns only the caller's own number. The route resolves the caller's avatar from the current Clerk session outside shared caches.
+
 1. Only an authenticated and authorized bidder can submit a bid.
 2. The server/database validates auction eligibility, end time, minimum accepted amount, and the bidder's permission.
 3. **Acceptance is atomic and concurrency-safe in PostgreSQL**: concurrent bids cannot both be accepted against the same stale highest amount. The transaction rechecks current state under an appropriate locking/serialization strategy.
