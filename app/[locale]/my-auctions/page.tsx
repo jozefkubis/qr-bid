@@ -20,8 +20,10 @@ export async function generateMetadata({
 
 export default async function MyAuctionsPage({
   params,
+  searchParams,
 }: PageProps<"/[locale]/my-auctions">) {
   const { locale } = await params;
+  const { status } = await searchParams;
   setRequestLocale(locale);
 
   const returnPath = `/${locale}/my-auctions`;
@@ -36,6 +38,7 @@ export default async function MyAuctionsPage({
     <>
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
         <h1 id="my-auctions-title" className="sr-only">{t("pageTitle")}</h1>
+        {status === "deletedPhotoCleanupFailed" ? <p role="status" className="mb-4 text-sm text-error">{t("live.deletedPhotoCleanupFailed")}</p> : null}
         <MyAuctionsDashboard auctions={auctions} now={currentTimestamp()} />
 
         <section className="mt-10 rounded-soft border border-border bg-surface p-6 shadow-soft sm:p-8">

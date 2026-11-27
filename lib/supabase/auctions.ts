@@ -6,6 +6,9 @@ import { createPublicSupabaseServerClient, createSupabaseServerClient } from "@/
 
 export type OwnedAuction = {
   bidCount: number;
+  cancellationReason: string | null;
+  cancelledAt: string | null;
+  supportsCancellation: boolean;
   createdAt: string;
   currency: "EUR";
   description: string;
@@ -22,7 +25,7 @@ export type OwnedAuction = {
 
 export type PublicBid = { amountMinor: number; bidderNumber: number | null; createdAt: string };
 export type PublicOwnerNote = { body: string; createdAt: string };
-export type MyBidAuctionStatus = "ended" | "leading" | "outbid";
+export type MyBidAuctionStatus = "cancelled" | "ended" | "leading" | "outbid";
 export type MyBidAuction = {
   currency: "EUR";
   currentHighestMinor: number;
@@ -35,13 +38,13 @@ export type MyBidAuction = {
   status: MyBidAuctionStatus;
   title: string;
 };
-export type PublicAuction = Omit<OwnedAuction, "createdAt"> & {
+export type PublicAuction = Omit<OwnedAuction, "createdAt" | "supportsCancellation"> & {
   bidHistory: PublicBid[];
   minimumNextBidMinor: number;
   ownerNotes: PublicOwnerNote[];
 };
 
-async function currentSupabaseClient() {
+export async function currentSupabaseClient() {
   const { getToken, userId } = await auth();
   if (!userId) throw new Error("An authenticated Clerk session is required.");
   const token = await getToken();
@@ -50,6 +53,8 @@ async function currentSupabaseClient() {
 }
 
 function toOwnedAuction(row: {
+  cancellation_reason?: string | null;
+  cancelled_at?: string | null;
   created_at: string;
   currency: "EUR";
   description: string;
@@ -63,6 +68,9 @@ function toOwnedAuction(row: {
   auction_photos?: { sort_order: number; storage_path: string }[];
 }, summary?: { bid_count: number; current_highest_minor: number | null }): OwnedAuction {
   return {
+    cancellationReason: row.cancellation_reason ?? null,
+    cancelledAt: row.cancelled_at ?? null,
+    supportsCancellation: "cancelled_at" in row && "cancellation_reason" in row,
     createdAt: row.created_at,
     bidCount: summary?.bid_count ?? 0,
     currency: row.currency,
@@ -79,7 +87,9 @@ function toOwnedAuction(row: {
   };
 }
 
-const auctionColumns = "id, title, description, location, currency, starting_price_minor, min_increment_minor, starts_at, ends_at, created_at, auction_photos(storage_path, sort_order)";
+// Include whichever auction columns the deployed schema provides. Only the explicit
+// mapping in toOwnedAuction leaves this server-side data layer.
+const auctionColumns = "*, auction_photos(storage_path, sort_order)";
 
 export async function createAuction(input: {
   description: string;
@@ -186,6 +196,8 @@ export async function getPublicAuction(id: string): Promise<PublicAuction | null
     description: result.data.description,
     location: result.data.location,
     currency: result.data.currency as "EUR",
+    cancellationReason: result.data.cancellation_reason ?? null,
+    cancelledAt: result.data.cancelled_at ?? null,
     bidCount: result.data.bid_count,
     bidHistory: result.data.bid_history.map((bid) => ({
       amountMinor: bid.amount_minor,
@@ -271,6 +283,12 @@ export async function deleteCurrentUserAuction(id: string) {
   return result.data;
 }
 
-export async function getCurrentSupabaseClient() {
-  return currentSupabaseClient();
+export async function cancelCurrentUserAuction(id: string, reason: string) {
+  const supabase = await currentSupabaseClient();
+  const { data, error } = await supabase.rpc("cancel_owned_auction", {
+    p_auction_id: id,
+    p_reason: reason,
+  });
+  if (error) throw error;
+  return data;
 }

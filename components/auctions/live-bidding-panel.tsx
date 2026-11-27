@@ -101,6 +101,7 @@ export function LiveBiddingPanel(props: Props) {
     props.isOwner ||
     props.ended ||
     confirmationStatus === "ended" ||
+    confirmationStatus === "cancelled" ||
     !amountMeetsMinimum;
 
   useEffect(() => {

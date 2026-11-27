@@ -1,4 +1,21 @@
 {
+  "AuctionCancellation": {
+    "section": "Predčasné zrušenie",
+    "open": "Zrušiť aukciu",
+    "title": "Zrušiť aukciu?",
+    "warning": "Zrušenie je nevratné. Víťaz nebude vybraný. Existujúce ponuky zostanú zachované.",
+    "reason": "Dôvod zrušenia",
+    "publicWarning": "Dôvod bude verejný. Neuvádzajte osobné údaje.",
+    "back": "Späť",
+    "confirm": "Potvrdiť zrušenie",
+    "pending": "Ruším aukciu…",
+    "cancelled": "Aukcia zrušená",
+    "limit": "Najviac {limit} znakov.",
+    "invalidReason": "Zadajte dôvod s dĺžkou 1 až {limit} znakov.",
+    "unavailable": "Túto aukciu už nemožno zrušiť.",
+    "failed": "Zrušenie sa nepodarilo overiť. Skúste to znova.",
+    "bidCount": "Zachované ponuky: {count}"
+  },
   "Metadata": {
     "title": "QRBid — Jednoduché aukcie zdieľané QR kódom",
     "description": "Vytvorte časovo obmedzenú aukciu a zdieľajte jej odkaz alebo QR kód. Bez verejného trhoviska."
@@ -19,6 +36,7 @@
     "pageDescription": "Sleduj aukcie, v ktorých máš prijatú ponuku.",
     "filterLabel": "Filtrovať ponuky podľa stavu aukcie",
     "filters": {
+      "cancelled": "Zrušené ({count})",
       "all": "Všetky ({count})",
       "leading": "Vediem ({count})",
       "outbid": "Prekonané ({count})",
@@ -31,7 +49,7 @@
     "card": {
       "coverPhoto": "Titulná fotografia aukcie {title}",
       "locationUnavailable": "Lokalita neuvedená",
-      "status": { "leading": "Vediem", "outbid": "Prekonaná", "ended": "Ukončená" },
+      "status": { "cancelled": "Zrušené", "leading": "Vediem", "outbid": "Prekonaná", "ended": "Ukončená" },
       "remaining": "{days, plural, =0 {} other {#d }}{hours}h {minutes}m",
       "endedAt": "{date}",
       "timeLeft": "Zostávajúci čas",
@@ -73,6 +91,7 @@
   },
   "MyAuctions": {
     "live": {
+      "cancelledAt": "Zrušená {date}", "deletedPhotoCleanupFailed": "Aukcia bola vymazaná. Niektoré súbory fotografií sa nepodarilo odstrániť.",
       "filterLabel": "Filtrova\u0165 aukcie pod\u013ea stavu",
       "results": "{count, plural, one {Zobrazuje sa # aukcia} few {Zobrazuj\u00fa sa # aukcie} other {Zobrazuje sa # aukci\u00ed}}",
       "filterEmpty": "Tomuto filtru nezodpoved\u00e1 \u017eiadna aukcia.",
@@ -113,13 +132,14 @@
           "continueHelp": "Použi to iba vtedy, keď ti potvrdený záujemca oznámil odstúpenie. Jeho prístup ku kontaktu zanikne a ďalší oprávnený záujemca dostane novú 48-hodinovú ponuku.",
           "continue": "Pokračovať ďalším záujemcom"
         },
-        "status": { "saved": "Zmeny boli ulo\u017een\u00e9.", "photosSaved": "Fotografie boli aktualizovan\u00e9.", "noteAdded": "Doplnenie vlastn\u00edka bolo zverejnen\u00e9.", "continued": "Potvrdený záujemca bol označený ako odstúpený a postup pokračoval.", "saleCompleted": "Predaj bol zaevidovaný ako dokončený.", "invalid": "Skontrolujte zadan\u00e9 hodnoty.", "photoInvalid": "Vyberte najviac p\u00e4\u0165 podporovan\u00fdch obr\u00e1zkov do 5 MB.", "unavailable": "T\u00e1to akcia u\u017e nie je dostupn\u00e1." }
+        "status": { "photoCleanupFailed": "Odstránenie fotografie sa nepodarilo úplne dokončiť.", "saved": "Zmeny boli ulo\u017een\u00e9.", "photosSaved": "Fotografie boli aktualizovan\u00e9.", "noteAdded": "Doplnenie vlastn\u00edka bolo zverejnen\u00e9.", "continued": "Potvrdený záujemca bol označený ako odstúpený a postup pokračoval.", "saleCompleted": "Predaj bol zaevidovaný ako dokončený.", "invalid": "Skontrolujte zadan\u00e9 hodnoty.", "photoInvalid": "Vyberte najviac p\u00e4\u0165 podporovan\u00fdch obr\u00e1zkov do 5 MB.", "unavailable": "T\u00e1to akcia u\u017e nie je dostupn\u00e1." }
       }
     },
     "pageTitle": "Moje aukcie",
     "pageDescription": "Spravujte svoje aktívne a ukončené súkromné aukcie.",
     "demoDisclosure": "Fiktívne ukážkové záznamy pre tento prototyp používateľského rozhrania.",
     "filters": {
+      "cancelled": "Zrušené ({count})",
       "label": "Filtrovať ukážkové aukcie podľa stavu",
       "all": "Všetky ({count})",
       "active": "Aktívne ({count})",
@@ -143,6 +163,7 @@
       }
     },
     "card": {
+      "cancelled": "Zrušená", "scheduled": "Naplánovaná",
       "listLabel": "Ukážkové aukcie",
       "coverPlaceholder": "Neutrálny ukážkový obrázok pre {title}",
       "coverPhoto": "Titulná fotografia aukcie {title}",
@@ -214,7 +235,7 @@
     "backHome": "Späť domov",
     "visitorPreview": "Náhľad pre návštevníka",
     "demoDisclosure": "Fiktívna demo aukcia · Lokálne údaje prototypu",
-    "status": { "active": "Aktívna", "ended": "Ukončená" },
+    "status": { "cancelled": "Aukcia zrušená", "scheduled": "Naplánovaná", "active": "Aktívna", "ended": "Ukončená" },
     "remaining": "Zostáva {days, plural, =0 {} one {# deň } few {# dni } other {# dní }}{hours} h {minutes} min",
     "endedOn": "Ukončená {date}",
     "description": "Opis",
@@ -237,7 +258,7 @@
     "title": "Prihodi\u0165", "bidCount": "{count, plural, one {# prihodenie} few {# prihodenia} other {# prihoden\u00ed}}", "ended": "Prihadzovanie v tejto aukcii sa skon\u010dilo.", "signInDescription": "Na prihodenie sa prihl\u00e1ste. Aukciu si m\u00f4\u017eete pozrie\u0165 aj bez \u00fa\u010dtu.", "signIn": "Prihl\u00e1si\u0165 sa a prihodi\u0165",
     "minimum": "Najni\u017e\u0161ia \u010fal\u0161ia ponuka: {amount}", "offer": "Pon\u00faknu\u0165 {amount}", "increment": "+{increment} (spolu {total})", "increase": "+{amount}", "customLabel": "Va\u0161a celkov\u00e1 ponuka (EUR)", "review": "Skontrolova\u0165 ponuku", "customInvalid": "Zadajte platn\u00fa sumu najviac s dvoma desatinn\u00fdmi miestami.", "customTooLow": "Zadajte aspo\u0148 {minimum}.",
     "confirmTitle": "Potvr\u010fte prihodenie", "confirmAmount": "Va\u0161a celkov\u00e1 ponuka je {amount}", "confirmDescription": "Odo\u0161le sa t\u00e1to celkov\u00e1 suma, nie iba nav\u00fd\u0161enie.", "minimumChanged": "Aukcia sa po\u010das kontroly zmenila. Va\u0161a suma zostala zachovan\u00e1; nov\u00e9 minimum je {minimum}.", "amountBelowMinimum": "Va\u0161a suma je ni\u017e\u0161ia ako nov\u00e9 minimum {minimum}. Vr\u00e1\u0165te sa a zadajte nov\u00fa sumu.", "confirmAction": "Potvrdi\u0165 {amount}", "back": "Sp\u00e4\u0165", "submitting": "Odosielam ponuku…", "ownerModalTitle": "Vo vlastnej aukcii nem\u00f4\u017eete prihadzova\u0165", "ownerModalDescription": "Vlastn\u00edk aukcie nem\u00f4\u017ee prihodi\u0165. \u017diadna ponuka nebola odoslan\u00e1.",
-    "status": { "accepted": "Ponuka {amount} bola prijat\u00e1. \u010eal\u0161ia minim\u00e1lna ponuka je {minimum}.", "replayed": "Ponuka {amount} u\u017e bola prijat\u00e1. Duplicitn\u00fd z\u00e1pis nevznikol. \u010eal\u0161ia minim\u00e1lna ponuka je {minimum}.", "signInRequired": "Pred prihoden\u00edm sa prihl\u00e1ste.", "invalidRequest": "Po\u017eiadavka nie je platn\u00e1. Skontrolujte ponuku znova.", "invalidAmount": "Zadajte platn\u00fa sumu.", "profile_missing": "V\u00e1\u0161 profil prihadzuj\u00faceho nie je pripraven\u00fd. Obnovte str\u00e1nku a sk\u00faste to znova.", "auction_not_found": "T\u00e1to aukcia nie je dostupn\u00e1.", "request_conflict": "Toto potvrdenie u\u017e bolo pou\u017eit\u00e9 pre in\u00fa sumu. Skontrolujte ponuku znova.", "own_auction": "Na vlastnej aukcii nem\u00f4\u017eete prihadzova\u0165.", "not_started": "Prihadzovanie sa e\u0161te neza\u010dalo.", "ended": "Prihadzovanie sa u\u017e skon\u010dilo.", "bid_too_low": "T\u00e1to suma u\u017e nesta\u010d\u00ed. Nov\u00e9 minimum je {minimum}." }
+    "status": { "cancelled": "Aukcia bola zrušená. Ďalšie ponuky už neprijíma.", "accepted": "Ponuka {amount} bola prijat\u00e1. \u010eal\u0161ia minim\u00e1lna ponuka je {minimum}.", "replayed": "Ponuka {amount} u\u017e bola prijat\u00e1. Duplicitn\u00fd z\u00e1pis nevznikol. \u010eal\u0161ia minim\u00e1lna ponuka je {minimum}.", "signInRequired": "Pred prihoden\u00edm sa prihl\u00e1ste.", "invalidRequest": "Po\u017eiadavka nie je platn\u00e1. Skontrolujte ponuku znova.", "invalidAmount": "Zadajte platn\u00fa sumu.", "profile_missing": "V\u00e1\u0161 profil prihadzuj\u00faceho nie je pripraven\u00fd. Obnovte str\u00e1nku a sk\u00faste to znova.", "auction_not_found": "T\u00e1to aukcia nie je dostupn\u00e1.", "request_conflict": "Toto potvrdenie u\u017e bolo pou\u017eit\u00e9 pre in\u00fa sumu. Skontrolujte ponuku znova.", "own_auction": "Na vlastnej aukcii nem\u00f4\u017eete prihadzova\u0165.", "not_started": "Prihadzovanie sa e\u0161te neza\u010dalo.", "ended": "Prihadzovanie sa u\u017e skon\u010dilo.", "bid_too_low": "T\u00e1to suma u\u017e nesta\u010d\u00ed. Nov\u00e9 minimum je {minimum}." }
   },
   "LanguageSwitcher": {
     "label": "Výber jazyka",

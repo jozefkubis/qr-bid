@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import type { CreateAuctionState } from "@/lib/auction-form-state";
 import { createAuction, deleteCurrentUserAuction } from "@/lib/supabase/auctions";
-import { uploadAuctionPhotos, validateAuctionPhotos } from "@/lib/supabase/auction-photos";
+import { removeAuctionPhotoObjects, uploadAuctionPhotos, validateAuctionPhotos } from "@/lib/supabase/auction-photos";
 
 const maxMinorAmount = BigInt(Number.MAX_SAFE_INTEGER);
 
@@ -63,9 +63,11 @@ export async function createAuctionAction(
     });
     auctionId = auction.id;
     try {
-      await uploadAuctionPhotos(auction.id, photos);
+      if (!await uploadAuctionPhotos(auction, photos)) throw new Error("Photo publication was rejected.");
     } catch (error) {
-      await deleteCurrentUserAuction(auction.id).catch(() => false);
+      if (!auction.supportsCancellation) await removeAuctionPhotoObjects(auction).catch(console.error);
+      const deleted = await deleteCurrentUserAuction(auction.id).catch(() => false);
+      if (deleted && auction.supportsCancellation) await removeAuctionPhotoObjects(auction).catch(console.error);
       throw error;
     }
   } catch {

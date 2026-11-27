@@ -129,6 +129,10 @@ Show image, title, description, current highest bid, countdown, minimum valid ne
 - A pending confirmation keeps its amount and request UUID. A changed minimum never rewrites the reviewed amount; an insufficient amount must return to editing. Successful or idempotently replayed submission clears selection, resets the custom field to the server-returned minimum and announces the accepted amount plus next minimum in the panel.
 - The signed-in auction owner may inspect the same amount controls, but opening the modal shows an error-colored exclamation warning and only a Back action. The server supplies only an owner boolean derived through the existing owner-scoped RLS read; the PostgreSQL `own_auction` rejection remains the authoritative protection.
 
+### Feature 19 early cancellation (2026-11-27)
+
+The owner can cancel an active auction through a localized confirmation dialog with a required public reason. The dialog explains permanence, retention of bids and the absence of a winner. It keeps the reason after an error. The public detail stays available through the original link and QR, shows the cancellation reason and history, and removes countdown and bid controls. My Auctions and My Bids show a separate Cancelled filter. The owner detail stays readable and provides access to sharing.
+
 ### Auction Published / QR Sharing
 
 After a real auction is created, redirect its owner to the protected localized sharing page. The first redirect confirms that the auction was published; later openings from auction management use the normal sharing heading. Show the auction title, optional public location, starting price and localized end time with its time-zone abbreviation.

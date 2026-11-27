@@ -1,4 +1,21 @@
 {
+  "AuctionCancellation": {
+    "section": "Early cancellation",
+    "open": "Cancel auction",
+    "title": "Cancel this auction?",
+    "warning": "Cancellation is permanent. No winner will be selected. Existing bids will be kept.",
+    "reason": "Reason for cancellation",
+    "publicWarning": "The reason will be public. Do not include personal information.",
+    "back": "Back",
+    "confirm": "Confirm cancellation",
+    "pending": "Cancelling…",
+    "cancelled": "Auction cancelled",
+    "limit": "Maximum {limit} characters.",
+    "invalidReason": "Enter a reason of 1 to {limit} characters.",
+    "unavailable": "This auction can no longer be cancelled.",
+    "failed": "The cancellation could not be confirmed. Try again.",
+    "bidCount": "Bids kept: {count}"
+  },
   "Metadata": {
     "title": "QRBid — Simple auctions, shared by QR code",
     "description": "Create a time-limited auction and share its link or QR code. No public marketplace required."
@@ -19,6 +36,7 @@
     "pageDescription": "Follow the auctions where you have placed an accepted bid.",
     "filterLabel": "Filter your bids by auction status",
     "filters": {
+      "cancelled": "Cancelled ({count})",
       "all": "All Bids ({count})",
       "leading": "Leading ({count})",
       "outbid": "Outbid ({count})",
@@ -31,7 +49,7 @@
     "card": {
       "coverPhoto": "Cover photo for {title}",
       "locationUnavailable": "Location not provided",
-      "status": { "leading": "Leading", "outbid": "Outbid", "ended": "Ended" },
+      "status": { "cancelled": "Cancelled", "leading": "Leading", "outbid": "Outbid", "ended": "Ended" },
       "remaining": "{days, plural, =0 {} other {#d }}{hours}h {minutes}m",
       "endedAt": "{date}",
       "timeLeft": "Time left",
@@ -73,6 +91,7 @@
   },
   "MyAuctions": {
     "live": {
+      "cancelledAt": "Cancelled {date}", "deletedPhotoCleanupFailed": "The auction was deleted. Some photo files could not be removed.",
       "filterLabel": "Filter auctions by status",
       "results": "{count, plural, one {Showing # auction} other {Showing # auctions}}",
       "filterEmpty": "No auctions match this filter.",
@@ -113,13 +132,14 @@
           "continueHelp": "Use this only after the confirmed bidder tells you they withdrew. Their contact access ends and the next eligible bidder receives a new 48-hour offer.",
           "continue": "Continue with next bidder"
         },
-        "status": { "saved": "Changes saved.", "photosSaved": "Photos updated.", "noteAdded": "Owner update published.", "continued": "The confirmed bidder was marked withdrawn and the workflow continued.", "saleCompleted": "The sale was recorded as completed.", "invalid": "Check the entered values.", "photoInvalid": "Choose no more than five supported images of up to 5 MB each.", "unavailable": "This action is no longer available." }
+        "status": { "photoCleanupFailed": "Photo removal could not be fully completed.", "saved": "Changes saved.", "photosSaved": "Photos updated.", "noteAdded": "Owner update published.", "continued": "The confirmed bidder was marked withdrawn and the workflow continued.", "saleCompleted": "The sale was recorded as completed.", "invalid": "Check the entered values.", "photoInvalid": "Choose no more than five supported images of up to 5 MB each.", "unavailable": "This action is no longer available." }
       }
     },
     "pageTitle": "My Auctions",
     "pageDescription": "Manage your active and completed private auctions.",
     "demoDisclosure": "Fictional sample records for this UX prototype.",
     "filters": {
+      "cancelled": "Cancelled ({count})",
       "label": "Filter demo auctions by status",
       "all": "All ({count})",
       "active": "Active ({count})",
@@ -143,6 +163,7 @@
       }
     },
     "card": {
+      "cancelled": "Cancelled", "scheduled": "Scheduled",
       "listLabel": "Demo auctions",
       "coverPlaceholder": "Neutral demo cover for {title}",
       "coverPhoto": "Cover photo for {title}",
@@ -212,7 +233,7 @@
     "backHome": "Back home",
     "visitorPreview": "Visitor preview",
     "demoDisclosure": "Fictional demo auction · Local prototype data",
-    "status": { "active": "Active", "ended": "Ended" },
+    "status": { "cancelled": "Auction cancelled", "scheduled": "Scheduled", "active": "Active", "ended": "Ended" },
     "remaining": "{days, plural, =0 {} one {# day } other {# days }}{hours} h {minutes} min remaining",
     "endedOn": "Ended {date}",
     "description": "Description",
@@ -237,7 +258,7 @@
     "title": "Place a bid", "bidCount": "{count, plural, one {# bid} other {# bids}}", "ended": "Bidding for this auction has ended.", "signInDescription": "Sign in to place a bid. You can view the auction without an account.", "signIn": "Sign in to bid",
     "minimum": "Minimum next bid: {amount}", "offer": "Offer {amount}", "increment": "+{increment} (total {total})", "increase": "+{amount}", "customLabel": "Your total bid (EUR)", "review": "Review bid", "customInvalid": "Enter a valid amount with no more than two decimal places.", "customTooLow": "Enter at least {minimum}.",
     "confirmTitle": "Confirm your bid", "confirmAmount": "Your total bid is {amount}", "confirmDescription": "This is the full amount that will be submitted, not only the increase.", "minimumChanged": "The auction changed while you were reviewing. Your amount is preserved; the new minimum is {minimum}.", "amountBelowMinimum": "Your amount is below the new minimum of {minimum}. Go back and enter a new amount.", "confirmAction": "Confirm {amount}", "back": "Back", "submitting": "Submitting bid…", "ownerModalTitle": "You cannot bid on your own auction", "ownerModalDescription": "The auction owner is not allowed to place a bid. No bid was submitted.",
-    "status": { "accepted": "Bid {amount} was accepted. The next minimum bid is {minimum}.", "replayed": "Bid {amount} was already accepted. No duplicate was created. The next minimum bid is {minimum}.", "signInRequired": "Sign in before placing a bid.", "invalidRequest": "The bid request is invalid. Please review it again.", "invalidAmount": "Enter a valid amount.", "profile_missing": "Your bidder profile is not ready. Refresh the page and try again.", "auction_not_found": "This auction is unavailable.", "request_conflict": "This confirmation was already used for another amount. Review the bid again.", "own_auction": "You cannot bid on your own auction.", "not_started": "Bidding has not started yet.", "ended": "Bidding has already ended.", "bid_too_low": "That amount is no longer high enough. The new minimum is {minimum}." }
+    "status": { "cancelled": "The auction was cancelled and is closed to new bids.", "accepted": "Bid {amount} was accepted. The next minimum bid is {minimum}.", "replayed": "Bid {amount} was already accepted. No duplicate was created. The next minimum bid is {minimum}.", "signInRequired": "Sign in before placing a bid.", "invalidRequest": "The bid request is invalid. Please review it again.", "invalidAmount": "Enter a valid amount.", "profile_missing": "Your bidder profile is not ready. Refresh the page and try again.", "auction_not_found": "This auction is unavailable.", "request_conflict": "This confirmation was already used for another amount. Review the bid again.", "own_auction": "You cannot bid on your own auction.", "not_started": "Bidding has not started yet.", "ended": "Bidding has already ended.", "bid_too_low": "That amount is no longer high enough. The new minimum is {minimum}." }
   },
   "LanguageSwitcher": {
     "label": "Language selection",

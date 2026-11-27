@@ -23,6 +23,8 @@ export type Database = {
       };
       auctions: {
         Row: {
+          cancellation_reason: string | null;
+          cancelled_at: string | null;
           created_at: string;
           currency: "EUR";
           description: string;
@@ -114,6 +116,19 @@ export type Database = {
     };
     Views: Record<string, never>;
     Functions: {
+      cancel_owned_auction: {
+        Args: { p_auction_id: string; p_reason: string };
+        Returns: string;
+      };
+      change_owned_auction_photos: {
+        Args: {
+          p_auction_id: string;
+          p_owner_sub: string;
+          p_add_paths: string[];
+          p_remove_path: string | null;
+        };
+        Returns: boolean;
+      };
       claim_notification_outbox: {
         Args: { p_limit?: number };
         Returns: {
@@ -212,6 +227,8 @@ export type Database = {
       get_public_auction: {
         Args: { p_auction_id: string };
         Returns: {
+          cancellation_reason: string | null;
+          cancelled_at: string | null;
           currency: string;
           description: string;
           ends_at: string;

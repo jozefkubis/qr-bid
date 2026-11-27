@@ -40,6 +40,7 @@ function MyBidCard({ auction, now }: { auction: MyBidAuction; now: number }) {
     timeStyle: "short",
   });
   const endTime = new Date(auction.endsAt).getTime();
+  const closed = auction.status === "ended" || auction.status === "cancelled";
   const remaining = countdownParts(endTime, now);
   const timeText =
     auction.status === "ended"
@@ -52,16 +53,19 @@ function MyBidCard({ auction, now }: { auction: MyBidAuction; now: number }) {
     leading: "border-primary/25 bg-primary/10 text-primary",
     outbid: "border-tertiary/25 bg-tertiary/10 text-tertiary",
     ended: "border-border bg-surface-muted text-muted-foreground",
+    cancelled: "border-border bg-surface-muted text-muted-foreground",
   };
   const cardClasses: Record<MyBidAuctionStatus, string> = {
     leading: "border-border",
     outbid: "border-tertiary/35",
     ended: "border-border",
+    cancelled: "border-border",
   };
   const accentClasses: Record<MyBidAuctionStatus, string> = {
     leading: "bg-primary/70",
     outbid: "bg-tertiary",
     ended: "bg-muted-foreground/70",
+    cancelled: "bg-muted-foreground/70",
   };
   const StatusIcon =
     auction.status === "leading"
@@ -69,7 +73,7 @@ function MyBidCard({ auction, now }: { auction: MyBidAuction; now: number }) {
       : auction.status === "outbid"
         ? TriangleAlert
         : Archive;
-  const TimeIcon = auction.status === "ended" ? CalendarClock : Hourglass;
+  const TimeIcon = closed ? CalendarClock : Hourglass;
 
   return (
     <article>
@@ -124,7 +128,7 @@ function MyBidCard({ auction, now }: { auction: MyBidAuction; now: number }) {
           <dl className="grid min-w-0 grid-cols-2 border-t border-border pt-4 lg:grid-cols-3 lg:border-t-0 lg:border-l lg:pt-0">
             <div className="min-w-0 pr-4 lg:pl-6">
               <dt className="text-xs text-muted-foreground">
-                {auction.status === "ended"
+                {closed
                   ? t("finalHighest")
                   : t("currentHighest")}
               </dt>
@@ -140,7 +144,7 @@ function MyBidCard({ auction, now }: { auction: MyBidAuction; now: number }) {
                 {currency.format(auction.myLatestAmountMinor / 100)}
               </dd>
             </div>
-            <div className="col-span-2 mt-4 min-w-0 border-t border-border pt-4 lg:col-span-1 lg:mt-0 lg:border-t-0 lg:border-l lg:px-4 lg:pt-0">
+            {auction.status !== "cancelled" ? <div className="col-span-2 mt-4 min-w-0 border-t border-border pt-4 lg:col-span-1 lg:mt-0 lg:border-t-0 lg:border-l lg:px-4 lg:pt-0">
               <dt className="text-xs text-muted-foreground">
                 {auction.status === "ended" ? t("status.ended") : t("timeLeft")}
               </dt>
@@ -151,7 +155,7 @@ function MyBidCard({ auction, now }: { auction: MyBidAuction; now: number }) {
                 />
                 <span>{timeText}</span>
               </dd>
-            </div>
+            </div> : null}
           </dl>
 
           <Link
@@ -175,11 +179,12 @@ export function MyBidsDashboard({ auctions, now }: { auctions: MyBidAuction[]; n
     leading: auctions.filter((auction) => auction.status === "leading").length,
     outbid: auctions.filter((auction) => auction.status === "outbid").length,
     ended: auctions.filter((auction) => auction.status === "ended").length,
+    cancelled: auctions.filter((auction) => auction.status === "cancelled").length,
   };
   const filteredAuctions = filter === "all"
     ? auctions
     : auctions.filter((auction) => auction.status === filter);
-  const filters: BidFilter[] = ["all", "leading", "outbid", "ended"];
+  const filters: BidFilter[] = ["all", "leading", "outbid", "ended", "cancelled"];
 
   return (
     <>
@@ -192,7 +197,7 @@ export function MyBidsDashboard({ auctions, now }: { auctions: MyBidAuction[]; n
           <div
             role="group"
             aria-label={t("filterLabel")}
-            className="flex w-full gap-1 overflow-x-auto rounded-soft border border-border bg-surface p-1 shadow-soft lg:w-auto"
+            className="flex w-full flex-wrap gap-1 rounded-soft border border-border bg-surface p-1 shadow-soft lg:w-auto"
           >
             {filters.map((option) => (
               <button

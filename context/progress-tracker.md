@@ -8,9 +8,15 @@ Update this file after meaningful implementation changes or approved product/arc
 
 ## Current Goal
 
-- Feature 18 is manually accepted. The database changes are live on hosted Supabase, and application deployment is pending.
+- Feature 19 passed the product owner’s two-window acceptance against the hosted database. Production application deployment remains unverified. Feature 18 is manually accepted. Its database changes are live on hosted Supabase.
 
 ## Completed
+
+- The product owner confirmed Feature 19 manual acceptance against the hosted database. The form rejected an empty reason, accepted a valid public reason, and the cancelled state appeared in the bidder window.
+
+- Fixed the Feature 19 rollout compatibility error reported as PostgreSQL 42703. Owner auction reads and creation work with the original schema as well as the cancellation migration. The owner cancellation control follows the returned schema capability, and photo actions continue to use the existing authenticated Storage path before the migration. The database was not changed.
+
+- Implemented the approved Feature 19 early cancellation on 2026-11-27. Owners can close an active auction with or without bids using a public reason of up to 500 characters. The shared auction lock protects cancellation, bidding, photo references and finalization startup. The original deadline, URL/QR, photos and accepted bids are preserved. The public detail refreshes on cancellation Broadcast and both dashboards distinguish cancelled auctions. The existing result cycle skips cancellations. Storage object deletion follows committed removal of references and uses the existing server-only Supabase credential. An unsuccessful physical cleanup may leave an orphaned object. Local checks passed: 27 Feature 19 and 51 Feature 15 SQL assertions with Supabase service stubs, six real two-session PostgreSQL lock-order and deadline scenarios, photo-reference races, EN/SK parity, ESLint, TypeScript, the Next.js production build and git diff checks. The database harness did not verify the managed extensions or live Storage and Realtime transport. No hosted migration, application deployment or cancellation e-mail operation was performed.
 
 - The product owner tested Feature 18 after the hosted database update and confirmed that bidder labels work. Manual acceptance is complete.
 
@@ -241,6 +247,8 @@ Update this file after meaningful implementation changes or approved product/arc
 - Stage A repository verification passed: ESLint, standalone TypeScript, default Turbopack build and production dependency audit with zero findings. Hosted migration, Third-Party Auth configuration and live RLS tests were intentionally not performed because the target environment is ambiguous and hosted changes require explicit approval.
 
 ## In Progress
+
+- Feature 19 is manually accepted. Production application deployment and the hosted Storage write path remain unverified. Verify the server-side Supabase credential in the deployment environment.
 
 - On 2026-11-25, the product owner accepted Feature 17 Sections 2–4 in three manual blocks: 320 px layouts, mobile header and SK/EN switching in signed-in and signed-out states, and footer and layout checks at 320 px, 390 px and desktop. Feature 17 is complete with the previously accepted Section 1.
 

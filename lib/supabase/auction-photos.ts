@@ -1,6 +1,8 @@
 import "server-only";
 
-import { getCurrentSupabaseClient } from "@/lib/supabase/auctions";
+import { auth } from "@clerk/nextjs/server";
+import { currentSupabaseClient, type OwnedAuction } from "@/lib/supabase/auctions";
+import { createSupabaseAdminClient } from "@/lib/supabase/server";
 export { getAuctionPhotoUrl } from "@/lib/supabase/public-storage";
 
 export const MAX_AUCTION_PHOTOS = 5;
@@ -19,62 +21,106 @@ export function validateAuctionPhotos(files: File[]) {
   return null;
 }
 
-export async function uploadAuctionPhotos(auctionId: string, files: File[]) {
+function auctionPhotoBucket() {
+  return createSupabaseAdminClient().storage.from("auction-photos");
+}
+
+async function removeUnreferencedObjects(bucket: ReturnType<typeof auctionPhotoBucket>, paths: string[]) {
+  if (paths.length === 0) return;
+  const first = await bucket.remove(paths);
+  if (!first.error) return;
+  const retry = await bucket.remove(paths);
+  if (retry.error) throw retry.error;
+}
+
+async function changePhotoReferences(auctionId: string, addPaths: string[], removePath: string | null) {
+  const { userId } = await auth();
+  if (!userId) return false;
+  const { data, error } = await createSupabaseAdminClient().rpc("change_owned_auction_photos", {
+    p_auction_id: auctionId,
+    p_owner_sub: userId,
+    p_add_paths: addPaths,
+    p_remove_path: removePath,
+  });
+  if (error) throw error;
+  return data;
+}
+
+export async function uploadAuctionPhotos(auction: OwnedAuction, files: File[]) {
+  if (files.length === 0) return true;
   const validation = validateAuctionPhotos(files);
   if (validation) throw new Error(`Invalid auction photos: ${validation}`);
-  const supabase = await getCurrentSupabaseClient();
-  const uploadedPaths: string[] = [];
-  const existing = await supabase.from("auction_photos").select("sort_order").eq("auction_id", auctionId);
-  if (existing.error) throw existing.error;
-  const usedOrders = new Set(existing.data.map((photo) => photo.sort_order));
-  const availableOrders = Array.from({ length: MAX_AUCTION_PHOTOS }, (_, index) => index).filter((index) => !usedOrders.has(index));
-  if (files.length > availableOrders.length) throw new Error("Too many auction photos.");
+  const legacyClient = auction.supportsCancellation ? null : await currentSupabaseClient();
+  const bucket = legacyClient ? legacyClient.storage.from("auction-photos") : auctionPhotoBucket();
+  const attemptedPaths: string[] = [];
 
   try {
-    for (const [index, file] of files.entries()) {
+    for (const file of files) {
       const extension = extensionByType[file.type as keyof typeof extensionByType];
-      const path = `${auctionId}/${crypto.randomUUID()}.${extension}`;
-      const upload = await supabase.storage.from("auction-photos").upload(path, file, { contentType: file.type, upsert: false });
-      if (upload.error) throw upload.error;
-      uploadedPaths.push(path);
-      const metadata = await supabase.from("auction_photos").insert({ auction_id: auctionId, storage_path: path, sort_order: availableOrders[index] });
-      if (metadata.error) throw metadata.error;
+      const path = `${auction.id}/${crypto.randomUUID()}.${extension}`;
+      attemptedPaths.push(path);
+      const { error } = await bucket.upload(path, file, { contentType: file.type, upsert: false });
+      if (error) throw error;
     }
-    return uploadedPaths;
   } catch (error) {
-    if (uploadedPaths.length) {
-      await supabase.from("auction_photos").delete().in("storage_path", uploadedPaths);
-      await supabase.storage.from("auction-photos").remove(uploadedPaths);
-    }
+    await removeUnreferencedObjects(bucket, attemptedPaths).catch(console.error);
     throw error;
   }
-}
 
-export async function removeAuctionPhotos(paths: string[]) {
-  if (!paths.length) return;
-  const supabase = await getCurrentSupabaseClient();
-  const storage = await supabase.storage.from("auction-photos").remove(paths);
-  if (storage.error) throw storage.error;
-  if (!storage.data || storage.data.length !== paths.length) {
-    throw new Error("Storage did not remove every requested auction photo.");
+  if (legacyClient) {
+    const existing = await legacyClient.from("auction_photos").select("sort_order").eq("auction_id", auction.id);
+    if (existing.error) {
+      await removeUnreferencedObjects(bucket, attemptedPaths).catch(console.error);
+      throw existing.error;
+    }
+    const occupied = new Set(existing.data.map(({ sort_order }) => sort_order));
+    const slots = Array.from({ length: MAX_AUCTION_PHOTOS }, (_, index) => index).filter((index) => !occupied.has(index));
+    if (slots.length < attemptedPaths.length) {
+      await removeUnreferencedObjects(bucket, attemptedPaths).catch(console.error);
+      return false;
+    }
+    const { error } = await legacyClient.from("auction_photos").insert(
+      attemptedPaths.map((path, index) => ({ auction_id: auction.id, storage_path: path, sort_order: slots[index] })),
+    );
+    if (error) throw error;
+    return true;
   }
-  const metadata = await supabase.from("auction_photos").delete().in("storage_path", paths);
-  if (metadata.error) throw metadata.error;
+
+  // On an ambiguous RPC failure, keep the files: the references may have committed.
+  const published = await changePhotoReferences(auction.id, attemptedPaths, null);
+  if (!published) await removeUnreferencedObjects(bucket, attemptedPaths).catch(console.error);
+  return published;
 }
 
-export async function removeAllAuctionPhotoObjects(auctionId: string) {
-  const supabase = await getCurrentSupabaseClient();
-  const listed = await supabase.storage.from("auction-photos").list(auctionId, { limit: 100 });
+export async function removeAuctionPhoto(auction: OwnedAuction, path: string) {
+  if (!auction.supportsCancellation) {
+    const client = await currentSupabaseClient();
+    const { data, error } = await client.storage.from("auction-photos").remove([path]);
+    if (error) throw error;
+    if (data.length !== 1) return false;
+    const metadata = await client.from("auction_photos").delete().eq("auction_id", auction.id).eq("storage_path", path);
+    if (metadata.error) throw metadata.error;
+    return true;
+  }
+  const bucket = auctionPhotoBucket();
+  if (!await changePhotoReferences(auction.id, [], path)) return false;
+  await removeUnreferencedObjects(bucket, [path]);
+  return true;
+}
+
+export async function removeAuctionPhotoObjects(auction: OwnedAuction) {
+  const legacyClient = auction.supportsCancellation ? null : await currentSupabaseClient();
+  const bucket = legacyClient ? legacyClient.storage.from("auction-photos") : auctionPhotoBucket();
+  const auctionId = auction.id;
+  const listed = await bucket.list(auctionId, { limit: 100 });
   if (listed.error) throw listed.error;
   const paths = listed.data.filter((object) => object.id).map((object) => `${auctionId}/${object.name}`);
-  if (paths.length) {
-    const removed = await supabase.storage.from("auction-photos").remove(paths);
-    if (removed.error) throw removed.error;
-    if (!removed.data || removed.data.length !== paths.length) {
-      throw new Error("Storage did not remove every auction object.");
-    }
+  await removeUnreferencedObjects(bucket, paths);
+  const remaining = await bucket.list(auctionId, { limit: 1 });
+  if (remaining.error) throw remaining.error;
+  if (remaining.data.length > 0) throw new Error("Storage did not remove every auction object.");
+  if (legacyClient) {
+    const metadata = await legacyClient.from("auction_photos").delete().eq("auction_id", auctionId);
+    if (metadata.error) throw metadata.error;
   }
-  const metadata = await supabase.from("auction_photos").delete().eq("auction_id", auctionId);
-  if (metadata.error) throw metadata.error;
 }
-

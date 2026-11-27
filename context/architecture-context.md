@@ -106,6 +106,14 @@ Feature 18 derives public auction-scoped bidder numbers from each bidder's first
 
 ## Auction End and Notifications
 
+
+#### Feature 19 early cancellation (2026-11-27)
+
+- Cancellation is stored on the auction as `cancelled_at` and a trimmed public `cancellation_reason` of 1–500 Unicode characters. It preserves the original deadline, URL and accepted bids. The cancellation status takes precedence over schedule-based display.
+- Cancellation, new bid acceptance and finalization start share the auction-row lock and evaluate fresh database time after locking. A cancelled auction is excluded from the Cron candidate scan and the finalization start function. An already accepted bid request still replays with its original amount.
+- Photo publication and removal of gallery references share the same auction lock. The authenticated application server stages new objects before publishing references and physically removes objects after deleting references. Server-only Storage writes use the existing secret and a narrowly authorized RPC for gallery metadata. Cancellation preserves all committed references. Physical cleanup failures may leave an unreferenced object.
+- The existing public auction Broadcast channel sends a minimal cancellation refresh event. The detail reloads the safe public RPC and preserves Feature 18 bid labels.
+
 - **END-002 (approved):** The auction owner may cancel an auction before its scheduled end, including after accepted bids exist, for personal or other reasons. Cancellation is a distinct terminal state (`cancelled`) from normal completion (`completed`); no winner is declared on cancellation. Accepted bid records remain preserved for audit, and no further bids are accepted. Authorization, status transition and race conditions with concurrent bids must be enforced transactionally on the server/database.
 - **END-003 (approved):** The auction owner must provide a non-empty cancellation reason when cancelling early. The reason is stored with the cancelled auction and displayed to people viewing its auction page, including affected bidders. Validate the reason server-side and persist it atomically with the cancellation; do not allow cancelling without a reason. Exact length limits and presentation details remain open.
 - Cancellation notifications to affected bidders are planned; precise recipients, timing and delivery guarantees remain to be specified before implementation.

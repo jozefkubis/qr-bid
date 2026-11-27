@@ -5,22 +5,27 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { OwnedAuctionCard } from "@/components/auctions/owned-auction-card";
 import { Card } from "@/components/ui/card";
+import { getAuctionStatus } from "@/lib/auction-cancellation";
 import type { OwnedAuction } from "@/lib/supabase/auctions";
 
-type AuctionFilter = "active" | "all" | "ended";
+type AuctionFilter = "active" | "all" | "cancelled" | "ended";
 
 export function MyAuctionsDashboard({ auctions, now }: { auctions: OwnedAuction[]; now: number }) {
   const t = useTranslations("MyAuctions");
   const [filter, setFilter] = useState<AuctionFilter>("all");
-  const isEnded = (auction: OwnedAuction) => new Date(auction.endsAt).getTime() <= now;
-  const activeCount = auctions.filter((auction) => !isEnded(auction)).length;
-  const endedCount = auctions.length - activeCount;
-  const filteredAuctions = auctions.filter((auction) => filter === "all" || (filter === "ended") === isEnded(auction));
+  const statusOf = (auction: OwnedAuction) => getAuctionStatus(auction, now);
+  const activeCount = auctions.filter((auction) => statusOf(auction) === "active").length;
+  const endedCount = auctions.filter((auction) => statusOf(auction) === "ended").length;
+  const cancelledCount = auctions.filter((auction) => statusOf(auction) === "cancelled").length;
+  const filteredAuctions = auctions.filter((auction) => filter === "all" || statusOf(auction) === filter);
   const filterOptions: Array<{ value: AuctionFilter; label: string }> = [
     { value: "all", label: t("filters.all", { count: auctions.length }) },
     { value: "active", label: t("filters.active", { count: activeCount }) },
     { value: "ended", label: t("filters.ended", { count: endedCount }) },
   ];
+  if (auctions.some((auction) => auction.supportsCancellation)) {
+    filterOptions.push({ value: "cancelled", label: t("filters.cancelled", { count: cancelledCount }) });
+  }
   const summaryCards = [
     { label: t("summary.liveBiddingActivity.label"), value: t("summary.liveBiddingActivity.value", { count: activeCount }), meta: t("live.realData"), icon: Radio, iconClasses: "bg-tertiary/10 text-tertiary" },
     { label: t("summary.finishedBidding.label"), value: t("summary.finishedBidding.value", { count: endedCount }), meta: t("live.realData"), icon: CheckCircle2, iconClasses: "bg-surface-muted text-muted-foreground" },
@@ -32,7 +37,7 @@ export function MyAuctionsDashboard({ auctions, now }: { auctions: OwnedAuction[
       <section aria-labelledby="my-auctions-title">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <p className="max-w-2xl text-sm text-muted-foreground sm:text-base">{t("pageDescription")}</p>
-          <div role="group" aria-label={t("live.filterLabel")} className="inline-flex w-fit rounded-soft border border-border bg-surface p-1 shadow-soft">
+          <div role="group" aria-label={t("live.filterLabel")} className="inline-flex w-fit max-w-full flex-wrap rounded-soft border border-border bg-surface p-1 shadow-soft">
             {filterOptions.map((option) => (
               <button key={option.value} type="button" aria-pressed={filter === option.value} aria-controls="auction-list" onClick={() => setFilter(option.value)} className={`min-h-11 cursor-pointer rounded-lg px-3 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus sm:px-4 sm:text-sm ${filter === option.value ? "bg-primary text-white" : "text-muted-foreground hover:bg-surface-muted hover:text-primary"}`}>
                 {option.label}

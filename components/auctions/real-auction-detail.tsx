@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Link } from "@/i18n/navigation";
 import type { PublicAuction } from "@/lib/supabase/auctions";
 import { getAuctionPhotoUrl } from "@/lib/supabase/auction-photos";
+import { getAuctionStatus } from "@/lib/auction-cancellation";
 import { currentTimestamp } from "@/lib/server-time";
 import type { BidActionState } from "@/lib/bid-action-state";
 import { LocalAuctionEndTime } from "@/components/auctions/local-auction-end-time";
@@ -17,7 +18,8 @@ export async function RealAuctionDetail({ auction, avatarUrl, bidAction, isOwner
   const language = locale === "sk" ? "sk-SK" : "en-IE";
   const money = new Intl.NumberFormat(language, { style: "currency", currency: auction.currency });
   const dateTime = new Intl.DateTimeFormat(language, { dateStyle: "medium", timeStyle: "short" });
-  const ended = new Date(auction.endsAt).getTime() <= currentTimestamp();
+  const status = getAuctionStatus(auction, currentTimestamp());
+  const ended = status === "ended";
   const photoUrls = auction.photoPaths.map(getAuctionPhotoUrl);
 
   return <div className="grid gap-6">
@@ -25,10 +27,15 @@ export async function RealAuctionDetail({ auction, avatarUrl, bidAction, isOwner
     <div className="grid min-w-0 gap-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(20rem,0.65fr)]">
       <RealAuctionGallery photoUrls={photoUrls} title={auction.title} />
       <Card className="p-5 sm:p-6">
-        <span className={`rounded-full px-3 py-1 text-xs font-semibold ${ended ? "bg-surface-muted text-muted-foreground" : "bg-primary text-white"}`}>{ended ? t("status.ended") : t("status.active")}</span>
+        {status !== "cancelled" ? <span className={`rounded-full px-3 py-1 text-xs font-semibold ${status === "active" ? "bg-primary text-white" : "bg-surface-muted text-muted-foreground"}`}>{t(`status.${status}`)}</span> : null}
         <h1 className="mt-4 text-2xl font-semibold sm:text-3xl">{auction.title}</h1>
         <p className="mt-3 flex items-start gap-2 text-sm text-muted-foreground"><MapPin aria-hidden="true" className="mt-0.5 size-4 shrink-0" /><span>{auction.location ?? t("locationUnavailable")}</span></p>
-        <LocalAuctionEndTime ended={ended} endsAt={auction.endsAt} />
+        {status === "cancelled" ? (
+          <div role="status" className="mt-4 rounded-soft border border-border bg-surface-muted p-3">
+            <p className="font-semibold">{t("status.cancelled")}</p>
+            <p className="mt-1 whitespace-pre-wrap wrap-anywhere text-sm">{auction.cancellationReason}</p>
+          </div>
+        ) : <LocalAuctionEndTime ended={ended} endsAt={auction.endsAt} />}
         <dl className="mt-6 grid grid-cols-2 gap-4 border-t border-border pt-5">
           <div className="col-span-2"><dt className="text-sm text-muted-foreground">{t("price.current")}</dt><dd className="mt-1 text-3xl font-bold text-primary">{auction.currentHighestMinor === null ? t("price.noBids") : money.format(auction.currentHighestMinor / 100)}</dd></div>
           <div><dt className="text-sm text-muted-foreground">{t("price.starting")}</dt><dd className="mt-1 font-semibold">{money.format(auction.startingPriceMinor / 100)}</dd></div>
@@ -38,7 +45,7 @@ export async function RealAuctionDetail({ auction, avatarUrl, bidAction, isOwner
     </div>
     <Card className="p-5 sm:p-6"><h2 className="text-xl font-semibold">{t("description")}</h2><p className="mt-3 whitespace-pre-wrap text-muted-foreground">{auction.description || t("noDescription")}</p></Card>
     {auction.ownerNotes.length ? <Card className="p-5 sm:p-6"><h2 className="text-xl font-semibold">{t("notes.title")}</h2><ol className="mt-4 grid gap-4">{auction.ownerNotes.map((note) => <li key={`${note.createdAt}-${note.body}`} className="border-l-2 border-tertiary pl-4"><p>{note.body}</p><time className="mt-1 block text-xs text-muted-foreground">{dateTime.format(new Date(note.createdAt))}</time></li>)}</ol></Card> : null}
-    <LiveBiddingPanel action={bidAction} auctionId={auction.id} bidCount={auction.bidCount} currentHighestMinor={auction.currentHighestMinor} ended={ended} isOwner={isOwner} locale={locale} minimumIncrementMinor={auction.minimumIncrementMinor} minimumNextBidMinor={auction.minimumNextBidMinor} signedIn={signedIn} />
+    {status !== "cancelled" && status !== "scheduled" ? <LiveBiddingPanel action={bidAction} auctionId={auction.id} bidCount={auction.bidCount} currentHighestMinor={auction.currentHighestMinor} ended={ended} isOwner={isOwner} locale={locale} minimumIncrementMinor={auction.minimumIncrementMinor} minimumNextBidMinor={auction.minimumNextBidMinor} signedIn={signedIn} /> : null}
     <Card className="p-5 sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-xl font-semibold">{t("history.title")}</h2>

@@ -12,6 +12,7 @@ export function AuctionRealtimeRefresh({ auctionId, children }: { auctionId: str
     const channel = supabase
       .channel(`auction:${auctionId}:bids`)
       .on("broadcast", { event: "bid_changed" }, () => router.refresh())
+      .on("broadcast", { event: "auction_cancelled" }, () => router.refresh())
       .subscribe((status) => {
         if (status === "SUBSCRIBED") router.refresh();
       });
